@@ -1,0 +1,24 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.swp
+*.tmp
+
+# Office creates these temporary lock files alongside user-owned spreadsheets.
+*.xlsx
+~$*.xlsx
+
+# Network-derived template cache and locally compiled helper.
+capcut_local_data/cache/
+capcut_local_data/tools/
+capcut_local_data/video_analysis/
+capcut_local_data/*.log
+
+# Historical safety snapshots are retained locally but are not the current state.
+capcut_local_data/*.backup-*.json
+capcut_local_data/*.before-*.json
+
+# Generated distribution packages duplicate the canonical source tree.
+outputs/
+CapCut作者审核_分享版/

@@ -1,0 +1,106 @@
+[
+  {
+    "generated_at": "2026-09-25 16:21:17",
+    "indexed_templates": 95,
+    "new_candidates": 0,
+    "skipped_seen_creators": 1
+  },
+  {
+    "generated_at": "2026-09-25 16:51:09",
+    "indexed_templates": 696,
+    "new_candidates": 38,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 37
+  },
+  {
+    "generated_at": "2026-09-25 16:51:39",
+    "indexed_templates": 646,
+    "new_candidates": 6,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 55
+  },
+  {
+    "generated_at": "2026-09-25 16:51:59",
+    "indexed_templates": 626,
+    "new_candidates": 1,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 55
+  },
+  {
+    "generated_at": "2026-09-25 16:52:17",
+    "indexed_templates": 645,
+    "new_candidates": 0,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 56
+  },
+  {
+    "generated_at": "2026-09-25 16:52:41",
+    "indexed_templates": 644,
+    "new_candidates": 0,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 56
+  },
+  {
+    "generated_at": "2026-09-28 16:19:38",
+    "indexed_templates": 646,
+    "new_candidates": 5,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 56
+  },
+  {
+    "generated_at": "2026-09-28 16:30:27",
+    "indexed_templates": 998,
+    "new_candidates": 24,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 61
+  },
+  {
+    "generated_at": "2026-09-29 12:22:20",
+    "indexed_templates": 1206,
+    "new_candidates": 12,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 83
+  },
+  {
+    "generated_at": "2026-09-29 14:14:18",
+    "indexed_templates": 1417,
+    "new_candidates": 4,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 61
+  },
+  {
+    "generated_at": "2026-09-29 14:16:04",
+    "indexed_templates": 797,
+    "new_candidates": 0,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 83
+  },
+  {
+    "generated_at": "2026-09-29 14:19:38",
+    "indexed_templates": 797,
+    "new_candidates": 0,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 83
+  },
+  {
+    "generated_at": "2026-09-29 14:22:00",
+    "indexed_templates": 799,
+    "new_candidates": 0,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 83
+  },
+  {
+    "generated_at": "2026-09-29 14:24:52",
+    "indexed_templates": 797,
+    "new_candidates": 0,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 83
+  },
+  {
+    "generated_at": "2026-09-29 20:33:10",
+    "indexed_templates": 1469,
+    "new_candidates": 7,
+    "deferred_new_candidates": 0,
+    "skipped_seen_creators": 76
+  }
+]

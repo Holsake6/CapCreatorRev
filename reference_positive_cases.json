@@ -1,0 +1,2088 @@
+{
+  "videos": [
+    {
+      "video_number": 1,
+      "duration_seconds": 21.4,
+      "dance_type": "双人",
+      "style_tags": [
+        "校园感",
+        "手写涂鸦",
+        "歌词装饰",
+        "青春",
+        "强记忆点"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3.9s：音频强起伏点附近出现动作/包装变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "8.9s：第二个明显节奏节点，涂鸦继续跟随动作更新",
+        "rhythm_score": 4,
+        "rhythm_reason": "手写元素不是静态贴图，而是随段落更新，舞蹈主体始终可读。"
+      },
+      "packaging": {
+        "first_3_seconds": "0.0-3.0s：人物近景+大面积手写字快速建立主题",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "手写元素不是静态贴图，而是随段落更新，舞蹈主体始终可读。",
+        "packaging_score": 4,
+        "packaging_reason": "手写元素不是静态贴图，而是随段落更新，舞蹈主体始终可读。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "手写元素不是静态贴图，而是随段落更新，舞蹈主体始终可读。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0.0-3.0s：人物近景+大面积手写字快速建立主题",
+        "3.9s：音频强起伏点附近出现动作/包装变化",
+        "8.9s：第二个明显节奏节点，涂鸦继续跟随动作更新",
+        "12.0-17.0s：双人全身动作与文字/箭头形成互动",
+        "17.9s后：结尾继续用图形收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "手写元素不是静态贴图，而是随段落更新，舞蹈主体始终可读。",
+        "why_reference_worthy": "手写元素不是静态贴图，而是随段落更新，舞蹈主体始终可读。",
+        "one_sentence_style": "校园感、手写涂鸦、歌词装饰、青春、强记忆点"
+      }
+    },
+    {
+      "video_number": 2,
+      "duration_seconds": 16.6,
+      "dance_type": "双人",
+      "style_tags": [
+        "户外",
+        "可爱贴纸",
+        "轻快",
+        "低门槛",
+        "青春"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3-6s：星星/卡通元素围绕人物出现"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "8.3-9.4s：音频强节点附近动作和装饰同时变换",
+        "rhythm_score": 4,
+        "rhythm_reason": "固定机位+全身舞蹈+轻贴纸，替换成本低。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：双人全身直接入舞",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "固定机位+全身舞蹈+轻贴纸，替换成本低。",
+        "packaging_score": 4,
+        "packaging_reason": "固定机位+全身舞蹈+轻贴纸，替换成本低。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "固定机位+全身舞蹈+轻贴纸，替换成本低。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：双人全身直接入舞",
+        "3-6s：星星/卡通元素围绕人物出现",
+        "8.3-9.4s：音频强节点附近动作和装饰同时变换",
+        "10-13s：构图保持稳定，包装不抢主体",
+        "13.3s后：继续以小贴纸补充节奏"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "固定机位+全身舞蹈+轻贴纸，替换成本低。",
+        "why_reference_worthy": "固定机位+全身舞蹈+轻贴纸，替换成本低。",
+        "one_sentence_style": "户外、可爱贴纸、轻快、低门槛、青春"
+      }
+    },
+    {
+      "video_number": 3,
+      "duration_seconds": 19.4,
+      "dance_type": "双人",
+      "style_tags": [
+        "户外",
+        "卡通贴纸",
+        "彩色",
+        "俏皮",
+        "全身舞"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约3s：明显动作节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "7.9-8.0s：强节奏点附近贴纸和姿态同步变化",
+        "rhythm_score": 4,
+        "rhythm_reason": "用卡通符号而不是复杂转场制造层次。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：双人中近景起手",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "用卡通符号而不是复杂转场制造层次。",
+        "packaging_score": 4,
+        "packaging_reason": "用卡通符号而不是复杂转场制造层次。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "用卡通符号而不是复杂转场制造层次。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：双人中近景起手",
+        "约3s：明显动作节点",
+        "7.9-8.0s：强节奏点附近贴纸和姿态同步变化",
+        "11-15s：主体保持中轴稳定",
+        "15s后：继续以贴纸强化可爱感"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "用卡通符号而不是复杂转场制造层次。",
+        "why_reference_worthy": "用卡通符号而不是复杂转场制造层次。",
+        "one_sentence_style": "户外、卡通贴纸、彩色、俏皮、全身舞"
+      }
+    },
+    {
+      "video_number": 4,
+      "duration_seconds": 36.4,
+      "dance_type": "多人",
+      "style_tags": [
+        "偶像感",
+        "户外",
+        "文字包装",
+        "青春",
+        "群舞"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约6s：节奏变化带来队形/文字变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "约18.4s：中段明显强节点",
+        "rhythm_score": 4,
+        "rhythm_reason": "更依赖多人动作整齐度，模板替换性略低。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：多人群像直接建立规模感",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "更依赖多人动作整齐度，模板替换性略低。",
+        "packaging_score": 4,
+        "packaging_reason": "更依赖多人动作整齐度，模板替换性略低。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "更依赖多人动作整齐度，模板替换性略低。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：多人群像直接建立规模感",
+        "约6s：节奏变化带来队形/文字变化",
+        "约18.4s：中段明显强节点",
+        "20s后：群体动作继续推动节奏",
+        "结尾：保持同一机位完成收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "更依赖多人动作整齐度，模板替换性略低。",
+        "why_reference_worthy": "更依赖多人动作整齐度，模板替换性略低。",
+        "one_sentence_style": "偶像感、户外、文字包装、青春、群舞"
+      }
+    },
+    {
+      "video_number": 5,
+      "duration_seconds": 17.0,
+      "dance_type": "Solo/手势舞",
+      "style_tags": [
+        "近景",
+        "人像",
+        "手势",
+        "可爱装饰",
+        "表情驱动"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约2.35s：动作切换点明显"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "6.55s：音频强节点附近手势变化",
+        "rhythm_score": 4,
+        "rhythm_reason": "主体近、动作简单，包装承担了较多节奏功能。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-2.4s：脸部近景+眼镜造型快速抓人",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "主体近、动作简单，包装承担了较多节奏功能。",
+        "packaging_score": 4,
+        "packaging_reason": "主体近、动作简单，包装承担了较多节奏功能。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "主体近、动作简单，包装承担了较多节奏功能。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-2.4s：脸部近景+眼镜造型快速抓人",
+        "约2.35s：动作切换点明显",
+        "6.55s：音频强节点附近手势变化",
+        "9.8-11s：表情与手势连续变化",
+        "14-17s：装饰继续配合动作收尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "主体近、动作简单，包装承担了较多节奏功能。",
+        "why_reference_worthy": "主体近、动作简单，包装承担了较多节奏功能。",
+        "one_sentence_style": "近景、人像、手势、可爱装饰、表情驱动"
+      }
+    },
+    {
+      "video_number": 6,
+      "duration_seconds": 14.0,
+      "dance_type": "Solo",
+      "style_tags": [
+        "室内",
+        "全身",
+        "手写字",
+        "歌词感",
+        "轻剧情"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "4-7s：文字持续更新形成第二节奏层"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "8.15s附近：明显音乐节点配合动作与字变化",
+        "rhythm_score": 4,
+        "rhythm_reason": "舞蹈动作与文字语义绑定，是包装型模板的代表。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：单人全身+手写文字直接建立语义",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "舞蹈动作与文字语义绑定，是包装型模板的代表。",
+        "packaging_score": 5,
+        "packaging_reason": "舞蹈动作与文字语义绑定，是包装型模板的代表。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "舞蹈动作与文字语义绑定，是包装型模板的代表。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：单人全身+手写文字直接建立语义",
+        "4-7s：文字持续更新形成第二节奏层",
+        "8.15s附近：明显音乐节点配合动作与字变化",
+        "10-12s：图形元素密度上升",
+        "12-14s：用文字完成收尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "舞蹈动作与文字语义绑定，是包装型模板的代表。",
+        "why_reference_worthy": "舞蹈动作与文字语义绑定，是包装型模板的代表。",
+        "one_sentence_style": "室内、全身、手写字、歌词感、轻剧情"
+      }
+    },
+    {
+      "video_number": 7,
+      "duration_seconds": 12.5,
+      "dance_type": "多人",
+      "style_tags": [
+        "夜景",
+        "都市",
+        "黑色系",
+        "群舞",
+        "简洁包装"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "偏强；群舞同步与队形感明显",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "1.8s附近：动作进入"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "3.35s：明显节奏节点",
+        "rhythm_score": 4,
+        "rhythm_reason": "更靠人物和舞蹈本身，包装不是主角。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-2s：三人站位清楚，视觉重心稳定",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "更靠人物和舞蹈本身，包装不是主角。",
+        "packaging_score": 3,
+        "packaging_reason": "更靠人物和舞蹈本身，包装不是主角。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "更靠人物和舞蹈本身，包装不是主角。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-2s：三人站位清楚，视觉重心稳定",
+        "1.8s附近：动作进入",
+        "3.35s：明显节奏节点",
+        "6-9s：群体动作连续推进",
+        "10-12.5s：保持简洁收尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "更靠人物和舞蹈本身，包装不是主角。",
+        "why_reference_worthy": "更靠人物和舞蹈本身，包装不是主角。",
+        "one_sentence_style": "夜景、都市、黑色系、群舞、简洁包装"
+      }
+    },
+    {
+      "video_number": 8,
+      "duration_seconds": 13.1,
+      "dance_type": "多人",
+      "style_tags": [
+        "夜景",
+        "都市",
+        "偶像舞",
+        "低装饰",
+        "节奏直给"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "偏强；群舞同步与队形感明显",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3-7s：连续动作无明显复杂转场"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "约11.2s：音频强起伏点",
+        "rhythm_score": 4,
+        "rhythm_reason": "内容驱动型，适合考察舞蹈选择而非装饰设计。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：多人中景，人物辨识清楚",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "内容驱动型，适合考察舞蹈选择而非装饰设计。",
+        "packaging_score": 3,
+        "packaging_reason": "内容驱动型，适合考察舞蹈选择而非装饰设计。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "内容驱动型，适合考察舞蹈选择而非装饰设计。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：多人中景，人物辨识清楚",
+        "3-7s：连续动作无明显复杂转场",
+        "约11.2s：音频强起伏点",
+        "11-13s：动作快速收束",
+        "全片：背景稳定、包装克制"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "内容驱动型，适合考察舞蹈选择而非装饰设计。",
+        "why_reference_worthy": "内容驱动型，适合考察舞蹈选择而非装饰设计。",
+        "one_sentence_style": "夜景、都市、偶像舞、低装饰、节奏直给"
+      }
+    },
+    {
+      "video_number": 9,
+      "duration_seconds": 12.6,
+      "dance_type": "多人",
+      "style_tags": [
+        "夜景",
+        "黑色系",
+        "同步群舞",
+        "极简",
+        "短节奏"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "偏强；群舞同步与队形感明显",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3.3s附近：音乐强节点对应动作变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "6.35s附近：第二个明显节点",
+        "rhythm_score": 4,
+        "rhythm_reason": "主体强，模板依赖群舞整齐度。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：三人同步起舞",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "主体强，模板依赖群舞整齐度。",
+        "packaging_score": 3,
+        "packaging_reason": "主体强，模板依赖群舞整齐度。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "主体强，模板依赖群舞整齐度。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：三人同步起舞",
+        "3.3s附近：音乐强节点对应动作变化",
+        "6.35s附近：第二个明显节点",
+        "8-10s：动作持续连贯",
+        "10-12.6s：保持固定画面结束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "主体强，模板依赖群舞整齐度。",
+        "why_reference_worthy": "主体强，模板依赖群舞整齐度。",
+        "one_sentence_style": "夜景、黑色系、同步群舞、极简、短节奏"
+      }
+    },
+    {
+      "video_number": 10,
+      "duration_seconds": 15.2,
+      "dance_type": "Solo",
+      "style_tags": [
+        "人像",
+        "近景",
+        "手势",
+        "简洁",
+        "表情感"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约2.25s：手势变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "约9.5s：音频强节点",
+        "rhythm_score": 3,
+        "rhythm_reason": "低包装、靠人物状态成立。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：人物近景直接建立主体",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "低包装、靠人物状态成立。",
+        "packaging_score": 2,
+        "packaging_reason": "低包装、靠人物状态成立。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "低包装、靠人物状态成立。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计"
+      ],
+      "evidence": [
+        "0-3s：人物近景直接建立主体",
+        "约2.25s：手势变化",
+        "约9.5s：音频强节点",
+        "中后段：构图和景别基本稳定",
+        "结尾：无明显复杂包装升级"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "低包装、靠人物状态成立。",
+        "why_reference_worthy": "低包装、靠人物状态成立。",
+        "one_sentence_style": "人像、近景、手势、简洁、表情感"
+      }
+    },
+    {
+      "video_number": 11,
+      "duration_seconds": 11.2,
+      "dance_type": "Solo",
+      "style_tags": [
+        "拼贴",
+        "人像",
+        "贴图",
+        "黑色系",
+        "手势舞"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "2.3s：节奏点附近元素更新"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "5.2-5.9s：连续动作节点",
+        "rhythm_score": 4,
+        "rhythm_reason": "开始就通过拼贴建立记忆点，模板逻辑明确。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-2s：人物+额外图片/贴图形成第一视觉钩子",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "开始就通过拼贴建立记忆点，模板逻辑明确。",
+        "packaging_score": 4,
+        "packaging_reason": "开始就通过拼贴建立记忆点，模板逻辑明确。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "开始就通过拼贴建立记忆点，模板逻辑明确。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-2s：人物+额外图片/贴图形成第一视觉钩子",
+        "2.3s：节奏点附近元素更新",
+        "5.2-5.9s：连续动作节点",
+        "7-9s：主体保持中央",
+        "9-11s：完成收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "开始就通过拼贴建立记忆点，模板逻辑明确。",
+        "why_reference_worthy": "开始就通过拼贴建立记忆点，模板逻辑明确。",
+        "one_sentence_style": "拼贴、人像、贴图、黑色系、手势舞"
+      }
+    },
+    {
+      "video_number": 12,
+      "duration_seconds": 24.8,
+      "dance_type": "Solo/手势舞",
+      "style_tags": [
+        "近景",
+        "可爱",
+        "轻包装",
+        "持续动作",
+        "生活感"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3.05s：音频节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "8-15s：连续手势动作保持主体清晰",
+        "rhythm_score": 3,
+        "rhythm_reason": "长镜头为主，对替换素材友好。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：人物近景起手",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "长镜头为主，对替换素材友好。",
+        "packaging_score": 3,
+        "packaging_reason": "长镜头为主，对替换素材友好。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "长镜头为主，对替换素材友好。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计"
+      ],
+      "evidence": [
+        "0-3s：人物近景起手",
+        "3.05s：音频节点",
+        "8-15s：连续手势动作保持主体清晰",
+        "20.7s附近：后段强节点",
+        "22.3s后：动作收尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "长镜头为主，对替换素材友好。",
+        "why_reference_worthy": "长镜头为主，对替换素材友好。",
+        "one_sentence_style": "近景、可爱、轻包装、持续动作、生活感"
+      }
+    },
+    {
+      "video_number": 13,
+      "duration_seconds": 20.8,
+      "dance_type": "Solo",
+      "style_tags": [
+        "手写歌词",
+        "彩色涂鸦",
+        "室内",
+        "密集包装",
+        "少女感"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "4.65s：明显音频节点，字/图形变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "9.65s：第二次明显节奏升级",
+        "rhythm_score": 5,
+        "rhythm_reason": "包装节奏最突出，能把普通单机位舞蹈做成强风格模板。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：文字+人物同步出现，首屏信息密度高",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "包装节奏最突出，能把普通单机位舞蹈做成强风格模板。",
+        "packaging_score": 5,
+        "packaging_reason": "包装节奏最突出，能把普通单机位舞蹈做成强风格模板。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "包装节奏最突出，能把普通单机位舞蹈做成强风格模板。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：文字+人物同步出现，首屏信息密度高",
+        "4.65s：明显音频节点，字/图形变化",
+        "9.65s：第二次明显节奏升级",
+        "11.3s附近：视觉元素继续加码",
+        "15-20s：保持同主题完成结尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "包装节奏最突出，能把普通单机位舞蹈做成强风格模板。",
+        "why_reference_worthy": "包装节奏最突出，能把普通单机位舞蹈做成强风格模板。",
+        "one_sentence_style": "手写歌词、彩色涂鸦、室内、密集包装、少女感"
+      }
+    },
+    {
+      "video_number": 14,
+      "duration_seconds": 25.6,
+      "dance_type": "双人",
+      "style_tags": [
+        "校园",
+        "制服",
+        "教室",
+        "黑色留白",
+        "装饰节奏"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约8s：音频节点，动作/包装产生变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "9s：仍保持双人全身可读",
+        "rhythm_score": 4,
+        "rhythm_reason": "校园语境清晰，替换时需要相近双人构图。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：双人教室场景直接进入",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "校园语境清晰，替换时需要相近双人构图。",
+        "packaging_score": 4,
+        "packaging_reason": "校园语境清晰，替换时需要相近双人构图。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "校园语境清晰，替换时需要相近双人构图。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：双人教室场景直接进入",
+        "约8s：音频节点，动作/包装产生变化",
+        "9s：仍保持双人全身可读",
+        "17.8s：后段明显节点",
+        "20s后：固定构图收尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "校园语境清晰，替换时需要相近双人构图。",
+        "why_reference_worthy": "校园语境清晰，替换时需要相近双人构图。",
+        "one_sentence_style": "校园、制服、教室、黑色留白、装饰节奏"
+      }
+    },
+    {
+      "video_number": 15,
+      "duration_seconds": 16.9,
+      "dance_type": "多人",
+      "style_tags": [
+        "教室",
+        "远景",
+        "群舞",
+        "偶像感",
+        "低包装"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "偏强；群舞同步与队形感明显",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约8.05s：音频强节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "9s：多人仍保持整体可读",
+        "rhythm_score": 4,
+        "rhythm_reason": "舞蹈内容选择强于视觉包装。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：远景群舞直接建立队形",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "舞蹈内容选择强于视觉包装。",
+        "packaging_score": 2,
+        "packaging_reason": "舞蹈内容选择强于视觉包装。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "舞蹈内容选择强于视觉包装。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：远景群舞直接建立队形",
+        "约8.05s：音频强节点",
+        "9s：多人仍保持整体可读",
+        "12-15s：动作推进但包装较少",
+        "结尾：仍以群舞为核心"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "舞蹈内容选择强于视觉包装。",
+        "why_reference_worthy": "舞蹈内容选择强于视觉包装。",
+        "one_sentence_style": "教室、远景、群舞、偶像感、低包装"
+      }
+    },
+    {
+      "video_number": 16,
+      "duration_seconds": 13.4,
+      "dance_type": "双人",
+      "style_tags": [
+        "粉色",
+        "版式设计",
+        "分屏/信息卡",
+        "可爱",
+        "强包装"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "约3s：版面信息切换"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "6-9s：装饰与文字继续更新",
+        "rhythm_score": 4,
+        "rhythm_reason": "把舞蹈放进完整视觉系统，模板识别度高。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：粉色版式和双人主体同时建立",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "把舞蹈放进完整视觉系统，模板识别度高。",
+        "packaging_score": 5,
+        "packaging_reason": "把舞蹈放进完整视觉系统，模板识别度高。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "把舞蹈放进完整视觉系统，模板识别度高。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：粉色版式和双人主体同时建立",
+        "约3s：版面信息切换",
+        "6-9s：装饰与文字继续更新",
+        "9s：仍保持强粉色主题",
+        "10-13s：以统一版式收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "把舞蹈放进完整视觉系统，模板识别度高。",
+        "why_reference_worthy": "把舞蹈放进完整视觉系统，模板识别度高。",
+        "one_sentence_style": "粉色、版式设计、分屏/信息卡、可爱、强包装"
+      }
+    },
+    {
+      "video_number": 17,
+      "duration_seconds": 17.4,
+      "dance_type": "双人/手势舞",
+      "style_tags": [
+        "近景",
+        "室内",
+        "横向构图感",
+        "表情",
+        "轻包装"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3.45s：明显音频节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "6-9s：以手势和表情推进",
+        "rhythm_score": 3,
+        "rhythm_reason": "动作与人物关系是核心，适合低门槛复刻。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：两人近景，主体占满画面",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "动作与人物关系是核心，适合低门槛复刻。",
+        "packaging_score": 2,
+        "packaging_reason": "动作与人物关系是核心，适合低门槛复刻。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "动作与人物关系是核心，适合低门槛复刻。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计"
+      ],
+      "evidence": [
+        "0-3s：两人近景，主体占满画面",
+        "3.45s：明显音频节点",
+        "6-9s：以手势和表情推进",
+        "9s：基本无包装抢占",
+        "12-17s：稳定构图结束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "动作与人物关系是核心，适合低门槛复刻。",
+        "why_reference_worthy": "动作与人物关系是核心，适合低门槛复刻。",
+        "one_sentence_style": "近景、室内、横向构图感、表情、轻包装"
+      }
+    },
+    {
+      "video_number": 18,
+      "duration_seconds": 22.8,
+      "dance_type": "Solo",
+      "style_tags": [
+        "超广角",
+        "户外",
+        "空间感",
+        "文字贴纸",
+        "趣味"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "4.5s：音频强节点附近画面变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "9-10s：大面积文字‘交信中’成为记忆点",
+        "rhythm_score": 4,
+        "rhythm_reason": "最强的是空间+字体的组合，但较依赖原拍摄环境。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：超广角/鱼眼感立即形成视觉钩子",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "最强的是空间+字体的组合，但较依赖原拍摄环境。",
+        "packaging_score": 5,
+        "packaging_reason": "最强的是空间+字体的组合，但较依赖原拍摄环境。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "最强的是空间+字体的组合，但较依赖原拍摄环境。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：超广角/鱼眼感立即形成视觉钩子",
+        "4.5s：音频强节点附近画面变化",
+        "9-10s：大面积文字‘交信中’成为记忆点",
+        "12-18s：人物在大空间中持续舞动",
+        "18s后：继续用图形强化主题"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "最强的是空间+字体的组合，但较依赖原拍摄环境。",
+        "why_reference_worthy": "最强的是空间+字体的组合，但较依赖原拍摄环境。",
+        "one_sentence_style": "超广角、户外、空间感、文字贴纸、趣味"
+      }
+    },
+    {
+      "video_number": 19,
+      "duration_seconds": 14.8,
+      "dance_type": "Solo",
+      "style_tags": [
+        "暗调",
+        "霓虹手写",
+        "近景",
+        "手势",
+        "Y2K感"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "5.35s：节奏节点附近图形更新"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "9s：人物仍保持近景主体",
+        "rhythm_score": 4,
+        "rhythm_reason": "简单素材通过手写霓虹包装获得高辨识度。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：暗背景+手写大字快速定调",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "简单素材通过手写霓虹包装获得高辨识度。",
+        "packaging_score": 5,
+        "packaging_reason": "简单素材通过手写霓虹包装获得高辨识度。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "简单素材通过手写霓虹包装获得高辨识度。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-3s：暗背景+手写大字快速定调",
+        "5.35s：节奏节点附近图形更新",
+        "9s：人物仍保持近景主体",
+        "10.55s：后段强节点",
+        "12-14.8s：持续以涂鸦收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "简单素材通过手写霓虹包装获得高辨识度。",
+        "why_reference_worthy": "简单素材通过手写霓虹包装获得高辨识度。",
+        "one_sentence_style": "暗调、霓虹手写、近景、手势、Y2K感"
+      }
+    },
+    {
+      "video_number": 20,
+      "duration_seconds": 12.2,
+      "dance_type": "Solo+合成",
+      "style_tags": [
+        "前后景合成",
+        "可爱",
+        "玩偶",
+        "贴纸",
+        "空间层级"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3s：音频节点附近合成关系变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "5.2-6.3s：连续节奏点对应装饰变化",
+        "rhythm_score": 4,
+        "rhythm_reason": "创意很强，但替换需要人物位置与遮罩关系配合。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：前景人物/玩偶与后景舞者形成双层画面",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "创意很强，但替换需要人物位置与遮罩关系配合。",
+        "packaging_score": 5,
+        "packaging_reason": "创意很强，但替换需要人物位置与遮罩关系配合。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "创意很强，但替换需要人物位置与遮罩关系配合。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：前景人物/玩偶与后景舞者形成双层画面",
+        "3s：音频节点附近合成关系变化",
+        "5.2-6.3s：连续节奏点对应装饰变化",
+        "9s：前后景层级仍清晰",
+        "10-12s：可爱元素完成收尾"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "创意很强，但替换需要人物位置与遮罩关系配合。",
+        "why_reference_worthy": "创意很强，但替换需要人物位置与遮罩关系配合。",
+        "one_sentence_style": "前后景合成、可爱、玩偶、贴纸、空间层级"
+      }
+    },
+    {
+      "video_number": 21,
+      "duration_seconds": 13.2,
+      "dance_type": "Solo",
+      "style_tags": [
+        "近景",
+        "生活感",
+        "道具",
+        "墨镜",
+        "低包装"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "4.2s：节奏节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "6.75-7.7s：连续音频起伏点",
+        "rhythm_score": 3,
+        "rhythm_reason": "素材要求最低，用户替换后最容易成立。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：人物正面近景直接入动作",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "素材要求最低，用户替换后最容易成立。",
+        "packaging_score": 2,
+        "packaging_reason": "素材要求最低，用户替换后最容易成立。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 5,
+        "replaceability_reason": "素材要求最低，用户替换后最容易成立。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计"
+      ],
+      "evidence": [
+        "0-3s：人物正面近景直接入动作",
+        "4.2s：节奏节点",
+        "6.75-7.7s：连续音频起伏点",
+        "9s：墨镜/手势形成记忆点",
+        "10-13s：固定机位结束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "素材要求最低，用户替换后最容易成立。",
+        "why_reference_worthy": "素材要求最低，用户替换后最容易成立。",
+        "one_sentence_style": "近景、生活感、道具、墨镜、低包装"
+      }
+    },
+    {
+      "video_number": 22,
+      "duration_seconds": 15.2,
+      "dance_type": "Solo",
+      "style_tags": [
+        "近景",
+        "简洁",
+        "手势",
+        "表情",
+        "低包装"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "9s：仍保持同一构图"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "9.75s：明显音频节点",
+        "rhythm_score": 3,
+        "rhythm_reason": "靠人和动作，模板通用性很高。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：人物半身/近景建立主体",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "中",
+        "memory_point": "靠人和动作，模板通用性很高。",
+        "packaging_score": 2,
+        "packaging_reason": "靠人和动作，模板通用性很高。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 5,
+        "replaceability_reason": "靠人和动作，模板通用性很高。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计"
+      ],
+      "evidence": [
+        "0-3s：人物半身/近景建立主体",
+        "9s：仍保持同一构图",
+        "9.75s：明显音频节点",
+        "11.9s：后段节点",
+        "12-15s：简单动作收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "靠人和动作，模板通用性很高。",
+        "why_reference_worthy": "靠人和动作，模板通用性很高。",
+        "one_sentence_style": "近景、简洁、手势、表情、低包装"
+      }
+    },
+    {
+      "video_number": 23,
+      "duration_seconds": 12.5,
+      "dance_type": "Solo+合成",
+      "style_tags": [
+        "抠像",
+        "灰阶背景",
+        "英文手写字",
+        "星星",
+        "偶像海报感"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3.7s：节奏节点附近装饰变化"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "5.9s：第二个明显节点",
+        "rhythm_score": 5,
+        "rhythm_reason": "兼具抠像、版式和节奏，是模板设计能力较强的案例。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：抠像人物+背景版式+大字立即形成海报感",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "兼具抠像、版式和节奏，是模板设计能力较强的案例。",
+        "packaging_score": 5,
+        "packaging_reason": "兼具抠像、版式和节奏，是模板设计能力较强的案例。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "兼具抠像、版式和节奏，是模板设计能力较强的案例。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：抠像人物+背景版式+大字立即形成海报感",
+        "3.7s：节奏节点附近装饰变化",
+        "5.9s：第二个明显节点",
+        "9s：背景与人物仍保持分层",
+        "10-12.5s：统一主题收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "兼具抠像、版式和节奏，是模板设计能力较强的案例。",
+        "why_reference_worthy": "兼具抠像、版式和节奏，是模板设计能力较强的案例。",
+        "one_sentence_style": "抠像、灰阶背景、英文手写字、星星、偶像海报感"
+      }
+    },
+    {
+      "video_number": 24,
+      "duration_seconds": 14.6,
+      "dance_type": "双人/手势舞",
+      "style_tags": [
+        "可爱",
+        "手写字",
+        "双人",
+        "室内",
+        "歌词装饰"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "以上半身/手势表达为主",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "2.45s：音频节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "4.5s：第二次节奏变化",
+        "rhythm_score": 4,
+        "rhythm_reason": "双人手势+逐段文字是高复用的可爱模板结构。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-2.5s：双人近景+手写标题快速吸引",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "双人手势+逐段文字是高复用的可爱模板结构。",
+        "packaging_score": 5,
+        "packaging_reason": "双人手势+逐段文字是高复用的可爱模板结构。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "较大概率成立",
+        "shooting_requirements": "低到中",
+        "difficulty": "低到中",
+        "repeatability": "高",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 4,
+        "replaceability_reason": "双人手势+逐段文字是高复用的可爱模板结构。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计"
+      ],
+      "evidence": [
+        "0-2.5s：双人近景+手写标题快速吸引",
+        "2.45s：音频节点",
+        "4.5s：第二次节奏变化",
+        "9s：大字和动作继续同步",
+        "11-14.6s：保持统一可爱风结束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "双人手势+逐段文字是高复用的可爱模板结构。",
+        "why_reference_worthy": "双人手势+逐段文字是高复用的可爱模板结构。",
+        "one_sentence_style": "可爱、手写字、双人、室内、歌词装饰"
+      }
+    },
+    {
+      "video_number": 25,
+      "duration_seconds": 1.3,
+      "dance_type": "无法判断",
+      "style_tags": [
+        "录屏过短",
+        "信息不足"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "无法判断",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "无法稳定确认完整舞蹈"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "无法判断",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "无法判断剪辑结构",
+        "rhythm_score": 1,
+        "rhythm_reason": "时长不足，不纳入共同审美统计。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-1.3s：仅有极短画面",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "无法判断",
+        "theme_cohesion": "中",
+        "memory_point": "时长不足，不纳入共同审美统计。",
+        "packaging_score": 1,
+        "packaging_reason": "时长不足，不纳入共同审美统计。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "无法判断",
+        "shooting_requirements": "无法判断",
+        "difficulty": "无法判断",
+        "repeatability": "无法判断",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 1,
+        "replaceability_reason": "时长不足，不纳入共同审美统计。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计"
+      ],
+      "evidence": [
+        "0-1.3s：仅有极短画面",
+        "无法稳定确认完整舞蹈",
+        "无法判断剪辑结构",
+        "无法判断高潮",
+        "无法判断模板替换逻辑"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "时长不足，不纳入共同审美统计。",
+        "why_reference_worthy": "时长不足，不纳入共同审美统计。",
+        "one_sentence_style": "录屏过短、信息不足"
+      }
+    },
+    {
+      "video_number": 26,
+      "duration_seconds": 18.3,
+      "dance_type": "多人/双人",
+      "style_tags": [
+        "街头",
+        "时尚",
+        "拼贴感",
+        "都市",
+        "强场景"
+      ],
+      "dance_content": {
+        "action_intensity_and_emotion": "中等至偏强；以短视频可读性和表情/手势为主",
+        "music_action_sync": "可观察到多个动作节点与音频强起伏点重合；歌词内容无法稳定判断",
+        "subject_clarity": "清楚",
+        "action_completeness": "基本完整",
+        "camera_and_composition": "以固定机位和主体居中为主，少数案例依赖超广角、抠像或多人队形",
+        "most_expressive_segment": "3.05s：音频节点"
+      },
+      "editing": {
+        "overall_speed": "中快",
+        "average_shot_duration": "以长镜头或单机位为主，包装元素承担节奏；无法精确换算镜头平均时长",
+        "cut_music_relation": "主要通过动作节点、文字/贴纸出现与音乐强点对应",
+        "speed_effects": "未见明确可确认的复杂变速；个别视觉变化可能来自录屏或平台效果",
+        "emotional_progression": "多数为持续推进，依靠包装密度或动作段落变化形成升级",
+        "climax": "4.8s：连续节奏变化",
+        "rhythm_score": 4,
+        "rhythm_reason": "强依赖街景和人物造型，但时尚感、构图与包装完成度高。"
+      },
+      "packaging": {
+        "first_3_seconds": "0-3s：街头背景和人物造型形成强视觉入口",
+        "typography_subtitles": "手写字/大字/歌词式装饰常见；低包装案例则弱化文字",
+        "decorations": "贴纸、涂鸦、星星、箭头、卡通图形、拼贴等按案例变化",
+        "transitions": "以同镜头内图层变化为主，复杂硬切并非主流",
+        "effects_timing": "多在动作节点或音频强起伏点出现",
+        "color_light_texture": "偏明亮青春、少女感；少数为夜景、暗调或都市时尚",
+        "visual_hierarchy": "主体优先，包装围绕人物而非覆盖人物",
+        "visual_upgrade_at_climax": "多数有包装密度上升或大字/贴纸强化；低包装案例无明显升级",
+        "enhances_dance_atmosphere": "是",
+        "theme_cohesion": "高",
+        "memory_point": "强依赖街景和人物造型，但时尚感、构图与包装完成度高。",
+        "packaging_score": 4,
+        "packaging_reason": "强依赖街景和人物造型，但时尚感、构图与包装完成度高。"
+      },
+      "template_design": {
+        "estimated_clip_count": "1-3段为主；部分拼贴/合成案例需要更多图层",
+        "works_after_replacement": "依赖原场景/多人配合",
+        "shooting_requirements": "中到高",
+        "difficulty": "中",
+        "repeatability": "中",
+        "replacement_risks": "与人物位置、动作方向、多人队形、抠像层级或特定场景绑定的设计替换后可能失效",
+        "replaceability_score": 3,
+        "replaceability_reason": "强依赖街景和人物造型，但时尚感、构图与包装完成度高。"
+      },
+      "creator_signals": [
+        "音乐理解",
+        "舞蹈内容选择",
+        "节奏设计",
+        "视觉包装",
+        "模板化设计",
+        "构图"
+      ],
+      "evidence": [
+        "0-3s：街头背景和人物造型形成强视觉入口",
+        "3.05s：音频节点",
+        "4.8s：连续节奏变化",
+        "9s：人物与街景维持高信息密度",
+        "13.35-15.55s：后段明显强节点并收束"
+      ],
+      "summary": {
+        "top_three_strengths": [
+          "主体清晰",
+          "动作/包装节奏配合",
+          "风格记忆点"
+        ],
+        "most_distinctive_design": "强依赖街景和人物造型，但时尚感、构图与包装完成度高。",
+        "why_reference_worthy": "强依赖街景和人物造型，但时尚感、构图与包装完成度高。",
+        "one_sentence_style": "街头、时尚、拼贴感、都市、强场景"
+      }
+    }
+  ],
+  "common_aesthetic": {
+    "repeated_features": [
+      "固定机位或稳定构图，人物始终是第一视觉层级",
+      "舞蹈动作本身不一定复杂，但包装会跟随动作节点持续更新",
+      "高频使用手写字、涂鸦、贴纸、星星、箭头、卡通图形",
+      "前3秒快速建立人物+视觉主题，而不是慢铺垫",
+      "多数案例依靠同一镜头内的包装变化制造剪辑节奏"
+    ],
+    "core_preferences": [
+      "主体清楚、动作可读",
+      "包装有明确主题且不压过人物",
+      "视觉元素与动作或音乐强点发生关系",
+      "一眼能记住的字体/贴纸/拼贴系统",
+      "低至中等替换门槛"
+    ],
+    "optional_styles": [
+      "夜景黑色系极简群舞",
+      "超广角/鱼眼空间风格",
+      "抠像海报式合成",
+      "粉色信息卡/版式化包装",
+      "街头时尚与复杂场景"
+    ],
+    "style_groups": [
+      "A 手写涂鸦/歌词包装型",
+      "B 可爱贴纸/少女感型",
+      "C 极简人物/舞蹈驱动型",
+      "D 拼贴/抠像/版式型",
+      "E 群舞/偶像舞蹈型",
+      "F 场景与镜头语言驱动型"
+    ],
+    "uncertain_preferences": [
+      "是否明确偏好某种音乐类型",
+      "是否偏好快速硬切还是完整长镜头",
+      "对复杂变速、定格、循环的容忍度",
+      "对暗色系与夜景风格的真实偏好强度"
+    ],
+    "negative_examples_to_test": [
+      "包装完全遮挡人物",
+      "贴纸与节拍无关、只做装饰",
+      "频繁转场导致舞蹈动作被切碎",
+      "替换后对人物位置要求过高",
+      "主题元素过多但没有统一视觉系统"
+    ]
+  }
+}

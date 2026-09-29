@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "revision": 0,
+  "updated_at": "尚未学习",
+  "category_name": "新类别（待命名）",
+  "learning_policy": "只从用户提供和审核通过的正面案例自动学习；不建立反向提示词。",
+  "positive_terms": {},
+  "source_fields": {},
+  "case_summaries": []
+}

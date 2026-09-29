@@ -1,0 +1,2079 @@
+{
+  "rejected_profiles": {
+    "HGt-v6h0De2M7OB93uAwF85bBH4Dt4Nvp2Dz9wZP7uGOa8g=": {
+      "reason": "目前他的主页有很多AI内容，近期模板没有舞蹈相关内容",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 1.0,
+        "mean_frame_distance": 0.522,
+        "label_diversity": 16.0,
+        "labels": {
+          "adult": 0.927,
+          "people": 0.927,
+          "necktie": 0.304,
+          "clothing": 0.234,
+          "illustrations": 0.17,
+          "structure": 0.165,
+          "art": 0.154,
+          "gown": 0.152,
+          "fence": 0.15,
+          "material": 0.148,
+          "textile": 0.148,
+          "sign": 0.145,
+          "wood_processed": 0.137,
+          "celebration": 0.125,
+          "costume": 0.125,
+          "bottle": 0.124,
+          "container": 0.12,
+          "interior_room": 0.116,
+          "interior_shop": 0.116,
+          "banner": 0.112,
+          "balloon": 0.105,
+          "decoration": 0.105,
+          "suit": 0.105,
+          "teen": 0.104,
+          "child": 0.087,
+          "light": 0.086,
+          "jacket": 0.08
+        },
+        "template_ids": [
+          "7618894909306719541",
+          "7430669393484401976"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:37"
+    },
+    "ccN6KuBDACN2NlzzdV4b6FjM7U5HgL2Pyab26DfLORmLfeA=": {
+      "reason": "主页舞蹈类相关模板少，模板动画过于简单",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.058,
+        "label_diversity": 6.0,
+        "labels": {
+          "people": 0.402,
+          "adult": 0.401,
+          "material": 0.124,
+          "textile": 0.124,
+          "child": 0.115,
+          "baby": 0.106
+        },
+        "template_ids": [
+          "7280114397823929601"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:39"
+    },
+    "0QQmlZ0WoujCARZmn_8_-YaJT5TomY80iYDnYO_qa6vIMcs=": {
+      "reason": "首页明确说明已经不会再更新（最新投稿已经是2025年），没有很多舞蹈内容。",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.667,
+        "face_frame_ratio": 0.333,
+        "mean_frame_distance": 0.871,
+        "label_diversity": 20.0,
+        "labels": {
+          "adult": 0.631,
+          "people": 0.631,
+          "suit": 0.377,
+          "sign": 0.262,
+          "structure": 0.262,
+          "jeans": 0.235,
+          "art": 0.216,
+          "illustrations": 0.216,
+          "handwriting": 0.194,
+          "clothing": 0.179,
+          "document": 0.166,
+          "printed_page": 0.16,
+          "banner": 0.129,
+          "celebration": 0.104,
+          "costume": 0.104,
+          "container": 0.102,
+          "luggage": 0.102,
+          "purse": 0.102,
+          "teen": 0.102,
+          "child": 0.099
+        },
+        "template_ids": [
+          "7405949477330226448"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:41"
+    },
+    "7W1iU-SLm6zg0YaitdoN_1AwgZtPO-viXVJTn-XzzUTp0wg=": {
+      "reason": "数据不好，标题太大众很难搜索",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.875,
+        "mean_frame_distance": 0.459,
+        "label_diversity": 16.0,
+        "labels": {
+          "adult": 0.851,
+          "people": 0.851,
+          "raw_glass": 0.471,
+          "material": 0.435,
+          "shoes": 0.286,
+          "sneaker": 0.286,
+          "footwear": 0.246,
+          "high_heel": 0.244,
+          "clothing": 0.219,
+          "structure": 0.219,
+          "door": 0.19,
+          "child": 0.183,
+          "conveyance": 0.176,
+          "portal": 0.176,
+          "wood_processed": 0.176,
+          "textile": 0.145
+        },
+        "template_ids": [
+          "7650611251730550017"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:43"
+    },
+    "G5J9hX27dM1B29rRBgB2a9WePPsiBibA2CpyE3z3Plb0JfU=": {
+      "reason": "主页近期没有舞蹈相关模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.743,
+        "label_diversity": 11.0,
+        "labels": {
+          "document": 0.543,
+          "screenshot": 0.536,
+          "art": 0.201,
+          "illustrations": 0.201,
+          "night_sky": 0.163,
+          "outdoor": 0.163,
+          "sky": 0.163,
+          "handwriting": 0.137,
+          "cup": 0.118,
+          "tableware": 0.118,
+          "utensil": 0.118
+        },
+        "template_ids": [
+          "7635950441041300757"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:44"
+    },
+    "xyDaRRuKYKD610ro8DYz26qNZUCT9U1UCCz8KYtHG2lSGRE=": {
+      "reason": "非舞蹈类模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.393,
+        "label_diversity": 12.0,
+        "labels": {
+          "outdoor": 0.946,
+          "blue_sky": 0.862,
+          "sky": 0.862,
+          "grass": 0.861,
+          "land": 0.861,
+          "adult": 0.838,
+          "people": 0.838,
+          "structure": 0.375,
+          "child": 0.3,
+          "clothing": 0.23,
+          "art": 0.223,
+          "container": 0.187
+        },
+        "template_ids": [
+          "7466394134253735221"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:45"
+    },
+    "IDaNQE1kgtLEX7RBXgtA3aOO_ihz1LJJ1OUvKqmn5g2g7so=": {
+      "reason": "与舞蹈无关",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.125,
+        "face_frame_ratio": 0.25,
+        "mean_frame_distance": 0.463,
+        "label_diversity": 14.0,
+        "labels": {
+          "document": 0.872,
+          "screenshot": 0.872,
+          "people": 0.464,
+          "adult": 0.432,
+          "child": 0.34,
+          "clothing": 0.207,
+          "teen": 0.148,
+          "baby": 0.145,
+          "material": 0.135,
+          "cosmetic_tool": 0.125,
+          "tool": 0.125,
+          "toy": 0.105,
+          "pacifier": 0.094,
+          "doll": 0.081
+        },
+        "template_ids": [
+          "7237746833265609986"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:46"
+    },
+    "qL98GsrXAdNTz68xZTxz-861bnye8Vj__Zd9UPPuk6Wl93Q=": {
+      "reason": "不是舞蹈相关",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.111,
+        "face_frame_ratio": 0.222,
+        "mean_frame_distance": 0.809,
+        "label_diversity": 10.0,
+        "labels": {
+          "art": 0.508,
+          "illustrations": 0.508,
+          "document": 0.246,
+          "screenshot": 0.246,
+          "people": 0.245,
+          "adult": 0.239,
+          "child": 0.14,
+          "sign": 0.104,
+          "structure": 0.104,
+          "painting": 0.099
+        },
+        "template_ids": [
+          "7408503122743643408"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:48"
+    },
+    "5NueBmj1QWOFQ4SRFpgu1kBr8Covef4n34JtF-_46pAqxTU=": {
+      "reason": "非舞蹈类模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.102,
+        "label_diversity": 12.0,
+        "labels": {
+          "adult": 0.813,
+          "people": 0.813,
+          "land": 0.371,
+          "outdoor": 0.371,
+          "beach": 0.37,
+          "screenshot": 0.342,
+          "document": 0.289,
+          "optical_equipment": 0.232,
+          "sunglasses": 0.227,
+          "water_body": 0.223,
+          "water": 0.22,
+          "liquid": 0.208
+        },
+        "template_ids": [
+          "7686055798341995784",
+          "7685568004851027207"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:51"
+    },
+    "d--0gMmNm3wQRnccUM17GWJ-5DVcDjzJ71su50NdalM3JQk=": {
+      "reason": "非舞蹈类模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.333,
+        "face_frame_ratio": 0.25,
+        "mean_frame_distance": 0.7,
+        "label_diversity": 19.0,
+        "labels": {
+          "adult": 0.702,
+          "sky": 0.645,
+          "screenshot": 0.615,
+          "people": 0.597,
+          "blue_sky": 0.59,
+          "outdoor": 0.59,
+          "document": 0.581,
+          "sign": 0.359,
+          "structure": 0.321,
+          "clothing": 0.246,
+          "foliage": 0.246,
+          "plant": 0.246,
+          "illustrations": 0.217,
+          "art": 0.18,
+          "figurine": 0.16,
+          "toy": 0.16,
+          "grass": 0.15,
+          "land": 0.15,
+          "liquid": 0.137
+        },
+        "template_ids": [
+          "7437341828728343828"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:53"
+    },
+    "SsOYr-h0u5NMTv9dn4Bf3Jn_NCrOS1r9ufIwUovu76iIL0M=": {
+      "reason": "非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.25,
+        "face_frame_ratio": 0.833,
+        "mean_frame_distance": 0.83,
+        "label_diversity": 18.0,
+        "labels": {
+          "people": 0.474,
+          "adult": 0.465,
+          "child": 0.203,
+          "illustrations": 0.148,
+          "art": 0.143,
+          "document": 0.128,
+          "screenshot": 0.128,
+          "sign": 0.118,
+          "structure": 0.118,
+          "teen": 0.116,
+          "decoration": 0.108,
+          "polka_dots": 0.108,
+          "optical_equipment": 0.105,
+          "sunglasses": 0.105,
+          "cord": 0.1,
+          "clothing": 0.093,
+          "celebration": 0.086,
+          "mask": 0.086
+        },
+        "template_ids": [
+          "7282275218947656962"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:56"
+    },
+    "6F-B2MuLXoe5A-YFg80oDYY8RE90gQkUYrDAy2acDQZF6io=": {
+      "reason": "只换脸无法配合舞蹈",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.333,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.478,
+        "label_diversity": 20.0,
+        "labels": {
+          "people": 0.628,
+          "adult": 0.627,
+          "art": 0.386,
+          "balloon": 0.385,
+          "decoration": 0.385,
+          "wood_processed": 0.262,
+          "night_sky": 0.24,
+          "outdoor": 0.24,
+          "sky": 0.24,
+          "lab_coat": 0.234,
+          "structure": 0.217,
+          "child": 0.17,
+          "clothing": 0.157,
+          "material": 0.157,
+          "raw_glass": 0.156,
+          "suit": 0.118,
+          "footwear": 0.115,
+          "statue": 0.109,
+          "recreation": 0.105,
+          "sport": 0.105
+        },
+        "template_ids": [
+          "7331542005819968770"
+        ]
+      },
+      "updated_at": "2026-09-28 15:57:58"
+    },
+    "FzEtifShZwAjFhbCzcZ8eVPh0fad4nzexvsS651iUvaCLe8=": {
+      "reason": "数据非常差",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 0.792,
+        "face_frame_ratio": 0.833,
+        "mean_frame_distance": 0.663,
+        "label_diversity": 16.0,
+        "labels": {
+          "guitar": 0.871,
+          "music": 0.871,
+          "musical_instrument": 0.871,
+          "string_instrument": 0.871,
+          "adult": 0.808,
+          "people": 0.808,
+          "jeans": 0.639,
+          "clothing": 0.595,
+          "blue_sky": 0.57,
+          "outdoor": 0.57,
+          "sky": 0.57,
+          "wood_processed": 0.54,
+          "conveyance": 0.416,
+          "portal": 0.416,
+          "window": 0.416,
+          "optical_equipment": 0.326,
+          "sunglasses": 0.326,
+          "purse": 0.302,
+          "structure": 0.278,
+          "luggage": 0.269,
+          "liquid": 0.256,
+          "pool": 0.256,
+          "water": 0.256,
+          "decoration": 0.249,
+          "container": 0.23,
+          "jacket": 0.121
+        },
+        "template_ids": [
+          "7689260549120511252",
+          "7689042370138066196"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:03"
+    },
+    "eg_HD9TtYlAtYTuxRl8l3OmYkbxNMj7BzfxiRPjRjbrj32w=": {
+      "reason": "AI内容",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.8,
+        "mean_frame_distance": 0.453,
+        "label_diversity": 14.0,
+        "labels": {
+          "adult": 0.796,
+          "people": 0.796,
+          "clothing": 0.499,
+          "footwear": 0.487,
+          "shoes": 0.487,
+          "sneaker": 0.487,
+          "jacket": 0.338,
+          "headgear": 0.299,
+          "hat": 0.29,
+          "recreation": 0.194,
+          "celebration": 0.123,
+          "costume": 0.106,
+          "document": 0.083,
+          "screenshot": 0.083
+        },
+        "template_ids": [
+          "7607204010285812997"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:05"
+    },
+    "OpRBYG0WeMGSnj3nt6wohwLQTT4BNGMvFVl-js0_DBV6xQw=": {
+      "reason": "非舞蹈相关",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.242,
+        "label_diversity": 7.0,
+        "labels": {
+          "art": 0.448,
+          "illustrations": 0.448,
+          "people": 0.193,
+          "adult": 0.192,
+          "doll": 0.128,
+          "toy": 0.128,
+          "child": 0.122
+        },
+        "template_ids": [
+          "7573176487310806277"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:06"
+    },
+    "cVq-TOyTSxHj5UejEZsnnpIKN38t-fxY_4jVeUUvzRLWaJA=": {
+      "reason": "非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.629,
+        "label_diversity": 8.0,
+        "labels": {
+          "document": 0.554,
+          "screenshot": 0.554,
+          "art": 0.251,
+          "illustrations": 0.251,
+          "sign": 0.089,
+          "structure": 0.089,
+          "dice": 0.085,
+          "games": 0.085
+        },
+        "template_ids": [
+          "7413723252578716929"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:08"
+    },
+    "lpuDU6a2TbSGgNBE3rvDcLgrAal7BXjf0Xmcc2Y44xacrGI=": {
+      "reason": "非舞蹈相关",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.182,
+        "mean_frame_distance": 0.75,
+        "label_diversity": 9.0,
+        "labels": {
+          "art": 0.477,
+          "illustrations": 0.477,
+          "child": 0.287,
+          "people": 0.191,
+          "adult": 0.147,
+          "document": 0.118,
+          "screenshot": 0.11,
+          "teen": 0.11,
+          "painting": 0.109
+        },
+        "template_ids": [
+          "7233686429849718018"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:09"
+    },
+    "nGvdCd5ECEh3mO6xWfb4nWujjwG1NyZhxKk8R9eyAT9h6NM=": {
+      "reason": "换脸",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 0.625,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.373,
+        "label_diversity": 9.0,
+        "labels": {
+          "adult": 0.686,
+          "people": 0.686,
+          "document": 0.596,
+          "screenshot": 0.596,
+          "art": 0.421,
+          "illustrations": 0.421,
+          "computer": 0.242,
+          "computer_monitor": 0.242,
+          "consumer_electronics": 0.242,
+          "machine": 0.242,
+          "sign": 0.233,
+          "structure": 0.233
+        },
+        "template_ids": [
+          "7530108025592384829",
+          "7526075263898193205"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:12"
+    },
+    "3EzaVM9iAksVtO11V_Mrn9QscCz2DxwDtF69FmhgDDHse18=": {
+      "reason": "换脸",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.411,
+        "label_diversity": 7.0,
+        "labels": {
+          "adult": 0.136,
+          "people": 0.136,
+          "art": 0.109,
+          "balloon": 0.109,
+          "decoration": 0.109,
+          "cosmetic_tool": 0.085,
+          "tool": 0.085
+        },
+        "template_ids": [
+          "7451567454188342581"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:14"
+    },
+    "KOmuoLNR5Upl_baZg0FCm-OSo7K-ZcNoxnT1jgusH5ugpCM=": {
+      "reason": "换脸",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.857,
+        "mean_frame_distance": 0.379,
+        "label_diversity": 13.0,
+        "labels": {
+          "people": 0.876,
+          "adult": 0.865,
+          "clothing": 0.752,
+          "jeans": 0.71,
+          "jacket": 0.556,
+          "outdoor": 0.553,
+          "blue_sky": 0.552,
+          "sky": 0.552,
+          "crowd": 0.49,
+          "structure": 0.474,
+          "conveyance": 0.473,
+          "hoodie": 0.23,
+          "child": 0.218
+        },
+        "template_ids": [
+          "7528958367893605693"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:16"
+    },
+    "rUd3tJovRtI2UumrfPUJaO5y7ywxf4H2Du8vZqGJdIB7U8k=": {
+      "reason": "换脸",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.396,
+        "label_diversity": 19.0,
+        "labels": {
+          "structure": 0.641,
+          "wood_processed": 0.64,
+          "people": 0.47,
+          "adult": 0.396,
+          "baseball_hat": 0.379,
+          "hat": 0.354,
+          "child": 0.353,
+          "headgear": 0.322,
+          "clothing": 0.276,
+          "celebration": 0.227,
+          "costume": 0.227,
+          "sign": 0.198,
+          "recreation": 0.175,
+          "sport": 0.175,
+          "footwear": 0.166,
+          "shoes": 0.166,
+          "sneaker": 0.166,
+          "material": 0.152,
+          "art": 0.106
+        },
+        "template_ids": [
+          "7357611936231542033"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:22"
+    },
+    "QqASMOfweDYZ9mxVPhVXHXe7rm0le447mbcbtdF6szFBx00=": {
+      "reason": "换脸",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.276,
+        "label_diversity": 16.0,
+        "labels": {
+          "structure": 0.275,
+          "cabinet": 0.22,
+          "furniture": 0.22,
+          "window": 0.22,
+          "conveyance": 0.215,
+          "portal": 0.215,
+          "adult": 0.181,
+          "people": 0.162,
+          "statue": 0.157,
+          "art": 0.152,
+          "fence": 0.151,
+          "material": 0.141,
+          "raw_glass": 0.141,
+          "door": 0.113,
+          "plant": 0.111,
+          "celebration": 0.11
+        },
+        "template_ids": [
+          "7251522503150013697"
+        ]
+      },
+      "updated_at": "2026-09-28 15:58:24"
+    },
+    "0xRlFv6VWQz_TcCzddPO8SdsGQru9RBL3PWIruYOlG9tqe0=": {
+      "reason": "写真",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.637,
+        "label_diversity": 15.0,
+        "labels": {
+          "art": 0.641,
+          "illustrations": 0.641,
+          "outdoor": 0.299,
+          "night_sky": 0.298,
+          "sky": 0.298,
+          "sign": 0.214,
+          "structure": 0.214,
+          "graffiti": 0.179,
+          "painting": 0.171,
+          "adult": 0.152,
+          "people": 0.152,
+          "celestial_body": 0.085,
+          "moon": 0.085,
+          "light": 0.081,
+          "spotlight": 0.081
+        },
+        "template_ids": [
+          "7638212670671342868"
+        ]
+      },
+      "updated_at": "2026-09-28 16:02:50"
+    },
+    "b6sg2i0Yc_vflrynOjFBnV1XfmV37Blyrf7cwPUaaqKdK_g=": {
+      "reason": "写真",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.583,
+        "face_frame_ratio": 0.75,
+        "mean_frame_distance": 0.82,
+        "label_diversity": 20.0,
+        "labels": {
+          "adult": 0.716,
+          "people": 0.716,
+          "boot": 0.69,
+          "arch": 0.563,
+          "outdoor": 0.497,
+          "night_sky": 0.496,
+          "sky": 0.496,
+          "footwear": 0.431,
+          "shoes": 0.431,
+          "tattoo": 0.309,
+          "clothing": 0.287,
+          "gown": 0.274,
+          "bouquet": 0.273,
+          "flower_arrangement": 0.273,
+          "structure": 0.244,
+          "decoration": 0.24,
+          "kimono": 0.24,
+          "jewelry": 0.233,
+          "art": 0.217,
+          "textile": 0.19
+        },
+        "template_ids": [
+          "7667430027780312321"
+        ]
+      },
+      "updated_at": "2026-09-28 16:03:02"
+    },
+    "MFPjMgWnLRApPzIop9ABFUBZwmke61MMdeQaWWtOZnW7wWg=": {
+      "reason": "写真",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.57,
+        "label_diversity": 4.0,
+        "labels": {
+          "art": 0.644,
+          "illustrations": 0.644,
+          "adult": 0.157,
+          "people": 0.157
+        },
+        "template_ids": [
+          "7323586726725815560"
+        ]
+      },
+      "updated_at": "2026-09-28 16:03:32"
+    },
+    "VMn-la9sBa23hz2QECCYjOJCG9-OPNFo92Epnq84tC0Pp7I=": {
+      "reason": "写真",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.083,
+        "mean_frame_distance": 0.501,
+        "label_diversity": 12.0,
+        "labels": {
+          "art": 0.332,
+          "illustrations": 0.321,
+          "screenshot": 0.269,
+          "document": 0.238,
+          "graffiti": 0.208,
+          "painting": 0.201,
+          "sign": 0.107,
+          "structure": 0.107,
+          "celebration": 0.104,
+          "mask": 0.104,
+          "adult": 0.099,
+          "people": 0.095
+        },
+        "template_ids": [
+          "7601061538564279570"
+        ]
+      },
+      "updated_at": "2026-09-28 16:03:35"
+    },
+    "icANYRKLhnbc2Sy0fTqiTOEfFxUA55-e5pUkC8ASTUNh3VQ=": {
+      "reason": "非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.5,
+        "mean_frame_distance": 0.382,
+        "label_diversity": 11.0,
+        "labels": {
+          "art": 0.376,
+          "illustrations": 0.376,
+          "child": 0.362,
+          "document": 0.347,
+          "screenshot": 0.347,
+          "people": 0.329,
+          "clothing": 0.292,
+          "jeans": 0.291,
+          "sign": 0.273,
+          "structure": 0.273,
+          "adult": 0.235
+        },
+        "template_ids": [
+          "7655296838827838740"
+        ]
+      },
+      "updated_at": "2026-09-28 16:03:40"
+    },
+    "0Qge6nixRzA_lAJrjYVzX0QbgaGwI4Smj6En6OyPPtixyLM=": {
+      "reason": "数据太差",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.909,
+        "mean_frame_distance": 0.267,
+        "label_diversity": 13.0,
+        "labels": {
+          "art": 0.513,
+          "illustrations": 0.512,
+          "adult": 0.247,
+          "people": 0.247,
+          "clothing": 0.202,
+          "sign": 0.159,
+          "painting": 0.151,
+          "structure": 0.138,
+          "doll": 0.112,
+          "toy": 0.112,
+          "decorative_plant": 0.107,
+          "plant": 0.107,
+          "child": 0.105
+        },
+        "template_ids": [
+          "7610883284494503184"
+        ]
+      },
+      "updated_at": "2026-09-28 16:05:51"
+    },
+    "fHrlNL17hjOee5k6ziOyb_zdiCSwixpB095ST-CAyGhxDH8=": {
+      "reason": "非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.368,
+        "label_diversity": 15.0,
+        "labels": {
+          "structure": 0.437,
+          "fence": 0.4,
+          "people": 0.358,
+          "child": 0.344,
+          "adult": 0.208,
+          "conveyance": 0.142,
+          "ball": 0.138,
+          "stairs": 0.136,
+          "recreation": 0.123,
+          "sport": 0.123,
+          "sports_equipment": 0.123,
+          "portal": 0.119,
+          "window": 0.115,
+          "sign": 0.094,
+          "toy": 0.09
+        },
+        "template_ids": [
+          "7397605392643018001"
+        ]
+      },
+      "updated_at": "2026-09-28 16:06:08"
+    },
+    "HYhUAxsKLZPqYuUDiVQ1WcUQAWoGRRDQy7HYvYh3e-Fd2Uk=": {
+      "reason": "数据太差",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 0.542,
+        "face_frame_ratio": 0.875,
+        "mean_frame_distance": 0.815,
+        "label_diversity": 15.5,
+        "labels": {
+          "blue_sky": 0.784,
+          "sky": 0.784,
+          "adult": 0.782,
+          "people": 0.782,
+          "wood_natural": 0.73,
+          "jeans": 0.608,
+          "container": 0.549,
+          "luggage": 0.549,
+          "conveyance": 0.501,
+          "portal": 0.501,
+          "outdoor": 0.475,
+          "automobile": 0.451,
+          "machine": 0.451,
+          "vehicle": 0.451,
+          "car": 0.45,
+          "structure": 0.419,
+          "wood_processed": 0.371,
+          "land": 0.368,
+          "art": 0.362,
+          "decoration": 0.362,
+          "jewelry": 0.362,
+          "plant": 0.339,
+          "decorative_plant": 0.332,
+          "clothing": 0.187,
+          "headphones": 0.139,
+          "document": 0.135,
+          "screenshot": 0.135,
+          "swimsuit": 0.097,
+          "cord": 0.09
+        },
+        "template_ids": [
+          "7688951849826667797",
+          "7689318826671951110"
+        ]
+      },
+      "updated_at": "2026-09-28 16:06:20"
+    },
+    "lbBLcGDLA68B9DeMxXOiLGdXeTVsMdBKp7Zk9c7S7cewv74=": {
+      "reason": "数据太差（使用量1K以下）",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.664,
+        "label_diversity": 19.0,
+        "labels": {
+          "disco_ball": 0.453,
+          "light": 0.453,
+          "adult": 0.307,
+          "people": 0.307,
+          "document": 0.234,
+          "screenshot": 0.234,
+          "fire": 0.183,
+          "fireworks": 0.183,
+          "pyrotechnics": 0.183,
+          "art": 0.171,
+          "decoration": 0.171,
+          "frame": 0.171,
+          "consumer_electronics": 0.142,
+          "machine": 0.142,
+          "television": 0.142,
+          "night_sky": 0.1,
+          "outdoor": 0.1,
+          "sky": 0.1,
+          "material": 0.083
+        },
+        "template_ids": [
+          "7323184555249192212"
+        ]
+      },
+      "updated_at": "2026-09-28 16:06:55"
+    },
+    "N7_Oc98fHO5Hllisp82F4qvfEn1CHej_O4DfNqSxMNDVuYU=": {
+      "reason": "换脸，非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.7,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.336,
+        "label_diversity": 13.0,
+        "labels": {
+          "people": 0.595,
+          "adult": 0.594,
+          "art": 0.448,
+          "illustrations": 0.448,
+          "furniture": 0.428,
+          "sofa": 0.428,
+          "wood_processed": 0.21,
+          "structure": 0.207,
+          "jeans": 0.196,
+          "child": 0.188,
+          "clothing": 0.163,
+          "sign": 0.12,
+          "material": 0.102
+        },
+        "template_ids": [
+          "7410366666137226514"
+        ]
+      },
+      "updated_at": "2026-09-28 16:07:28"
+    },
+    "5k08ckNGGfhpw5umdgbyP2F_ICndHz_h09xND3mcqQXiTSo=": {
+      "reason": "换脸，非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 1.0,
+        "mean_frame_distance": 0.466,
+        "label_diversity": 14.0,
+        "labels": {
+          "people": 0.919,
+          "adult": 0.908,
+          "blue_sky": 0.797,
+          "outdoor": 0.787,
+          "skyscraper": 0.776,
+          "sky": 0.771,
+          "clothing": 0.764,
+          "crowd": 0.718,
+          "jacket": 0.716,
+          "cityscape": 0.705,
+          "building": 0.67,
+          "jeans": 0.662,
+          "structure": 0.655,
+          "container": 0.637
+        },
+        "template_ids": [
+          "7516476207492271421"
+        ]
+      },
+      "updated_at": "2026-09-28 16:07:48"
+    },
+    "Ce3e0KyJtSNKkw47boGEpHfFPiuDJzDRqJ4zBpCsTWV09Co=": {
+      "reason": "换脸，非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.35,
+        "label_diversity": 4.0,
+        "labels": {
+          "art": 0.595,
+          "illustrations": 0.59,
+          "graffiti": 0.266,
+          "painting": 0.106
+        },
+        "template_ids": [
+          "7418516799202823440"
+        ]
+      },
+      "updated_at": "2026-09-28 16:08:12"
+    },
+    "bD5B38eCtWtBByXKwqDguTXC54HjwDtfK-E_bVWkQPA7Q9U=": {
+      "reason": "换脸，非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.249,
+        "label_diversity": 9.0,
+        "labels": {
+          "machine": 0.195,
+          "vehicle": 0.195,
+          "automobile": 0.194,
+          "bus": 0.194,
+          "sign": 0.162,
+          "structure": 0.162,
+          "streetcar": 0.095,
+          "train": 0.081,
+          "train_real": 0.081
+        },
+        "template_ids": [
+          "7475610025927445813"
+        ]
+      },
+      "updated_at": "2026-09-28 16:08:29"
+    },
+    "92G845e1jzrX03UMezdoNzLNuNy5WEYDdxzMSQrj9FlwnNw=": {
+      "reason": "换脸，非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.703,
+        "label_diversity": 6.0,
+        "labels": {
+          "art": 0.503,
+          "illustrations": 0.503,
+          "sign": 0.21,
+          "structure": 0.21,
+          "adult": 0.101,
+          "people": 0.101
+        },
+        "template_ids": [
+          "7381385061087677713"
+        ]
+      },
+      "updated_at": "2026-09-28 16:08:50"
+    },
+    "59LDt355S92TIm33uNEXl5kH5yflMxzckurtFbA42OOyDbs=": {
+      "reason": "非舞蹈模板",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 0.75,
+        "face_frame_ratio": 0.5,
+        "mean_frame_distance": 0.39,
+        "label_diversity": 9.5,
+        "labels": {
+          "art": 0.506,
+          "illustrations": 0.501,
+          "sign": 0.48,
+          "structure": 0.48,
+          "adult": 0.384,
+          "people": 0.384,
+          "graffiti": 0.193,
+          "clothing": 0.129,
+          "headgear": 0.129,
+          "painting": 0.093,
+          "document": 0.085,
+          "screenshot": 0.085
+        },
+        "template_ids": [
+          "7684970407853591815",
+          "7684493069089049864"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:11"
+    },
+    "VCW-pnxcqa3JK_joyiIpBo18LRnnuekxvxo2Kacy5Cfi14w=": {
+      "reason": "非舞蹈模板，使用量小于1000",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 2,
+        "human_frame_ratio": 0.75,
+        "face_frame_ratio": 0.625,
+        "mean_frame_distance": 0.656,
+        "label_diversity": 20.0,
+        "labels": {
+          "adult": 0.821,
+          "people": 0.821,
+          "skyscraper": 0.773,
+          "cloudy": 0.743,
+          "building": 0.736,
+          "cityscape": 0.706,
+          "outdoor": 0.685,
+          "clothing": 0.673,
+          "structure": 0.652,
+          "sky": 0.644,
+          "luggage": 0.605,
+          "purse": 0.605,
+          "jacket": 0.598,
+          "boot": 0.566,
+          "blue_sky": 0.56,
+          "footwear": 0.557,
+          "shoes": 0.557,
+          "fence": 0.533,
+          "container": 0.496,
+          "night_sky": 0.487,
+          "jeans": 0.448,
+          "illustrations": 0.298,
+          "art": 0.255,
+          "document": 0.219,
+          "screenshot": 0.219,
+          "window": 0.144,
+          "conveyance": 0.137,
+          "portal": 0.137
+        },
+        "template_ids": [
+          "7688859089006300436",
+          "7688992414333160756"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:16"
+    },
+    "ZypqfmXjjJ0TxYXpByewH0DjQCqaDfRopVZ_4StHZrcovyk=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.545,
+        "face_frame_ratio": 0.636,
+        "mean_frame_distance": 0.774,
+        "label_diversity": 20.0,
+        "labels": {
+          "illustrations": 0.407,
+          "art": 0.372,
+          "adult": 0.331,
+          "people": 0.331,
+          "sign": 0.239,
+          "structure": 0.239,
+          "jeans": 0.196,
+          "jacket": 0.195,
+          "clothing": 0.178,
+          "cord": 0.158,
+          "document": 0.137,
+          "screenshot": 0.137,
+          "painting": 0.102,
+          "decoration": 0.098,
+          "jewelry": 0.098,
+          "night_sky": 0.084,
+          "outdoor": 0.084,
+          "sky": 0.084,
+          "candy": 0.082,
+          "food": 0.082
+        },
+        "template_ids": [
+          "7626589862069652756"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:26"
+    },
+    "r8dVn7X8liWRJnL4cEFUGtwAa8lbQr7rk4EN7nMzi3LIY-A=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.619,
+        "label_diversity": 8.0,
+        "labels": {
+          "art": 0.627,
+          "illustrations": 0.627,
+          "sign": 0.137,
+          "structure": 0.137,
+          "document": 0.093,
+          "people": 0.093,
+          "adult": 0.092,
+          "screenshot": 0.092
+        },
+        "template_ids": [
+          "7620611941769153845"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:34"
+    },
+    "GlOu-CzY7xHep4UW45LmnjtTx0xjdwVKQSoqsopE0d9E8H8=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.333,
+        "face_frame_ratio": 0.417,
+        "mean_frame_distance": 0.885,
+        "label_diversity": 20.0,
+        "labels": {
+          "consumer_electronics": 0.793,
+          "machine": 0.793,
+          "outdoor": 0.491,
+          "night_sky": 0.49,
+          "sky": 0.49,
+          "people": 0.47,
+          "adult": 0.46,
+          "art": 0.443,
+          "illustrations": 0.443,
+          "suit": 0.442,
+          "material": 0.368,
+          "raw_glass": 0.368,
+          "document": 0.303,
+          "screenshot": 0.301,
+          "child": 0.26,
+          "clothing": 0.206,
+          "recreation": 0.191,
+          "entertainer": 0.145,
+          "performance": 0.145,
+          "singer": 0.145
+        },
+        "template_ids": [
+          "7377998574132530449"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:39"
+    },
+    "viRElPucC-_ItWZo3tuYevCT1ZN81jyh9nxL8V0uA3HHz_A=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.25,
+        "face_frame_ratio": 0.25,
+        "mean_frame_distance": 0.881,
+        "label_diversity": 14.0,
+        "labels": {
+          "art": 0.433,
+          "illustrations": 0.433,
+          "child": 0.243,
+          "people": 0.238,
+          "adult": 0.224,
+          "sign": 0.223,
+          "structure": 0.223,
+          "clothing": 0.202,
+          "headgear": 0.201,
+          "beanie": 0.2,
+          "hat": 0.2,
+          "document": 0.116,
+          "handwriting": 0.116,
+          "painting": 0.111
+        },
+        "template_ids": [
+          "7261456748089724161"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:43"
+    },
+    "8xff0YjpeQ6TA63f4hpETnwBljhT2wxOqdEEiomHcpJ2dsI=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.25,
+        "face_frame_ratio": 1.0,
+        "mean_frame_distance": 0.555,
+        "label_diversity": 16.0,
+        "labels": {
+          "people": 0.626,
+          "adult": 0.565,
+          "child": 0.349,
+          "document": 0.309,
+          "screenshot": 0.309,
+          "teen": 0.173,
+          "lab_coat": 0.161,
+          "clothing": 0.149,
+          "material": 0.118,
+          "raw_glass": 0.118,
+          "art": 0.109,
+          "decoration": 0.108,
+          "jewelry": 0.108,
+          "wood_processed": 0.108,
+          "structure": 0.104,
+          "sign": 0.101
+        },
+        "template_ids": [
+          "7361724205848726792"
+        ]
+      },
+      "updated_at": "2026-09-28 16:09:58"
+    },
+    "0m0TTgS-Vp0ZjEjJfPJJtFCoDRoCVxeVpRAnXkk3K1ll0Gk=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.868,
+        "label_diversity": 20.0,
+        "labels": {
+          "wood_processed": 0.431,
+          "screenshot": 0.402,
+          "adult": 0.331,
+          "blue_sky": 0.303,
+          "outdoor": 0.303,
+          "sky": 0.303,
+          "people": 0.299,
+          "document": 0.298,
+          "material": 0.241,
+          "textile": 0.241,
+          "carton": 0.234,
+          "container": 0.234,
+          "structure": 0.219,
+          "costume": 0.183,
+          "child": 0.168,
+          "toy": 0.152,
+          "art": 0.148,
+          "figurine": 0.148,
+          "celebration": 0.146,
+          "sign": 0.144
+        },
+        "template_ids": [
+          "7279418638417857793"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:05"
+    },
+    "UFsHf_xeGIAxAedPDUBwQjUkRP39onYBcQLl_bX7isLgWi0=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.286,
+        "face_frame_ratio": 0.143,
+        "mean_frame_distance": 0.59,
+        "label_diversity": 17.0,
+        "labels": {
+          "art": 0.509,
+          "illustrations": 0.509,
+          "cloudy": 0.506,
+          "outdoor": 0.501,
+          "sky": 0.5,
+          "night_sky": 0.494,
+          "clothing": 0.414,
+          "jacket": 0.414,
+          "structure": 0.336,
+          "sign": 0.335,
+          "document": 0.242,
+          "screenshot": 0.242,
+          "adult": 0.199,
+          "people": 0.199,
+          "celestial_body": 0.162,
+          "moon": 0.162,
+          "blue_sky": 0.147
+        },
+        "template_ids": [
+          "7357481741264686337"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:09"
+    },
+    "BEBMtyCp7yo51k4Zub9h0wxuYAgJPhk1UyGEvv5M3ib38us=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.25,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.675,
+        "label_diversity": 16.0,
+        "labels": {
+          "art": 0.492,
+          "illustrations": 0.492,
+          "document": 0.244,
+          "printed_page": 0.209,
+          "people": 0.2,
+          "screenshot": 0.197,
+          "adult": 0.19,
+          "outdoor": 0.19,
+          "sky": 0.19,
+          "blue_sky": 0.185,
+          "structure": 0.143,
+          "sign": 0.142,
+          "child": 0.115,
+          "clothing": 0.111,
+          "suit": 0.111,
+          "cloudy": 0.11
+        },
+        "template_ids": [
+          "7587320481422822661"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:14"
+    },
+    "A9cNnKpnlJTHYedSXDgcPSArca5jqJZ6XNpbqZTaCP207tU=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.273,
+        "face_frame_ratio": 0.182,
+        "mean_frame_distance": 0.768,
+        "label_diversity": 19.0,
+        "labels": {
+          "brick": 0.651,
+          "material": 0.651,
+          "art": 0.516,
+          "illustrations": 0.512,
+          "document": 0.399,
+          "screenshot": 0.399,
+          "outdoor": 0.357,
+          "night_sky": 0.356,
+          "sky": 0.356,
+          "adult": 0.253,
+          "people": 0.253,
+          "clothing": 0.246,
+          "decoration": 0.191,
+          "frame": 0.191,
+          "sign": 0.178,
+          "structure": 0.178,
+          "painting": 0.168,
+          "celestial_body": 0.109,
+          "moon": 0.109
+        },
+        "template_ids": [
+          "7386133527911337234"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:17"
+    },
+    "9Be7eZOCgNJ7wYTvDwPXEbB5In7h0Kf8NSoNx3kOZ7BodGc=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.642,
+        "label_diversity": 6.0,
+        "labels": {
+          "outdoor": 0.946,
+          "sky": 0.946,
+          "cloudy": 0.923,
+          "blue_sky": 0.735,
+          "document": 0.279,
+          "screenshot": 0.279
+        },
+        "template_ids": [
+          "7336196628879019272"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:21"
+    },
+    "VfdlBzOOXvnrdtq2b_cwwhwcZqYIMqUTtYeY1dVoxS_AkqM=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.083,
+        "face_frame_ratio": 0.25,
+        "mean_frame_distance": 0.436,
+        "label_diversity": 8.0,
+        "labels": {
+          "art": 0.791,
+          "illustrations": 0.791,
+          "sign": 0.18,
+          "structure": 0.18,
+          "document": 0.124,
+          "handwriting": 0.124,
+          "adult": 0.11,
+          "people": 0.11
+        },
+        "template_ids": [
+          "7646325071698578706"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:25"
+    },
+    "iGYN7M3cq7UX8Vv7ntB8KP4bla2Y4TV30ab9Y_lt-dIQpyg=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.554,
+        "label_diversity": 11.0,
+        "labels": {
+          "art": 0.694,
+          "illustrations": 0.694,
+          "sign": 0.118,
+          "structure": 0.118,
+          "adult": 0.111,
+          "people": 0.111,
+          "painting": 0.095,
+          "document": 0.089,
+          "handwriting": 0.084,
+          "chart": 0.082,
+          "diagram": 0.082
+        },
+        "template_ids": [
+          "7333577812940459265"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:28"
+    },
+    "qImq_QuH6iNybWfaRW4gmzEi4h26TPrFXmS9A6ZIgXCgd4o=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.565,
+        "label_diversity": 13.0,
+        "labels": {
+          "document": 0.607,
+          "screenshot": 0.605,
+          "art": 0.392,
+          "illustrations": 0.392,
+          "night_sky": 0.218,
+          "outdoor": 0.218,
+          "sky": 0.218,
+          "painting": 0.159,
+          "adult": 0.15,
+          "people": 0.15,
+          "handwriting": 0.146,
+          "sign": 0.128,
+          "structure": 0.128
+        },
+        "template_ids": [
+          "7643402101149732104"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:33"
+    },
+    "DCvpQgytafD2Ix6KnrXlPRNRDnflAGUCKRuvhK1F5OpY8C0=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.273,
+        "face_frame_ratio": 0.182,
+        "mean_frame_distance": 0.669,
+        "label_diversity": 14.0,
+        "labels": {
+          "camera": 0.452,
+          "art": 0.282,
+          "illustrations": 0.268,
+          "recreation": 0.24,
+          "adult": 0.238,
+          "people": 0.238,
+          "painting": 0.187,
+          "document": 0.157,
+          "screenshot": 0.157,
+          "sign": 0.154,
+          "structure": 0.154,
+          "graffiti": 0.138,
+          "material": 0.126,
+          "raw_glass": 0.126
+        },
+        "template_ids": [
+          "7369219110581882119"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:34"
+    },
+    "8TMxZqnxbktIVpD3QsgzI3kza03dgnv6GQ60EYc4gX_i9Zk=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.25,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.656,
+        "label_diversity": 10.0,
+        "labels": {
+          "art": 0.825,
+          "illustrations": 0.825,
+          "structure": 0.145,
+          "sign": 0.14,
+          "printed_page": 0.126,
+          "adult": 0.119,
+          "wood_processed": 0.117,
+          "document": 0.112,
+          "people": 0.109,
+          "handwriting": 0.086
+        },
+        "template_ids": [
+          "7643833826665450772"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:40"
+    },
+    "fRisW4eyK_2MwZznddeR59Z0MDG8-vZy898ZkX-x1xbnQtQ=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.5,
+        "mean_frame_distance": 0.486,
+        "label_diversity": 16.0,
+        "labels": {
+          "outdoor": 0.816,
+          "blue_sky": 0.815,
+          "sky": 0.815,
+          "people": 0.805,
+          "adult": 0.795,
+          "decorative_plant": 0.476,
+          "plant": 0.476,
+          "jeans": 0.438,
+          "child": 0.431,
+          "recreation": 0.404,
+          "clothing": 0.394,
+          "land": 0.342,
+          "shoes": 0.341,
+          "fence": 0.336,
+          "footwear": 0.332,
+          "structure": 0.322
+        },
+        "template_ids": [
+          "7320841011779964178"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:43"
+    },
+    "zao7S5PfdDmzJhTPrOi1GIi8wSkjLs781sBKv0EDuh40Gvg=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.917,
+        "face_frame_ratio": 0.917,
+        "mean_frame_distance": 0.818,
+        "label_diversity": 13.0,
+        "labels": {
+          "adult": 0.712,
+          "people": 0.712,
+          "outdoor": 0.61,
+          "sky": 0.59,
+          "blue_sky": 0.504,
+          "skyscraper": 0.503,
+          "footwear": 0.469,
+          "cloudy": 0.459,
+          "building": 0.392,
+          "clothing": 0.386,
+          "structure": 0.374,
+          "material": 0.19,
+          "raw_glass": 0.19
+        },
+        "template_ids": [
+          "7685890899519343893"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:46"
+    },
+    "8qLKWHCpmE34E6Bp82YV0q1iXgHY3nbZoa8uLCvA9iPIJ9Y=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.833,
+        "face_frame_ratio": 1.0,
+        "mean_frame_distance": 0.67,
+        "label_diversity": 20.0,
+        "labels": {
+          "adult": 0.705,
+          "people": 0.705,
+          "wood_processed": 0.591,
+          "blue_sky": 0.509,
+          "outdoor": 0.499,
+          "sky": 0.499,
+          "furniture": 0.462,
+          "table": 0.462,
+          "plant": 0.331,
+          "decorative_plant": 0.33,
+          "material": 0.266,
+          "raw_glass": 0.266,
+          "clothing": 0.251,
+          "structure": 0.239,
+          "jacket": 0.236,
+          "illustrations": 0.233,
+          "suit": 0.228,
+          "art": 0.164,
+          "footwear": 0.162,
+          "shoes": 0.162
+        },
+        "template_ids": [
+          "7688953092720626996"
+        ]
+      },
+      "updated_at": "2026-09-28 16:10:48"
+    },
+    "VlDVbRE-aDTaKiwtmN4zeP8OjiHmH5U9dX6bg7Xk_P96uUs=": {
+      "reason": "非舞蹈模板，使用量小于1000，写真，枚",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.1,
+        "mean_frame_distance": 0.6,
+        "label_diversity": 8.0,
+        "labels": {
+          "art": 0.635,
+          "illustrations": 0.635,
+          "people": 0.325,
+          "adult": 0.295,
+          "eyeglasses": 0.175,
+          "optical_equipment": 0.175,
+          "clothing": 0.091,
+          "headgear": 0.09
+        },
+        "template_ids": [
+          "7401680543319919893"
+        ]
+      },
+      "updated_at": "2026-09-28 16:11:17"
+    },
+    "Euof6-eoMd9wuy2tSsXlAwIhp9Bwm7pEv1Q-LGr_OVsyx_o=": {
+      "reason": "主页近期舞蹈相关模板少",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 0.333,
+        "mean_frame_distance": 0.363,
+        "label_diversity": 10.0,
+        "labels": {
+          "adult": 0.769,
+          "people": 0.769,
+          "clothing": 0.366,
+          "military_uniform": 0.36,
+          "suit": 0.121,
+          "boot": 0.088,
+          "footwear": 0.088,
+          "shoes": 0.088,
+          "document": 0.084,
+          "screenshot": 0.083
+        },
+        "template_ids": [
+          "7575551179179035957"
+        ]
+      },
+      "updated_at": "2026-09-28 16:12:18"
+    },
+    "B4410852pVfcbKtuU3j9zC4KBesK1lTK8Gb7V2B8va_x3hg=": {
+      "reason": "主页近期舞蹈相关模板少",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 1.0,
+        "face_frame_ratio": 1.0,
+        "mean_frame_distance": 0.388,
+        "label_diversity": 6.0,
+        "labels": {
+          "people": 0.543,
+          "adult": 0.54,
+          "swimsuit": 0.125,
+          "clothing": 0.123,
+          "sign": 0.09,
+          "structure": 0.09
+        },
+        "template_ids": [
+          "7274489779654380802"
+        ]
+      },
+      "updated_at": "2026-09-28 16:13:54"
+    },
+    "y7CCK1Z-DEVLijhfuCGqR0DlRXftB1T6NM2z7DiUt1iVskI=": {
+      "reason": "风格不对",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.083,
+        "mean_frame_distance": 0.723,
+        "label_diversity": 11.0,
+        "labels": {
+          "adult": 0.352,
+          "people": 0.352,
+          "chart": 0.199,
+          "diagram": 0.199,
+          "document": 0.198,
+          "screenshot": 0.162,
+          "sign": 0.147,
+          "structure": 0.147,
+          "art": 0.121,
+          "illustrations": 0.121,
+          "child": 0.091
+        },
+        "template_ids": [
+          "7380603619839708423"
+        ]
+      },
+      "updated_at": "2026-09-28 16:15:20"
+    },
+    "gEMndd_NR_HqmBCnmUGXTUKU-vyZozjMIUmfR5aGqgYP_uc=": {
+      "reason": "使用量小于1000",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.427,
+        "label_diversity": 15.0,
+        "labels": {
+          "art": 0.493,
+          "illustrations": 0.492,
+          "blue_sky": 0.34,
+          "outdoor": 0.34,
+          "sky": 0.34,
+          "palm_tree": 0.302,
+          "tree": 0.302,
+          "adult": 0.274,
+          "plant": 0.265,
+          "people": 0.255,
+          "sign": 0.227,
+          "document": 0.213,
+          "screenshot": 0.213,
+          "structure": 0.204,
+          "painting": 0.109
+        },
+        "template_ids": [
+          "7671988700498185473"
+        ]
+      },
+      "updated_at": "2026-09-28 16:15:54"
+    },
+    "Ac9fdQtgTIdlKv5bQLCKMklZfLRZaRHshDPAUwV2G07oGHU=": {
+      "reason": "写真",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.605,
+        "label_diversity": 18.0,
+        "labels": {
+          "night_sky": 0.447,
+          "outdoor": 0.447,
+          "sky": 0.447,
+          "adult": 0.28,
+          "people": 0.28,
+          "illustrations": 0.265,
+          "art": 0.229,
+          "handwriting": 0.205,
+          "document": 0.162,
+          "decoration": 0.142,
+          "polka_dots": 0.138,
+          "material": 0.124,
+          "textile": 0.124,
+          "bedding": 0.117,
+          "housewares": 0.117,
+          "screenshot": 0.114,
+          "printed_page": 0.113,
+          "balloon": 0.082
+        },
+        "template_ids": [
+          "7479655788189977917"
+        ]
+      },
+      "updated_at": "2026-09-28 16:16:08"
+    },
+    "cqjraDyyC-E-dU29K2xADk824hbWBYMml_4N_4L1Qn-md3U=": {
+      "reason": "#紹介テンプレ",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.25,
+        "face_frame_ratio": 0.625,
+        "mean_frame_distance": 0.355,
+        "label_diversity": 14.0,
+        "labels": {
+          "people": 0.572,
+          "adult": 0.571,
+          "consumer_electronics": 0.496,
+          "machine": 0.496,
+          "camera": 0.41,
+          "hat": 0.378,
+          "clothing": 0.33,
+          "headgear": 0.33,
+          "recreation": 0.329,
+          "helmet": 0.216,
+          "optical_equipment": 0.213,
+          "sunglasses": 0.206,
+          "celebration": 0.165,
+          "mask": 0.165
+        },
+        "template_ids": [
+          "7347672562266082567"
+        ]
+      },
+      "updated_at": "2026-09-28 16:20:56"
+    },
+    "3XFnI6C72xR8rx-HyZsYvnIAdz_Lp7CgHdCP735cjwX4CLg=": {
+      "reason": "#粘土加工",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.072,
+        "label_diversity": 2.0,
+        "labels": {
+          "document": 0.749,
+          "screenshot": 0.749
+        },
+        "template_ids": [
+          "7665329385750170897"
+        ]
+      },
+      "updated_at": "2026-09-28 16:21:12"
+    },
+    "yRcNAtEJCLIjxJS2jcEcQeYolXqVDkGtNwzi45BS0ZwjuXc=": {
+      "reason": "枚",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 0.0,
+        "mean_frame_distance": 0.374,
+        "label_diversity": 7.0,
+        "labels": {
+          "screenshot": 0.909,
+          "art": 0.84,
+          "illustrations": 0.84,
+          "document": 0.598,
+          "handwriting": 0.132,
+          "material": 0.082,
+          "textile": 0.082
+        },
+        "template_ids": [
+          "7473125227577347389"
+        ]
+      },
+      "updated_at": "2026-09-28 16:21:25"
+    },
+    "7dHJftiNf12AC5NOYw5RKDJkDMN6QEZ93rnLNjpEaUh2A_w=": {
+      "reason": "使用量小于1000",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.875,
+        "face_frame_ratio": 0.75,
+        "mean_frame_distance": 0.645,
+        "label_diversity": 16.0,
+        "labels": {
+          "jeans": 0.891,
+          "clothing": 0.869,
+          "adult": 0.859,
+          "people": 0.859,
+          "baseball_hat": 0.693,
+          "hat": 0.693,
+          "headgear": 0.693,
+          "jacket": 0.455,
+          "document": 0.379,
+          "screenshot": 0.379,
+          "hoodie": 0.134,
+          "outdoor": 0.134,
+          "night_sky": 0.123,
+          "sky": 0.123,
+          "celestial_body": 0.098,
+          "moon": 0.098
+        },
+        "template_ids": [
+          "7689813118788128001"
+        ]
+      },
+      "updated_at": "2026-09-28 16:21:36"
+    },
+    "LRPOgqKqTDCkil-OybQFsLanE8Ek4ebnle9IH57lDitkySU=": {
+      "reason": "写真",
+      "affects_visual_score": false,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.1,
+        "face_frame_ratio": 0.1,
+        "mean_frame_distance": 0.868,
+        "label_diversity": 20.0,
+        "labels": {
+          "structure": 0.694,
+          "wood_processed": 0.694,
+          "tableware": 0.526,
+          "utensil": 0.526,
+          "cup": 0.525,
+          "screenshot": 0.361,
+          "clothing": 0.345,
+          "headgear": 0.345,
+          "adult": 0.248,
+          "people": 0.248,
+          "document": 0.226,
+          "textile": 0.211,
+          "material": 0.164,
+          "art": 0.154,
+          "coin": 0.15,
+          "money": 0.15,
+          "cloudy": 0.149,
+          "outdoor": 0.137,
+          "sky": 0.131,
+          "night_sky": 0.122
+        },
+        "template_ids": [
+          "7285105795174255874"
+        ]
+      },
+      "updated_at": "2026-09-28 16:21:46"
+    }
+  },
+  "updated_at": "2026-09-28 16:21:46"
+}

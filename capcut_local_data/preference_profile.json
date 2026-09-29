@@ -1,0 +1,630 @@
+{
+  "version": 2,
+  "revision": 97,
+  "updated_at": "2026-09-28 17:29:07",
+  "approved_count": 5,
+  "aesthetic_only_count": 1,
+  "rejected_count": 94,
+  "learning_policy": "通过与审美达标特征累积为正向审美偏好；只有正式通过作者用于数据质量特征；不通过原因原文累积为反向提示词。",
+  "positive_phrases": [
+    {
+      "creator_key": "TzRfVrY5Q4Ibd6ZDY8YuLMsDZyuN9CYqN9aBCY_S9rSl04Y=",
+      "status": "approved",
+      "text": "1；1"
+    },
+    {
+      "creator_key": "4TYHI8tciClasgEkyz5SI1x-TOGoo1tY0oGJLxuRsp5vS8U=",
+      "status": "approved",
+      "text": "1；1"
+    },
+    {
+      "creator_key": "ubZgdcGc0gtLWGG-T19zSt8Bp2NbwcOwiMu30YK1Zlx_HFE=",
+      "status": "approved",
+      "text": "1；1"
+    },
+    {
+      "creator_key": "m9Kr-8xOGQzMW-S44y44qjMcPkG8_H5io2HF-9xVH-4UG_4=",
+      "status": "approved",
+      "text": "手势舞；1"
+    },
+    {
+      "creator_key": "QMjLbGD6psL9eXQFwrBXsK2iU5U1Rb_kpIQw4tvvpSJEoO4=",
+      "status": "approved",
+      "text": "单人舞；舞蹈"
+    },
+    {
+      "creator_key": "TIs0yNwTHtkUDGDk701ZEIfhl9vmI1E3X84o7pA1PRhkRJo=",
+      "status": "aesthetic_only",
+      "text": "ダンス用；ダンス用"
+    }
+  ],
+  "negative_prompts": [
+    {
+      "creator_key": "HGt-v6h0De2M7OB93uAwF85bBH4Dt4Nvp2Dz9wZP7uGOa8g=",
+      "text": "目前他的主页有很多AI内容，近期模板没有舞蹈相关内容"
+    },
+    {
+      "creator_key": "ccN6KuBDACN2NlzzdV4b6FjM7U5HgL2Pyab26DfLORmLfeA=",
+      "text": "主页舞蹈类相关模板少，模板动画过于简单"
+    },
+    {
+      "creator_key": "0QQmlZ0WoujCARZmn_8_-YaJT5TomY80iYDnYO_qa6vIMcs=",
+      "text": "首页明确说明已经不会再更新（最新投稿已经是2025年），没有很多舞蹈内容。"
+    },
+    {
+      "creator_key": "7W1iU-SLm6zg0YaitdoN_1AwgZtPO-viXVJTn-XzzUTp0wg=",
+      "text": "数据不好，标题太大众很难搜索"
+    },
+    {
+      "creator_key": "G5J9hX27dM1B29rRBgB2a9WePPsiBibA2CpyE3z3Plb0JfU=",
+      "text": "主页近期没有舞蹈相关模板"
+    },
+    {
+      "creator_key": "xyDaRRuKYKD610ro8DYz26qNZUCT9U1UCCz8KYtHG2lSGRE=",
+      "text": "非舞蹈类模板"
+    },
+    {
+      "creator_key": "qcsBbqfemNS6KW8Rl1dXERJq-moqbNrUCN0xCuZhiCp4ALI=",
+      "text": "非舞蹈类模板"
+    },
+    {
+      "creator_key": "IDaNQE1kgtLEX7RBXgtA3aOO_ihz1LJJ1OUvKqmn5g2g7so=",
+      "text": "与舞蹈无关"
+    },
+    {
+      "creator_key": "qL98GsrXAdNTz68xZTxz-861bnye8Vj__Zd9UPPuk6Wl93Q=",
+      "text": "不是舞蹈相关"
+    },
+    {
+      "creator_key": "5NueBmj1QWOFQ4SRFpgu1kBr8Covef4n34JtF-_46pAqxTU=",
+      "text": "非舞蹈类模板"
+    },
+    {
+      "creator_key": "d--0gMmNm3wQRnccUM17GWJ-5DVcDjzJ71su50NdalM3JQk=",
+      "text": "非舞蹈类模板"
+    },
+    {
+      "creator_key": "SsOYr-h0u5NMTv9dn4Bf3Jn_NCrOS1r9ufIwUovu76iIL0M=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "6F-B2MuLXoe5A-YFg80oDYY8RE90gQkUYrDAy2acDQZF6io=",
+      "text": "只换脸无法配合舞蹈"
+    },
+    {
+      "creator_key": "FzEtifShZwAjFhbCzcZ8eVPh0fad4nzexvsS651iUvaCLe8=",
+      "text": "数据非常差"
+    },
+    {
+      "creator_key": "eg_HD9TtYlAtYTuxRl8l3OmYkbxNMj7BzfxiRPjRjbrj32w=",
+      "text": "AI内容"
+    },
+    {
+      "creator_key": "Gl2B0DrseBnr-jB-1QQXo2Q62CuryYDAkmDxUU1xPuvSSTI=",
+      "text": "非舞蹈相关"
+    },
+    {
+      "creator_key": "OpRBYG0WeMGSnj3nt6wohwLQTT4BNGMvFVl-js0_DBV6xQw=",
+      "text": "非舞蹈相关"
+    },
+    {
+      "creator_key": "cVq-TOyTSxHj5UejEZsnnpIKN38t-fxY_4jVeUUvzRLWaJA=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "lpuDU6a2TbSGgNBE3rvDcLgrAal7BXjf0Xmcc2Y44xacrGI=",
+      "text": "非舞蹈相关"
+    },
+    {
+      "creator_key": "nGvdCd5ECEh3mO6xWfb4nWujjwG1NyZhxKk8R9eyAT9h6NM=",
+      "text": "换脸"
+    },
+    {
+      "creator_key": "3EzaVM9iAksVtO11V_Mrn9QscCz2DxwDtF69FmhgDDHse18=",
+      "text": "换脸"
+    },
+    {
+      "creator_key": "KOmuoLNR5Upl_baZg0FCm-OSo7K-ZcNoxnT1jgusH5ugpCM=",
+      "text": "换脸"
+    },
+    {
+      "creator_key": "rUd3tJovRtI2UumrfPUJaO5y7ywxf4H2Du8vZqGJdIB7U8k=",
+      "text": "换脸"
+    },
+    {
+      "creator_key": "QqASMOfweDYZ9mxVPhVXHXe7rm0le447mbcbtdF6szFBx00=",
+      "text": "换脸"
+    },
+    {
+      "creator_key": "OFIaiBJHTVTpPU4iyjnBzECNf5qz1xwi2QtAWTefzFK4DpU=",
+      "text": "主页近期没有舞蹈模板"
+    },
+    {
+      "creator_key": "f7EUPObH4gWTJtuYE0ZeUj7nlW4jqMgrg4qRHT2AMv-LK1U=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "x-uqSyp7R5wldIR-SX_iCtxPpFS9gYF8pPSiIDx_snZgiAA=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "6GkGXpQShV9Yw470hA6ViLBg8I-Qywp_xf9huwJK1_USYYI=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "7tySMt3xM0zDh_5L3rTpJo-ickFOANGTKJSYeU4au6TwWhU=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "2R10yIxRkPkfiD8Pe5rXV2piLp92NhnbSwNZgWAevpVpeZw=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "mm9nTeHMWtRReLhZqEUVJVoebNGQmIXel2RmPE15MNFjXQY=",
+      "text": "仅换脸，非舞蹈模板"
+    },
+    {
+      "creator_key": "LZyYt4Dc-xXEu8dLi9wF_4Ys2cwymudCG4oXXYfvC3mJbcg=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "M7It5DszxB4SRQlj14dhQSY_YQRheYtNEXJPwa4_L8w-6Qg=",
+      "text": "非舞蹈模板，ai内容。"
+    },
+    {
+      "creator_key": "UjzLqbYneuDVvTMcyRgAb0JPLQVUxImdjmhOL5JYDJlx7OA=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "6VN012rTHk3yZCTJtDEuF8MEmc_aUGsULe9YBD6it1LnLqQ=",
+      "text": "数据太低"
+    },
+    {
+      "creator_key": "yhlOD0xdT8JQ-Y8bElTzk-0F-TlBiMmKoncdFPCd7tO_vc8=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "9auzEm2EzlpnhoVDQeHh49vLOSUAlpxOshKpTudzQDMdEn8=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "vJTL7T5YeJQMFVi5FTCJoDi5hUw3sRWHWC6vXcN26QANowI=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "QOfiSqj5IYTjZHZkStP4PgpPVtNJQxHAuHQCOMXjTxh1K98=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "yVbQXWOlCn7tq9rU8iRmoe_30xVUYhqLA-iF3dD4TthFyKo=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "t-evo98rEY3Yop1aQsrNul1cxfbRkJl-xltRqzFtZe7_NjQ=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "DmOFwLGbQR13cXfOyrlAsC-OmwHCd-biXRSLYlvHn2XiJ5w=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "NjvJif3QLOj8K8T_OgvV1ot5bK66KCBwxclKGIB-BheQMMY=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "7nmkdYZw1rS_XEcQct5rNYtk6e4kgvFSSZAMOtJo4qsyxmo=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "0xRlFv6VWQz_TcCzddPO8SdsGQru9RBL3PWIruYOlG9tqe0=",
+      "text": "写真"
+    },
+    {
+      "creator_key": "b6sg2i0Yc_vflrynOjFBnV1XfmV37Blyrf7cwPUaaqKdK_g=",
+      "text": "写真"
+    },
+    {
+      "creator_key": "MFPjMgWnLRApPzIop9ABFUBZwmke61MMdeQaWWtOZnW7wWg=",
+      "text": "写真"
+    },
+    {
+      "creator_key": "VMn-la9sBa23hz2QECCYjOJCG9-OPNFo92Epnq84tC0Pp7I=",
+      "text": "写真"
+    },
+    {
+      "creator_key": "icANYRKLhnbc2Sy0fTqiTOEfFxUA55-e5pUkC8ASTUNh3VQ=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "0Qge6nixRzA_lAJrjYVzX0QbgaGwI4Smj6En6OyPPtixyLM=",
+      "text": "数据太差"
+    },
+    {
+      "creator_key": "fHrlNL17hjOee5k6ziOyb_zdiCSwixpB095ST-CAyGhxDH8=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "HYhUAxsKLZPqYuUDiVQ1WcUQAWoGRRDQy7HYvYh3e-Fd2Uk=",
+      "text": "数据太差"
+    },
+    {
+      "creator_key": "GAADwAC5uwHy55tCiANJKl0PvFDbwpKOOCPwyAFAJisaml8=",
+      "text": "数据太差（播放量1K以下）"
+    },
+    {
+      "creator_key": "zO-nHTbWy2DCeM2yqU1FkbHZHKDmNguXL0ppwzk_qcHcvjE=",
+      "text": "数据太差（使用量1K以下）"
+    },
+    {
+      "creator_key": "lbBLcGDLA68B9DeMxXOiLGdXeTVsMdBKp7Zk9c7S7cewv74=",
+      "text": "数据太差（使用量1K以下）"
+    },
+    {
+      "creator_key": "J3jRMXYMS4T2y8Om-ONq04ithbJWyi-FhmSbc-vPifHw29s=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "N7_Oc98fHO5Hllisp82F4qvfEn1CHej_O4DfNqSxMNDVuYU=",
+      "text": "换脸，非舞蹈模板"
+    },
+    {
+      "creator_key": "KLRkz4hTW1zqn-5xqttERIykCPqMI-Sq2JvJ9szbZW6Gh4o=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "5k08ckNGGfhpw5umdgbyP2F_ICndHz_h09xND3mcqQXiTSo=",
+      "text": "换脸，非舞蹈模板"
+    },
+    {
+      "creator_key": "Ce3e0KyJtSNKkw47boGEpHfFPiuDJzDRqJ4zBpCsTWV09Co=",
+      "text": "换脸，非舞蹈模板"
+    },
+    {
+      "creator_key": "bD5B38eCtWtBByXKwqDguTXC54HjwDtfK-E_bVWkQPA7Q9U=",
+      "text": "换脸，非舞蹈模板"
+    },
+    {
+      "creator_key": "92G845e1jzrX03UMezdoNzLNuNy5WEYDdxzMSQrj9FlwnNw=",
+      "text": "换脸，非舞蹈模板"
+    },
+    {
+      "creator_key": "59LDt355S92TIm33uNEXl5kH5yflMxzckurtFbA42OOyDbs=",
+      "text": "非舞蹈模板"
+    },
+    {
+      "creator_key": "VCW-pnxcqa3JK_joyiIpBo18LRnnuekxvxo2Kacy5Cfi14w=",
+      "text": "非舞蹈模板，使用量小于1000"
+    },
+    {
+      "creator_key": "ZypqfmXjjJ0TxYXpByewH0DjQCqaDfRopVZ_4StHZrcovyk=",
+      "text": "非舞蹈模板，使用量小于1000，写真"
+    },
+    {
+      "creator_key": "r8dVn7X8liWRJnL4cEFUGtwAa8lbQr7rk4EN7nMzi3LIY-A=",
+      "text": "非舞蹈模板，使用量小于1000，写真"
+    },
+    {
+      "creator_key": "GlOu-CzY7xHep4UW45LmnjtTx0xjdwVKQSoqsopE0d9E8H8=",
+      "text": "非舞蹈模板，使用量小于1000，写真"
+    },
+    {
+      "creator_key": "viRElPucC-_ItWZo3tuYevCT1ZN81jyh9nxL8V0uA3HHz_A=",
+      "text": "非舞蹈模板，使用量小于1000，写真"
+    },
+    {
+      "creator_key": "8xff0YjpeQ6TA63f4hpETnwBljhT2wxOqdEEiomHcpJ2dsI=",
+      "text": "非舞蹈模板，使用量小于1000，写真"
+    },
+    {
+      "creator_key": "0m0TTgS-Vp0ZjEjJfPJJtFCoDRoCVxeVpRAnXkk3K1ll0Gk=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "UFsHf_xeGIAxAedPDUBwQjUkRP39onYBcQLl_bX7isLgWi0=",
+      "text": "非舞蹈模板，使用量小于1000，写真，"
+    },
+    {
+      "creator_key": "BEBMtyCp7yo51k4Zub9h0wxuYAgJPhk1UyGEvv5M3ib38us=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "A9cNnKpnlJTHYedSXDgcPSArca5jqJZ6XNpbqZTaCP207tU=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "9Be7eZOCgNJ7wYTvDwPXEbB5In7h0Kf8NSoNx3kOZ7BodGc=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "VfdlBzOOXvnrdtq2b_cwwhwcZqYIMqUTtYeY1dVoxS_AkqM=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "iGYN7M3cq7UX8Vv7ntB8KP4bla2Y4TV30ab9Y_lt-dIQpyg=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "qImq_QuH6iNybWfaRW4gmzEi4h26TPrFXmS9A6ZIgXCgd4o=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "DCvpQgytafD2Ix6KnrXlPRNRDnflAGUCKRuvhK1F5OpY8C0=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "8TMxZqnxbktIVpD3QsgzI3kza03dgnv6GQ60EYc4gX_i9Zk=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "fRisW4eyK_2MwZznddeR59Z0MDG8-vZy898ZkX-x1xbnQtQ=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "zao7S5PfdDmzJhTPrOi1GIi8wSkjLs781sBKv0EDuh40Gvg=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "8qLKWHCpmE34E6Bp82YV0q1iXgHY3nbZoa8uLCvA9iPIJ9Y=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "m0OXH5R2lG5XRAtsdobMvT4wbspMeakBAa-hBIVd7iwtjRk=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "VlDVbRE-aDTaKiwtmN4zeP8OjiHmH5U9dX6bg7Xk_P96uUs=",
+      "text": "非舞蹈模板，使用量小于1000，写真，枚"
+    },
+    {
+      "creator_key": "Euof6-eoMd9wuy2tSsXlAwIhp9Bwm7pEv1Q-LGr_OVsyx_o=",
+      "text": "主页近期舞蹈相关模板少"
+    },
+    {
+      "creator_key": "B4410852pVfcbKtuU3j9zC4KBesK1lTK8Gb7V2B8va_x3hg=",
+      "text": "主页近期舞蹈相关模板少"
+    },
+    {
+      "creator_key": "y7CCK1Z-DEVLijhfuCGqR0DlRXftB1T6NM2z7DiUt1iVskI=",
+      "text": "风格不对"
+    },
+    {
+      "creator_key": "gEMndd_NR_HqmBCnmUGXTUKU-vyZozjMIUmfR5aGqgYP_uc=",
+      "text": "使用量小于1000"
+    },
+    {
+      "creator_key": "Ac9fdQtgTIdlKv5bQLCKMklZfLRZaRHshDPAUwV2G07oGHU=",
+      "text": "写真"
+    },
+    {
+      "creator_key": "cqjraDyyC-E-dU29K2xADk824hbWBYMml_4N_4L1Qn-md3U=",
+      "text": "#紹介テンプレ"
+    },
+    {
+      "creator_key": "3XFnI6C72xR8rx-HyZsYvnIAdz_Lp7CgHdCP735cjwX4CLg=",
+      "text": "#粘土加工"
+    },
+    {
+      "creator_key": "yRcNAtEJCLIjxJS2jcEcQeYolXqVDkGtNwzi45BS0ZwjuXc=",
+      "text": "枚"
+    },
+    {
+      "creator_key": "7dHJftiNf12AC5NOYw5RKDJkDMN6QEZ93rnLNjpEaUh2A_w=",
+      "text": "使用量小于1000"
+    },
+    {
+      "creator_key": "LRPOgqKqTDCkil-OybQFsLanE8Ek4ebnle9IH57lDitkySU=",
+      "text": "写真"
+    }
+  ],
+  "derived_positive_terms": {
+    "手势舞": 1,
+    "单人舞": 1,
+    "舞蹈": 1,
+    "ダンス": 2
+  },
+  "derived_negative_terms": {
+    "目前他的主页有很多ai内容，近期模板没有舞蹈相关内容": 1,
+    "目前他的主页有很多ai内容": 1,
+    "近期模板没有舞蹈相关内容": 1,
+    "目前他的主页有很多": 1,
+    "ai": 3,
+    "内容": 3,
+    "主页舞蹈类相关模板少，模板动画过于简单": 1,
+    "主页舞蹈类相关模板少": 1,
+    "模板动画过于简单": 1,
+    "首页明确说明已经不会再更新（最新投稿已经是2025年），没有很多舞蹈内容。": 1,
+    "首页明确说明已经不会再更新": 1,
+    "最新投稿已经是2025年": 1,
+    "没有很多舞蹈内容": 1,
+    "最新投稿已经是": 1,
+    "2025": 1,
+    "数据不好，标题太大众很难搜索": 1,
+    "数据不好": 1,
+    "标题太大众很难搜索": 1,
+    "主页近期没有舞蹈相关模板": 1,
+    "非舞蹈类模板": 4,
+    "与舞蹈无关": 1,
+    "不是舞蹈相关": 1,
+    "非舞蹈模板": 51,
+    "只换脸无法配合舞蹈": 1,
+    "数据非常差": 1,
+    "ai内容": 2,
+    "非舞蹈相关": 3,
+    "换脸": 10,
+    "主页近期没有舞蹈模板": 1,
+    "仅换脸，非舞蹈模板": 1,
+    "仅换脸": 1,
+    "非舞蹈模板，ai内容。": 1,
+    "数据太低": 1,
+    "写真": 26,
+    "数据太差": 5,
+    "数据太差（播放量1k以下）": 1,
+    "播放量1k以下": 1,
+    "播放量": 1,
+    "1k": 3,
+    "以下": 3,
+    "数据太差（使用量1k以下）": 2,
+    "使用量1k以下": 2,
+    "使用量": 2,
+    "换脸，非舞蹈模板": 5,
+    "非舞蹈模板，使用量小于1000": 1,
+    "使用量小于1000": 23,
+    "使用量小于": 23,
+    "1000": 23,
+    "非舞蹈模板，使用量小于1000，写真": 5,
+    "非舞蹈模板，使用量小于1000，写真，枚": 14,
+    "非舞蹈模板，使用量小于1000，写真，": 1,
+    "主页近期舞蹈相关模板少": 2,
+    "风格不对": 1,
+    "#紹介テンプレ": 1,
+    "紹介": 1,
+    "テンプレ": 1,
+    "#粘土加工": 1,
+    "粘土加工": 1,
+    "枚": 1
+  },
+  "term_overrides": {
+    "positive": {
+      "手势舞模板": 1,
+      "落書き": 1,
+      "踊る": 1,
+      "落書きテンプレ": 1
+    },
+    "negative": {
+      "个人简介明确说明已经不会再更新": 1
+    }
+  },
+  "deleted_terms": {
+    "positive": [
+      "手势舞"
+    ],
+    "negative": [
+      "2025",
+      "主页舞蹈类相关模板少，模板动画过于简单",
+      "数据不好，标题太大众很难搜索",
+      "最新投稿已经是",
+      "目前他的主页有很多",
+      "目前他的主页有很多ai内容",
+      "目前他的主页有很多ai内容，近期模板没有舞蹈相关内容",
+      "首页明确说明已经不会再更新",
+      "首页明确说明已经不会再更新（最新投稿已经是2025年），没有很多舞蹈内容。"
+    ]
+  },
+  "positive_terms": {
+    "ダンス": 2,
+    "单人舞": 1,
+    "手势舞模板": 1,
+    "舞蹈": 1,
+    "落書き": 1,
+    "落書きテンプレ": 1,
+    "踊る": 1
+  },
+  "negative_terms": {
+    "非舞蹈模板": 51,
+    "写真": 26,
+    "1000": 23,
+    "使用量小于": 23,
+    "使用量小于1000": 23,
+    "非舞蹈模板，使用量小于1000，写真，枚": 14,
+    "换脸": 10,
+    "换脸，非舞蹈模板": 5,
+    "数据太差": 5,
+    "非舞蹈模板，使用量小于1000，写真": 5,
+    "非舞蹈类模板": 4,
+    "1k": 3,
+    "ai": 3,
+    "以下": 3,
+    "内容": 3,
+    "非舞蹈相关": 3,
+    "ai内容": 2,
+    "主页近期舞蹈相关模板少": 2,
+    "使用量": 2,
+    "使用量1k以下": 2,
+    "数据太差（使用量1k以下）": 2,
+    "#粘土加工": 1,
+    "#紹介テンプレ": 1,
+    "テンプレ": 1,
+    "不是舞蹈相关": 1,
+    "与舞蹈无关": 1,
+    "个人简介明确说明已经不会再更新": 1,
+    "主页舞蹈类相关模板少": 1,
+    "主页近期没有舞蹈模板": 1,
+    "主页近期没有舞蹈相关模板": 1,
+    "仅换脸": 1,
+    "仅换脸，非舞蹈模板": 1,
+    "只换脸无法配合舞蹈": 1,
+    "播放量": 1,
+    "播放量1k以下": 1,
+    "数据不好": 1,
+    "数据太低": 1,
+    "数据太差（播放量1k以下）": 1,
+    "数据非常差": 1,
+    "最新投稿已经是2025年": 1,
+    "枚": 1,
+    "标题太大众很难搜索": 1,
+    "模板动画过于简单": 1,
+    "没有很多舞蹈内容": 1,
+    "粘土加工": 1,
+    "紹介": 1,
+    "近期模板没有舞蹈相关内容": 1,
+    "非舞蹈模板，ai内容。": 1,
+    "非舞蹈模板，使用量小于1000": 1,
+    "非舞蹈模板，使用量小于1000，写真，": 1,
+    "风格不对": 1
+  },
+  "approved_creator_features": [
+    {
+      "creator_key": "TzRfVrY5Q4Ibd6ZDY8YuLMsDZyuN9CYqN9aBCY_S9rSl04Y=",
+      "indexed_count": 7,
+      "high_use_non_ai_indexed": 7,
+      "japanese_signal": "投稿文案",
+      "max_uses": 528164
+    },
+    {
+      "creator_key": "4TYHI8tciClasgEkyz5SI1x-TOGoo1tY0oGJLxuRsp5vS8U=",
+      "indexed_count": 1,
+      "high_use_non_ai_indexed": 1,
+      "japanese_signal": "投稿文案",
+      "max_uses": 193064
+    },
+    {
+      "creator_key": "ubZgdcGc0gtLWGG-T19zSt8Bp2NbwcOwiMu30YK1Zlx_HFE=",
+      "indexed_count": 1,
+      "high_use_non_ai_indexed": 1,
+      "japanese_signal": "投稿文案",
+      "max_uses": 4584
+    },
+    {
+      "creator_key": "m9Kr-8xOGQzMW-S44y44qjMcPkG8_H5io2HF-9xVH-4UG_4=",
+      "indexed_count": 1,
+      "high_use_non_ai_indexed": 1,
+      "japanese_signal": "投稿文案",
+      "max_uses": 3077
+    },
+    {
+      "creator_key": "QMjLbGD6psL9eXQFwrBXsK2iU5U1Rb_kpIQw4tvvpSJEoO4=",
+      "indexed_count": 1,
+      "high_use_non_ai_indexed": 1,
+      "japanese_signal": "投稿文案",
+      "max_uses": 12000
+    }
+  ],
+  "edit_history": [
+    {
+      "at": "2026-09-28 15:22:41",
+      "summary": "正向新增：手势舞模板；正向删除：手势舞；反向新增：个人简介明确说明已经不会再更新、最新投稿已经是2025年；反向删除：2025、最新投稿已经是、目前他的主页有很多、首页明确说明已经不会再更新"
+    },
+    {
+      "at": "2026-09-28 15:23:18",
+      "summary": "正向新增：落書き"
+    },
+    {
+      "at": "2026-09-28 15:24:24",
+      "summary": "正向新增：踊る"
+    },
+    {
+      "at": "2026-09-28 15:47:04",
+      "summary": "正向新增：落書きテンプレ；反向删除：主页舞蹈类相关模板少，模板动画过于简单、数据不好，标题太大众很难搜索、目前他的主页有很多ai内容、目前他的主页有很多ai内容，近期模板没有舞蹈相关内容、首页明确说明已经不会再更新（最新投稿已经是2025年），没有很多舞蹈内容。"
+    }
+  ]
+}
