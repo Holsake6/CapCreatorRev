@@ -2073,7 +2073,38 @@
         ]
       },
       "updated_at": "2026-09-28 16:21:46"
+    },
+    "FyM0MvgW0uXmcjnCL-HP_3po0nE1TYdQFSnbgz1lk3dT9w8=": {
+      "reason": "有AI内容",
+      "affects_visual_score": true,
+      "video_profile": {
+        "video_count": 1,
+        "human_frame_ratio": 0.0,
+        "face_frame_ratio": 1.0,
+        "mean_frame_distance": 0.42,
+        "label_diversity": 14.0,
+        "labels": {
+          "people": 0.506,
+          "adult": 0.497,
+          "child": 0.23,
+          "sign": 0.223,
+          "decoration": 0.201,
+          "jewelry": 0.201,
+          "structure": 0.199,
+          "art": 0.19,
+          "teen": 0.19,
+          "material": 0.164,
+          "textile": 0.151,
+          "curtain": 0.141,
+          "clothing": 0.116,
+          "toy": 0.097
+        },
+        "template_ids": [
+          "7610719586274561287"
+        ]
+      },
+      "updated_at": "2026-09-29 22:17:55"
     }
   },
-  "updated_at": "2026-09-28 16:21:46"
+  "updated_at": "2026-09-29 22:17:55"
 }

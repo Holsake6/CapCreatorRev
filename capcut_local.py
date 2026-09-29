@@ -32,6 +32,7 @@ REFERENCE_CASES = ROOT / "reference_positive_cases.json"
 SEEN_CREATORS = DATA / "seen_creators.json"
 SCAN_STATE = DATA / "scan_state.json"
 SCAN_HISTORY = DATA / "scan_history.json"
+SEEN_TEMPLATES = DATA / "seen_templates.json"
 TREND_TERMS = DATA / "trend_terms.json"
 VIDEO_ANALYSIS = DATA / "video_analysis"
 VISUAL_LEARNING = DATA / "visual_learning.json"
@@ -108,6 +109,10 @@ FALLBACK_TREND_TERMS = (
     "分かっちゃいないね", "Hug feat. kojikoji", "恋、はじめました。",
     "愛のレンタル", "マル・マル・モリ・モリ！", "エアロピクルス",
 )
+
+
+class RefreshCancelled(Exception):
+    """Raised when a manual refresh is stopped before results are saved."""
 
 
 class ScriptData(HTMLParser):
@@ -231,12 +236,33 @@ def embedded_json_object(page, key):
 
 def landing_template_ids(url):
     _, page = fetch(url, timeout=25)
-    payload = embedded_json_object(page, "videoTemplateListResolved")
-    templates = (payload.get("data") or {}).get("videoTemplates") or []
-    ids = [str(item.get("templateId") or "") for item in templates if item.get("templateId")]
+    payload = embedded_json_object(page, "videoTemplateList")
+    templates = payload.get("videoTemplates") or []
+    summaries = {}
+    for item in templates:
+        template_id = str(item.get("templateId") or "")
+        structured = item.get("structuredData") or {}
+        creator = structured.get("creator") or {}
+        if not template_id or not creator.get("name"):
+            continue
+        summaries[template_id] = {
+            "templateId": template_id,
+            "title": item.get("title") or structured.get("name") or "",
+            "desc": item.get("titleDesc") or structured.get("description") or "",
+            "usageAmount": item.get("useCount") or 0,
+            "createTime": structured.get("uploadDate") or 0,
+            "segmentAmount": structured.get("clipsCount"),
+            "coverUrl": item.get("coverUrl") or structured.get("thumbnailUrl") or "",
+            "videoUrl": item.get("videoUrl") or structured.get("contentUrl") or "",
+            "canonicalPath": urlparse(structured.get("url") or "").path,
+            "author": {"name": creator["name"],
+                       "secUid": creator.get("encryptedCapcutID") or "",
+                       "profileUrl": creator.get("profileURL") or ""},
+        }
+    ids = [str(item.get("templateId")) for item in templates if item.get("templateId")]
     if not ids:
         ids = URL_ID.findall(page.replace("\\u002F", "/"))
-    return ids
+    return ids, summaries
 
 
 def read_json_file(path, default):
@@ -449,13 +475,25 @@ def learn_rejected_creator_video(author_key, reason, data):
     return True
 
 
-def analyze_retrieved_candidates(candidates, limit=60):
+def analyze_retrieved_candidates(candidates, limit=60, progress=None):
     learning = read_json_file(VISUAL_LEARNING, {}).get("rejected_profiles", {})
     if not learning:
+        if progress:
+            progress("视频分析", "尚无负面视觉样本，跳过逐帧分析")
         return
     selected = candidates[:min(limit, len(candidates))]
+
+    def analyze(author):
+        if progress:
+            progress("视频分析", f"正在分析作者 {author['name']} 的模板视频")
+        return analyze_author_video_content(author)
+
     with ThreadPoolExecutor(max_workers=2) as pool:
-        list(pool.map(analyze_author_video_content, selected))
+        jobs = {pool.submit(analyze, author): author for author in selected}
+        for completed, job in enumerate(as_completed(jobs), 1):
+            job.result()
+            if progress:
+                progress("视频分析", f"已分析作者 {jobs[job]['name']} 的模板视频（{completed}/{len(selected)}）")
 
 
 def scan_page_numbers(quick=False):
@@ -469,22 +507,37 @@ def scan_page_numbers(quick=False):
     return sorted(set([1, 2, 3, *range(cursor, cursor + 5)]))
 
 
-def get_seed_ids(quick=False):
+def get_seed_ids(quick=False, progress=None, cancel_event=None):
     bundled = []
     if SEED_TEMPLATES.exists():
         bundled = [line.strip() for line in SEED_TEMPLATES.read_text(encoding="utf-8").splitlines()
                    if line.strip().isdigit()]
     discovered = []
+    summaries = {}
+    successful_pages = 0
+    failed_pages = 0
     page_numbers = scan_page_numbers(quick)
     landing_pages = [url if page == 1 else f"{url}?page={page}"
                      for url in discovery_landing_urls() for page in page_numbers]
     with ThreadPoolExecutor(max_workers=10) as pool:
-        jobs = [pool.submit(landing_template_ids, url) for url in landing_pages]
-        for job in as_completed(jobs):
+        jobs = {pool.submit(landing_template_ids, url): url for url in landing_pages}
+        for completed, job in enumerate(as_completed(jobs), 1):
+            if cancel_event and cancel_event.is_set():
+                for pending_job in jobs:
+                    pending_job.cancel()
+                raise RefreshCancelled("已停止刷新，保留上一次候选结果")
             try:
-                discovered.extend(job.result())
-            except Exception:
+                ids, page_summaries = job.result()
+                discovered.extend(ids)
+                summaries.update(page_summaries)
+                successful_pages += 1
+            except Exception as exc:
+                failed_pages += 1
+                if progress and failed_pages <= 3:
+                    progress("入口失败", f"{jobs[job]}：{type(exc).__name__}：{exc}")
                 continue
+            if progress and (completed == 1 or completed % 5 == 0 or completed == len(jobs)):
+                progress("发现入口", f"已检查专题页 {completed}/{len(jobs)}，成功 {successful_pages}、失败 {failed_pages}；当前：{jobs[job]}")
     # Keep every previously seen non-AI dance template as a future entry point.
     # This makes the graph grow over successive daily scans instead of restarting
     # from a small fixed list each day.
@@ -501,7 +554,9 @@ def get_seed_ids(quick=False):
             template_id = str(item.get("templateId") or item.get("id") or "")
             if template_id and DANCE.search(text) and not AI.search(text):
                 cached_dance.append(template_id)
-    return list(dict.fromkeys(discovered + bundled + cached_dance))
+    if progress:
+        progress("发现入口", f"实时专题页返回 {len(summaries)} 条含作者资料的模板；成功 {successful_pages} 页、失败 {failed_pages} 页")
+    return list(dict.fromkeys(discovered + bundled + cached_dance)), summaries
 
 
 def item_record(item):
@@ -975,21 +1030,39 @@ def advance_scan_state(data):
     SCAN_STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def merge_results(previous, new, append_batch_size=None):
-    existing = list((previous or {}).get("candidates", []))
-    keys = {a.get("sec_uid") or a.get("name") for a in existing}
+def merge_results(previous, new, append_batch_size=None, replace_pending=False):
+    """Build a new review batch while retaining completed, non-rejected work.
+
+    The manual refresh intentionally replaces the current pending batch.
+    Pending creators are not added to a permanent exclusion list, so they may
+    appear in a later batch. Rejections are the sole review decision that
+    prevents a creator from being offered again.
+    """
     decisions = read_decisions()
-    pending_existing = sum(
-        decisions.get(a.get("sec_uid") or a.get("name"), {}).get("status", "pending") == "pending"
-        for a in existing
+    existing = list((previous or {}).get("candidates", []))
+    preserved = (
+        [
+            author for author in existing
+            if decisions.get(author.get("sec_uid") or author.get("name"), {}).get("status")
+            in {"approved", "aesthetic_only"}
+        ]
+        if replace_pending else existing
     )
-    # Normal refreshes only refill the review queue to 50.  An explicit
-    # append refresh is used after scoring changes: it adds one new batch
-    # without deleting or replacing creators already waiting for review.
+    preserved_keys = {author.get("sec_uid") or author.get("name") for author in preserved}
+    replaced_pending = sum(
+        decisions.get(author.get("sec_uid") or author.get("name"), {}).get("status", "pending")
+        == "pending" for author in existing
+    )
+    # The button builds a complete, independent review batch. Scheduled and
+    # command-line incremental scans retain their queue-refill behavior.
     available_slots = (max(0, int(append_batch_size)) if append_batch_size is not None
-                       else max(0, MAX_PENDING_CREATORS - pending_existing))
-    available = [a for a in new.get("candidates", [])
-                 if (a.get("sec_uid") or a.get("name")) not in keys]
+                       else (MAX_PENDING_CREATORS if replace_pending
+                             else max(0, MAX_PENDING_CREATORS - replaced_pending)))
+    available = [
+        author for author in new.get("candidates", [])
+        if (author.get("sec_uid") or author.get("name")) not in preserved_keys
+        and decisions.get(author.get("sec_uid") or author.get("name"), {}).get("status") != "rejected"
+    ]
     # Keep a 60/40 exploitation/exploration split. A full batch is exactly
     # 30 highest-match creators plus 20 random creators from the remainder.
     ranked_slots = min(len(available), round(available_slots * 0.6))
@@ -1008,16 +1081,17 @@ def merge_results(previous, new, append_batch_size=None):
         author["match_rank"] = rank_lookup[id(author)]
     for author in added:
         author["discovered_at"] = new.get("generated_at")
-        existing.append(author)
+        preserved.append(author)
     eligible_new = len(available)
-    merged = {**new, "candidates": existing,
+    merged = {**new, "candidates": preserved,
               "latest_batch_candidates": len(added),
               "latest_batch_keys": [a.get("sec_uid") or a.get("name") for a in added],
               "latest_ranked_candidates": len(ranked),
               "latest_random_candidates": len(exploratory),
               "deferred_new_candidates": max(0, eligible_new - len(added)),
-              "pending_queue": pending_existing + len(added),
-              "total_candidates": len(existing)}
+              "pending_queue": len(added),
+              "replaced_pending_candidates": replaced_pending,
+              "total_candidates": len(preserved)}
     history = read_json_file(SCAN_HISTORY, [])
     history.append({
         "generated_at": new.get("generated_at"),
@@ -1038,20 +1112,40 @@ def pending_creator_count(data, decisions=None):
     )
 
 
-def run_incremental_refresh(max_pages=1200, append_batch_size=None):
+def run_incremental_refresh(max_pages=1200, append_batch_size=None, replace_pending=False,
+                            cancel_event=None, progress=None):
     previous = read_json_file(RESULTS, {"candidates": []})
     pending_before = pending_creator_count(previous)
-    if (append_batch_size is None and RESULTS.exists()
+    if (not replace_pending and append_batch_size is None and RESULTS.exists()
             and pending_before >= MAX_PENDING_CREATORS):
         return previous, (f"当前已有 {pending_before} 位待审作者。请先审核一部分，"
                           f"刷新时再补足到 {MAX_PENDING_CREATORS} 位。"), False
-    new_data = discover(max_pages=max(1, min(max_pages, 2000)))
+    new_data = discover(max_pages=max(1, min(max_pages, 2000)), cancel_event=cancel_event,
+                        progress=progress, fresh=replace_pending)
     if not new_data["indexed_templates"]:
         raise RuntimeError("没有获取到模板，保留上次扫描结果")
-    data = merge_results(previous, new_data, append_batch_size=append_batch_size)
+    if replace_pending and not new_data.get("new_live_templates"):
+        raise RuntimeError("实时专题页未发现可首次索引的新模板，保留上次候选结果")
+    if replace_pending and not new_data["candidates"]:
+        raise RuntimeError("实时模板未产生符合条件的作者，保留上次候选结果")
+    enrich_profiles(new_data, progress=progress, cancel_event=cancel_event)
+    if cancel_event and cancel_event.is_set():
+        raise RefreshCancelled("已停止刷新，保留上一次候选结果")
+    if progress:
+        progress("生成候选", "正在按匹配分和随机探索比例整理新一批候选")
+    data = merge_results(previous, new_data, append_batch_size=append_batch_size,
+                         replace_pending=replace_pending)
     temp = RESULTS.with_suffix(".tmp")
     temp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     temp.replace(RESULTS)
+    if new_data.get("live_template_ids"):
+        seen_templates = set(read_json_file(SEEN_TEMPLATES, []))
+        seen_templates.update(new_data["live_template_ids"])
+        seen_temp = SEEN_TEMPLATES.with_suffix(".tmp")
+        seen_temp.write_text(json.dumps(sorted(seen_templates), ensure_ascii=False), encoding="utf-8")
+        seen_temp.replace(SEEN_TEMPLATES)
+    if progress:
+        progress("保存结果", f"已保存 {data['latest_batch_candidates']} 位本批候选")
     added_keys = set(data.get("latest_batch_keys", []))
     record_seen_candidates({
         "generated_at": new_data.get("generated_at"),
@@ -1061,42 +1155,97 @@ def run_incremental_refresh(max_pages=1200, append_batch_size=None):
     if max_pages > 50:
         advance_scan_state(new_data)
     rebuild_preference_profile(data=data)
-    message = (f"扫描 {data['indexed_templates']} 条模板，本次补充 "
-               f"{data['latest_batch_candidates']} 位；当前待审 {data['pending_queue']} 位。")
+    if replace_pending:
+        message = (f"实时新增索引 {data.get('new_live_templates', 0)} 条模板；扫描 {data['indexed_templates']} 条模板，已替换 "
+                   f"{data.get('replaced_pending_candidates', 0)} 位原待审作者；"
+                   f"当前待审 {data['pending_queue']} 位。")
+    else:
+        message = (f"扫描 {data['indexed_templates']} 条模板，本次补充 "
+                   f"{data['latest_batch_candidates']} 位；当前待审 {data['pending_queue']} 位。")
     return data, message, True
 
 
-def discover(max_pages=1200, workers=10, force=False):
-    seed_ids = get_seed_ids(quick=max_pages <= 50)
+def discover(max_pages=1200, workers=10, force=False, cancel_event=None, progress=None,
+             fresh=False):
+    def raise_if_cancelled():
+        if cancel_event and cancel_event.is_set():
+            raise RefreshCancelled("已停止刷新，保留上一次候选结果")
+
+    raise_if_cancelled()
+    if progress:
+        progress("发现入口", "正在读取 CapCut 舞蹈专题和热歌页面，寻找模板链接")
+    seed_ids, live_summaries = get_seed_ids(quick=max_pages <= 50 or fresh,
+                                            progress=progress, cancel_event=cancel_event)
+    known_template_ids = set(read_json_file(SEEN_TEMPLATES, []))
+    known_template_ids.update(path.stem for path in CACHE.glob("*.json"))
+    for previous_author in read_json_file(RESULTS, {}).get("candidates", []):
+        known_template_ids.update(str(work.get("template_id")) for work in previous_author.get("works", []))
+    if fresh:
+        seed_ids = [template_id for template_id in seed_ids if template_id in live_summaries]
+        seed_ids.sort(key=lambda template_id: template_id in known_template_ids)
+        if progress:
+            unseen = sum(template_id not in known_template_ids for template_id in seed_ids)
+            progress("发现入口", f"实时列表中有 {unseen} 条本地未索引模板，优先读取这些新模板")
     dance_seed_ids = set(seed_ids)
     if not seed_ids:
         raise RuntimeError("CapCut 页面没有返回模板链接，保留上次扫描结果")
+    if progress:
+        progress("发现入口", f"找到 {len(seed_ids)} 个模板入口，开始读取模板详情与作者资料")
     queue = list(seed_ids)
     queued = set(queue)
     chosen = []
     records = {}
     errors = []
+    processed_templates = 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
         while queue and len(chosen) < max_pages:
+            raise_if_cancelled()
             batch = queue[:min(100, max_pages - len(chosen))]
             del queue[:len(batch)]
             chosen.extend(batch)
-            jobs = {pool.submit(cached_template, template_id, force): template_id for template_id in batch}
+            jobs = {pool.submit(cached_template, template_id, force)
+                    if not (fresh and template_id in live_summaries and
+                            not (CACHE / f"{template_id}.json").exists())
+                    else pool.submit(lambda item: {"detail": item, "recommendations": [],
+                                                   "source": "live-list"}, live_summaries[template_id]): template_id
+                    for template_id in batch}
             for job in as_completed(jobs):
+                if cancel_event and cancel_event.is_set():
+                    for pending_job in jobs:
+                        pending_job.cancel()
+                    raise_if_cancelled()
                 result = job.result()
+                processed_templates += 1
+                template_id = jobs[job]
+                author_name = ((result.get("detail") or {}).get("author") or {}).get("name", "")
+                if progress:
+                    label = f"，作者 {author_name}" if author_name else ""
+                    source = "实时专题页" if template_id in live_summaries else ("本地详情缓存" if (CACHE / f"{template_id}.json").exists() else "详情页")
+                    progress("模板抓取", f"{source}：模板 {template_id}{label}；已处理 {processed_templates}，上限 {max_pages}")
                 if result.get("error"):
                     errors.append({"template_id": jobs[job], "error": result["error"]})
-                for item in [result.get("detail"), *result.get("recommendations", [])]:
+                items = [result.get("detail")]
+                if not fresh:
+                    items.extend(result.get("recommendations") or [])
+                for item in items:
                     if not item:
                         continue
                     record = item_record(item)
                     if record:
+                        live_item = live_summaries.get(record["template_id"])
+                        if live_item:
+                            live_record = item_record(live_item)
+                            if live_record:
+                                if record.get("author_name") == live_record["author_name"]:
+                                    live_record["author_bio"] = record.get("author_bio", "")
+                                record = live_record
                         record["dance_seed"] = record["template_id"] in dance_seed_ids
                         records[record["template_id"]] = record
-                        if record["template_id"] not in queued:
+                        if not fresh and record["template_id"] not in queued:
                             queue.append(record["template_id"])
                             queued.add(record["template_id"])
 
+    raise_if_cancelled()
     authors = {}
     for record in records.values():
         key = record["sec_uid"] or record["author_name"]
@@ -1108,16 +1257,24 @@ def discover(max_pages=1200, workers=10, force=False):
         if len(record["author_bio"]) > len(author["bio"]):
             author["bio"] = record["author_bio"]
         author["works"].append(record)
+    if progress:
+        progress("作者筛选", f"已整理 {len(authors)} 位模板作者，开始核对地区、舞蹈与使用量信息")
 
     terms = exclusion_terms()
     candidates = []
-    seen_creators = read_seen_creators()
-    skipped_seen = 0
+    decisions = read_decisions()
+    skipped_rejected = 0
     preference_profile = read_preferences()
-    for author in authors.values():
+    for author_index, author in enumerate(authors.values(), 1):
+        raise_if_cancelled()
+        if progress and (author_index == 1 or author_index % 10 == 0 or author_index == len(authors)):
+            progress("作者筛选", f"正在核对作者 {author['name']} 的公开模板数据（{author_index}/{len(authors)}）")
         author_key = author.get("sec_uid") or author.get("name")
-        if author_key in seen_creators:
-            skipped_seen += 1
+        # Being displayed before is not an exclusion: pending creators are
+        # eligible for every new refresh. A human rejection is the only
+        # decision that permanently removes a creator from the queue.
+        if decisions.get(author_key, {}).get("status") == "rejected":
+            skipped_rejected += 1
             continue
         if is_excluded(author, terms):
             continue
@@ -1162,16 +1319,22 @@ def discover(max_pages=1200, workers=10, force=False):
         score_author(author, preference_profile)
         candidates.append(author)
     candidates.sort(key=lambda a: a["score"], reverse=True)
+    raise_if_cancelled()
     # Cheap metadata retrieval runs first. Only the strongest retrieval pool is
     # decoded with Apple Vision, then reranked against rejected video content.
-    analyze_retrieved_candidates(candidates, limit=80)
+    if progress:
+        progress("视频分析", f"初筛出 {len(candidates)} 位作者，准备分析排名靠前的模板视频")
+    analyze_retrieved_candidates(candidates, limit=80, progress=progress)
+    raise_if_cancelled()
     for author in candidates[:min(80, len(candidates))]:
+        raise_if_cancelled()
         score_author(author, preference_profile)
     # Keep explicit dance metadata.  For title-less music trends and other
     # landing-page seeds, require local video evidence of both people and
     # motion before the creator reaches the review queue.
     filtered = []
     for author in candidates:
+        raise_if_cancelled()
         profile = author.get("video_content_profile", {})
         verified = video_supports_dance(profile)
         author["dance_video_verified"] = verified
@@ -1182,9 +1345,19 @@ def discover(max_pages=1200, workers=10, force=False):
             filtered.append(author)
     candidates = filtered
     candidates.sort(key=lambda a: a["score"], reverse=True)
+    if progress:
+        progress("筛选完成", f"得到 {len(candidates)} 位符合条件的候选作者")
+    live_template_ids = sorted(set(records).intersection(live_summaries))
+    new_live_template_ids = [template_id for template_id in live_template_ids
+                             if template_id not in known_template_ids]
+    if progress:
+        progress("实时更新", f"首次索引 {len(new_live_template_ids)} 条实时模板，历史已知 {len(live_template_ids) - len(new_live_template_ids)} 条")
     return {"generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
             "seed_pages": len(chosen), "indexed_templates": len(records),
-            "errors": errors, "skipped_seen_creators": skipped_seen,
+            "live_template_ids": live_template_ids,
+            "new_live_template_ids": new_live_template_ids,
+            "new_live_templates": len(new_live_template_ids),
+            "errors": errors, "skipped_seen_creators": skipped_rejected,
             "reference_case_count": len(read_reference_cases().get("videos", [])),
             "scoring_policy": "正面案例审美70% + 数据质量30% + 审核反馈修正",
             "scoring_version": 2,
@@ -1221,15 +1394,21 @@ def resolve_profile_link(link):
             "tt_link": tt.get("link") or tt.get("url") or ""}
 
 
-def enrich_profiles(data):
+def enrich_profiles(data, progress=None, cancel_event=None):
     """Use only a verified creator homepage, never a generic CapCut short link."""
     changed = False
+    checked = 0
     for author in data.get("candidates", []):
+        if cancel_event and cancel_event.is_set():
+            raise RefreshCancelled("已停止刷新，保留上一次候选结果")
         if author.get("profile_verified") or author.get("profile_link_checked"):
             continue
         link = author.get("profile_link_hint") or author.get("cc_link", "")
         if not link:
             continue
+        checked += 1
+        if progress:
+            progress("作者主页", f"正在读取 {author['name']} 的 CapCut 主页：CC ID、投稿总数和 TT 链接")
         try:
             profile = resolve_profile_link(link)
             if profile["name"].strip().casefold() != author["name"].strip().casefold():
@@ -1237,10 +1416,16 @@ def enrich_profiles(data):
             author.update(cc_id=profile["cc_id"], cc_link=link,
                           total_posts=profile["total_posts"],
                           tt_link=profile["tt_link"], profile_verified=True)
+            if progress:
+                progress("作者主页", f"已核验 {author['name']} 的主页资料与投稿总数")
         except (ValueError, OSError):
             author["cc_link"] = ""
+            if progress:
+                progress("作者主页", f"{author['name']} 的主页链接未通过核验")
         author["profile_link_checked"] = True
         changed = True
+    if progress and not checked:
+        progress("作者主页", "候选作者没有可核验的主页分享链接，本轮仅使用公开模板资料")
     return changed
 
 
@@ -1407,11 +1592,19 @@ def review_html(data, decisions, view="pending"):
         key = c["sec_uid"] or c["name"]
         decision = decisions.get(key, {})
         works = c["works"][:12]
-        links = "<br>".join(
-            f'<a target="_blank" href="{html.escape(w["url"], quote=True)}">'
-            + (f'<video src="{html.escape(w.get("video_url", ""), quote=True)}" poster="{html.escape(w.get("cover_url", ""), quote=True)}" controls muted playsinline preload="none"></video>' if w.get("video_url") else (f'<img src="{html.escape(w.get("cover_url", ""), quote=True)}" loading="lazy" alt="作品封面">' if w.get("cover_url") else ""))
+        links = "".join(
+            '<div class="preview-item">'
+            + (f'<video class="preview-video" src="{html.escape(w["video_url"], quote=True)}" '
+               f'poster="{html.escape(w.get("cover_url", ""), quote=True)}" muted playsinline '
+               'preload="none" tabindex="0" role="button" aria-label="播放或暂停作品预览"></video>'
+               if w.get("video_url") else
+               (f'<img class="preview-image" src="{html.escape(w.get("cover_url", ""), quote=True)}" '
+                'loading="lazy" alt="作品封面">' if w.get("cover_url") else ""))
+            + '<div class="preview-caption">'
+            + f'<a target="_blank" rel="noopener noreferrer" href="{html.escape(w["url"], quote=True)}">'
             + f'{html.escape(w["title"][:45]) or w["template_id"]}</a>'
-            f' — {w["uses"]:,} uses' + (" 💃舞蹈" if w.get("dance_seed") or w.get("dance_signal") else "") + (" ⚠AI?" if w["likely_ai"] else "") for w in works
+            + f' — {w["uses"]:,} uses' + (" 💃舞蹈" if w.get("dance_seed") or w.get("dance_signal") else "")
+            + (" ⚠AI?" if w["likely_ai"] else "") + '</div></div>' for w in works
         )
         checked = "checked" if decision.get("non_ai_confirmed") else ""
         dance_checked = "checked" if decision.get("dance_confirmed") else ""
@@ -1433,8 +1626,8 @@ def review_html(data, decisions, view="pending"):
           <td><input aria-label="CC ID" placeholder="主页显示的 CapCut ID（不是昵称）" value="{html.escape(decision.get("cc_id", c["cc_id"]), quote=True)}"><br>
               <input aria-label="CC主页" placeholder="粘贴主页分享链接，自动提取ID" value="{html.escape(decision.get("cc_link", c["cc_link"]), quote=True)}"><br>
               <button class="btn subtle" onclick="lookup(this)">从主页链接读取 ID 和投稿数</button><br>
-              <input aria-label="TT主页" placeholder="TT主页链接（可空）" value="{html.escape(decision.get("tt_link", ""), quote=True)}"><br>
-              <label>主页投稿总数（仅供参考） <input aria-label="投稿总数" type="number" min="0" value="{html.escape(str(decision.get("total_posts", "")), quote=True)}"></label>
+              <input aria-label="TT主页" placeholder="TT主页链接（可空）" value="{html.escape(decision.get("tt_link", c.get("tt_link", "")), quote=True)}"><br>
+              <label>主页投稿总数（仅供参考） <input aria-label="投稿总数" type="number" min="0" value="{html.escape(str(decision.get("total_posts", c.get("total_posts") if c.get("total_posts") is not None else "")), quote=True)}"></label>
               <label>≥3000 uses 的非AI舞蹈模板数（仅供排序参考） <input aria-label="达标投稿数" type="number" min="0" value="{html.escape(str(decision.get("high_use_posts", c["high_use_non_ai_indexed"])), quote=True)}"></label>
               <label><input aria-label="确认非AI" type="checkbox" {checked}> 已确认以非AI模板为主</label><br>
               <label><input aria-label="确认舞蹈" type="checkbox" {dance_checked}> 已确认主要产出优质舞蹈模板</label><br>
@@ -1447,28 +1640,39 @@ def review_html(data, decisions, view="pending"):
               <button class="btn reject" onclick="save(this,'rejected')">排除</button>
               <button class="btn subtle" onclick="save(this,'pending')">待审</button></div></td></tr>''')
     trend_summary = '、'.join(data.get("trend_terms", [])[:5])
-    summary = (f'每天只追加未展示过的新作者；发布满7天且 uses 仍低于1000的模板会自动排除。旧作者保留审核记录，但默认隐藏已完成项目。'
+    summary = (f'每次刷新都会替换整批待审作者；未审核作者可能再次出现，只有人工排除的作者不会再次进入队列。发布满7天且 uses 仍低于1000的模板会自动排除。已完成审核记录会保留。'
                f'匹配度已结合 {data.get("reference_case_count", 0)} 条正面案例，按审美70%和数据质量30%计算。'
                + (f'本轮日本 TikTok 热歌入口：{html.escape(trend_summary)}。' if trend_summary else '') +
-               f'本次新增 {data.get("latest_batch_candidates", len(data.get("candidates", [])))} 位，'
+               f'本次从实时专题页首次索引 {data.get("new_live_templates", 0)} 条模板。'
+               f'本批待审 {data.get("latest_batch_candidates", len(data.get("candidates", [])))} 位，'
                f'其中高匹配 {data.get("latest_ranked_candidates", 30)} 位、随机探索 {data.get("latest_random_candidates", 20)} 位。'
-               f'累计 {len(data.get("candidates", []))} 位，扫描时跳过已见作者 '
+               f'累计保留 {len(data.get("candidates", []))} 位，扫描时跳过已排除作者 '
                f'{data.get("skipped_seen_creators", 0)} 位。')
     return '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>舞蹈创作者审核</title>
 <style>
+.refresh-log-panel{margin:0 0 16px;padding:14px 16px;border:1px solid #dce2ef;border-radius:16px;background:#fff;box-shadow:0 8px 24px rgba(31,38,67,.06)}.refresh-log-panel[hidden]{display:none}.refresh-log-panel h2{margin:0 0 9px;font-size:15px}.refresh-log-entries{max-height:250px;overflow-y:auto;font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace}.refresh-log-entry{display:grid;grid-template-columns:64px 84px minmax(0,1fr);gap:8px;padding:5px 0;border-top:1px solid #edf0f6;overflow-wrap:anywhere}.refresh-log-entry time{color:#777f91}.refresh-log-entry strong{color:#5751c3}@media(max-width:700px){.refresh-log-entry{grid-template-columns:56px minmax(0,1fr)}.refresh-log-entry span{grid-column:1/-1}}
+body{overflow-x:hidden}main,.table-wrap{min-width:0}.table-wrap{overflow-x:hidden!important;overflow-y:visible!important}table{width:100%;min-width:0!important;table-layout:fixed}th:nth-child(1){width:4%}th:nth-child(2){width:17%}th:nth-child(3){width:18%}th:nth-child(4){width:32%}th:nth-child(5){width:29%}td,th{min-width:0!important;overflow-wrap:anywhere}td input,td textarea,td select{max-width:100%}.preview-item{margin:0 0 14px}.preview-video,.preview-image{display:block;width:104px;height:148px;max-width:100%;margin:0 0 7px;object-fit:contain;cursor:pointer}.preview-video.expanded{width:100%;height:auto;max-height:70vh;aspect-ratio:9/16;background:#111}.preview-caption{line-height:1.5;overflow-wrap:anywhere}@media(max-width:760px){table,tbody,tr{width:100%}td:nth-child(n){width:auto;min-width:0!important}.preview-video.expanded{max-height:65vh}}
 :root{--ink:#172033;--muted:#687086;--line:#e4e8f0;--panel:#fff;--blue:#635bff;--blue2:#8b5cf6;--green:#15945c;--red:#d34b5d;--shadow:0 16px 40px rgba(31,38,67,.08)}*{box-sizing:border-box}body{margin:0;color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC",sans-serif;background:linear-gradient(135deg,#f5f3ff 0,#f7fbff 40%,#f8fafc 100%);min-height:100vh}main{max-width:1800px;margin:auto;padding:28px}.hero{position:relative;overflow:hidden;color:#fff;padding:28px 32px;border-radius:22px;background:linear-gradient(125deg,#27215f,#635bff 54%,#a855f7);box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;right:-80px;top:-160px;background:rgba(255,255,255,.13)}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.72}.hero h1{font-size:28px;margin:5px 0 8px}.hero p{max-width:1050px;margin:0;color:rgba(255,255,255,.84)}.toolbar{position:sticky;top:0;z-index:8;display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:18px 0 14px;padding:12px 14px;border:1px solid rgba(228,232,240,.9);border-radius:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(31,38,67,.06)}.btn,.download{appearance:none;border:0;border-radius:10px;padding:9px 13px;font-weight:650;cursor:pointer;text-decoration:none;transition:.15s ease}.btn:hover,.download:hover{transform:translateY(-1px)}.btn:disabled{opacity:.55;cursor:wait;transform:none}.primary{color:#fff;background:linear-gradient(120deg,var(--blue),var(--blue2));box-shadow:0 6px 16px rgba(99,91,255,.25)}.subtle,.download{color:#4d5265;background:#eef0f6}.approve{color:#087142;background:#dff7ea}.potential{color:#765800;background:#fff0b8}.reject{color:#a62f42;background:#ffe4e8}.refresh-status{color:var(--muted);margin-left:auto}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel);box-shadow:var(--shadow)}table{border-collapse:separate;border-spacing:0;width:100%;min-width:1260px}td,th{border-bottom:1px solid var(--line);padding:14px 12px;vertical-align:top;text-align:left}th{position:sticky;top:0;z-index:5;color:#596176;background:#f5f7fb;font-size:12px;letter-spacing:.04em}tr:last-child td{border-bottom:0}tbody tr{transition:.18s background}tbody tr:hover{background:#fafbff}td:nth-child(2){min-width:180px}td:nth-child(3){min-width:190px}td:nth-child(4){min-width:390px}td:nth-child(5){min-width:270px}.rank{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;color:#5f59d9;background:#eeecff;font-weight:750}.creator-name{font-size:16px}.badge{display:inline-block;margin:7px 7px 7px 0;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700}.badge.match{color:#5148d8;background:#eae8ff}.badge.explore{color:#9a5b00;background:#fff1ce}.score,small{color:var(--muted)}input,textarea,select{width:100%;margin:4px 0;padding:9px 10px;border:1px solid #d9deea;border-radius:9px;background:#fff;color:var(--ink);font:inherit;outline:none}input:focus,textarea:focus,select:focus{border-color:#827af7;box-shadow:0 0 0 3px rgba(99,91,255,.12)}input[type=checkbox]{width:auto;accent-color:var(--blue)}textarea{height:72px;resize:vertical}.review-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}a{color:#5148d8}img,video{width:100px;height:142px;object-fit:cover;vertical-align:middle;margin:6px 9px 6px 0;border-radius:11px;background:#111;box-shadow:0 4px 12px rgba(20,25,45,.12)}tr[data-status=approved]{background:#f0fbf5}tr[data-status=aesthetic_only]{background:#fffaf0}tr[data-status=rejected]{background:#fff6f7;opacity:.62}#msg{color:#3f4660;font-weight:600}@media(max-width:700px){main{padding:14px}.hero{padding:22px}.hero h1{font-size:22px}.refresh-status{width:100%;margin-left:0}}
-@media(max-width:760px){.toolbar{top:6px}.table-wrap{overflow:visible;border:0;background:transparent;box-shadow:none}table{display:block;min-width:0}thead{display:none}tbody{display:grid;gap:14px}tr{display:block;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 26px rgba(31,38,67,.07)}td{display:block;min-width:0!important;padding:12px 14px;border-bottom:1px solid #edf0f6}td:last-child{border-bottom:0}td:nth-child(1){float:left;width:54px;border:0;padding-top:16px}td:nth-child(2){margin-left:54px;padding-left:0}td:nth-child(n+3):before{display:block;margin-bottom:7px;color:#858ca0;font-size:11px;font-weight:750;letter-spacing:.08em}td:nth-child(3):before{content:"筛选证据"}td:nth-child(4):before{content:"作品预览"}td:nth-child(5):before{content:"审核信息"}img,video{width:88px;height:125px}.review-actions{position:sticky;bottom:8px;padding:8px;border-radius:12px;background:rgba(255,255,255,.94);box-shadow:0 5px 18px rgba(31,38,67,.1)}}
+@media(max-width:1050px){.toolbar{top:6px}.table-wrap{overflow:visible;border:0;background:transparent;box-shadow:none}table{display:block;min-width:0}thead{display:none}tbody{display:grid;gap:14px}tr{display:block;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 10px 26px rgba(31,38,67,.07)}td{display:block;min-width:0!important;padding:12px 14px;border-bottom:1px solid #edf0f6}td:last-child{border-bottom:0}td:nth-child(1){float:left;width:54px;border:0;padding-top:16px}td:nth-child(2){margin-left:54px;padding-left:0}td:nth-child(n+3):before{display:block;margin-bottom:7px;color:#858ca0;font-size:11px;font-weight:750;letter-spacing:.08em}td:nth-child(3):before{content:"筛选证据"}td:nth-child(4):before{content:"作品预览"}td:nth-child(5):before{content:"审核信息"}img,video{width:88px;height:125px}.review-actions{position:sticky;bottom:8px;padding:8px;border-radius:12px;background:rgba(255,255,255,.94);box-shadow:0 5px 18px rgba(31,38,67,.1)}}
 </style><body><main>
 <section class="hero"><div class="eyebrow">CAPCUT · JAPAN · DANCE</div><h1>舞蹈模板创作者审核</h1><p>''' + summary + '''</p></section>
 <nav class="toolbar"><button id="refreshBtn" class="btn primary" onclick="manualRefresh()">↻ 手动刷新候选</button><a class="btn subtle" href="/?view=pending">只看待审</a><a class="btn approve" href="/?view=approved">只看通过</a><a class="btn subtle" href="/?view=all">查看全部</a><a class="btn potential" href="/aesthetic">舞蹈审美机制</a><a class="btn subtle" href="/new-category">新类别工作区</a><a class="download" href="/export.csv">下载已通过表格</a><span id="msg"></span><span id="refreshStatus" class="refresh-status">准备就绪</span></nav>
+<section id="refreshLogPanel" class="refresh-log-panel" hidden><h2>刷新日志</h2><div id="refreshLogEntries" class="refresh-log-entries" role="log" aria-live="polite"></div></section>
 <div class="table-wrap"><table><thead><tr><th>#</th><th>作者</th><th>日文和数量证据</th><th>作品预览</th><th>审核</th></tr></thead><tbody>''' + "\n".join(rows) + '''</tbody></table></div>
 <script>
 async function save(button,status){const row=button.closest('tr'),td=button.closest('td'), inputs=td.querySelectorAll('input'),areas=td.querySelectorAll('textarea'),body={key:row.dataset.key,status,cc_id:inputs[0].value,cc_link:inputs[1].value,tt_link:inputs[2].value,total_posts:inputs[3].value,high_use_posts:inputs[4].value,non_ai_confirmed:inputs[5].checked,dance_confirmed:inputs[6].checked,priority:td.querySelector('select').value,specialty:areas[0].value,aesthetic_notes:areas[1].value,rejection_reason:areas[2].value};const r=await fetch('/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(r.ok){row.dataset.status=status;document.querySelector('#msg').textContent=status==='rejected'?'已保存，原因已加入反向提示词':status==='aesthetic_only'?'已保存为审美达标、数据不足，并更新审美档案':'已保存并更新舞蹈审美档案';return true;}alert(await r.text());return false;}
 async function lookup(button){const td=button.closest('td'),inputs=td.querySelectorAll('input'),link=inputs[1].value.trim();if(!link){alert('先粘贴主页分享链接');return;}button.disabled=true;button.textContent='正在读取…';try{const r=await fetch('/resolve-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({link})});if(!r.ok)throw Error(await r.text());const p=await r.json();if(!inputs[0].value.trim())inputs[0].value=p.cc_id||'';inputs[2].value=inputs[2].value||p.tt_link||'';inputs[3].value=p.total_posts||'';await save(button,button.closest('tr').dataset.status);document.querySelector('#msg').textContent='主页：'+p.name+'；投稿数已保存。已有 CC ID 保持原值。';}catch(e){alert('读取失败：'+e.message);}finally{button.disabled=false;button.textContent='从主页链接读取 ID 和投稿数';}}
+function closePreview(video){video.pause();video.classList.remove('expanded');video.setAttribute('aria-label','播放或暂停作品预览');}
+async function togglePreview(video){if(video.paused){document.querySelectorAll('.preview-video.expanded').forEach(other=>{if(other!==video)closePreview(other)});video.classList.add('expanded');video.setAttribute('aria-label','暂停作品预览');try{await video.play()}catch(e){closePreview(video)}}else{video.pause();video.setAttribute('aria-label','播放作品预览')}}
+document.addEventListener('click',event=>{const video=event.target.closest('.preview-video');if(video){togglePreview(video);return}document.querySelectorAll('.preview-video.expanded').forEach(closePreview)});
+document.addEventListener('keydown',event=>{if(event.target.matches('.preview-video')&&(event.key==='Enter'||event.key===' ')){event.preventDefault();togglePreview(event.target)}});
 function filter(which){document.querySelectorAll('tbody tr').forEach(r=>r.style.display=which==='all'||r.dataset.status===which?'':'none');}
 let refreshTimer=null;
-async function manualRefresh(){const b=document.querySelector('#refreshBtn'),s=document.querySelector('#refreshStatus');b.disabled=true;s.textContent='正在启动大范围扫描…';try{const r=await fetch('/refresh',{method:'POST'});if(!r.ok)throw Error(await r.text());pollRefresh();}catch(e){b.disabled=false;s.textContent='启动失败：'+e.message;}}
-async function pollRefresh(){const b=document.querySelector('#refreshBtn'),s=document.querySelector('#refreshStatus');try{const r=await fetch('/refresh-status');const state=await r.json();s.textContent=state.message;if(state.running){refreshTimer=setTimeout(pollRefresh,2000);return;}b.disabled=false;if(state.finished){s.textContent=state.message+' 正在载入…';setTimeout(()=>location.reload(),900);}}catch(e){b.disabled=false;s.textContent='状态读取失败：'+e.message;}}
+function renderRefreshLog(state){const panel=document.querySelector('#refreshLogPanel'),entries=document.querySelector('#refreshLogEntries'),logs=state.logs||[];panel.hidden=logs.length===0;if(!logs.length)return;const atBottom=entries.scrollTop+entries.clientHeight>=entries.scrollHeight-20;entries.replaceChildren(...logs.map(item=>{const line=document.createElement('div');line.className='refresh-log-entry';const time=document.createElement('time');time.textContent=item.time;const stage=document.createElement('strong');stage.textContent=item.stage;const detail=document.createElement('span');detail.textContent=item.message;line.append(time,stage,detail);return line}));if(atBottom)entries.scrollTop=entries.scrollHeight;}
+function setRefreshButton(running,stopping=false){const b=document.querySelector('#refreshBtn');b.disabled=stopping;b.textContent=running?(stopping?'正在停止…':'■ 停止刷新'):'↻ 手动刷新候选';}
+async function manualRefresh(){const b=document.querySelector('#refreshBtn'),s=document.querySelector('#refreshStatus');if(b.dataset.running==='true'){b.disabled=true;s.textContent='正在请求停止刷新…';try{const r=await fetch('/refresh/cancel',{method:'POST'});if(!r.ok)throw Error(await r.text());pollRefresh(false);}catch(e){b.disabled=false;s.textContent='停止失败：'+e.message;}return;}b.disabled=true;s.textContent='正在启动大范围扫描…';try{const r=await fetch('/refresh',{method:'POST'});if(!r.ok)throw Error(await r.text());b.dataset.running='true';setRefreshButton(true);pollRefresh();}catch(e){b.disabled=false;s.textContent='启动失败：'+e.message;}}
+async function pollRefresh(reloadOnFinish=true){const b=document.querySelector('#refreshBtn'),s=document.querySelector('#refreshStatus');if(refreshTimer)clearTimeout(refreshTimer);try{const r=await fetch('/refresh-status');const state=await r.json();renderRefreshLog(state);s.textContent=state.message+(state.running&&state.elapsed_seconds!==undefined?' · '+state.elapsed_seconds+' 秒':'');if(state.running){b.dataset.running='true';setRefreshButton(true,Boolean(state.cancel_requested));refreshTimer=setTimeout(()=>pollRefresh(true),1000);return;}b.dataset.running='false';setRefreshButton(false);if(state.finished&&reloadOnFinish){s.textContent=state.message+' 正在载入…';setTimeout(()=>location.reload(),900);}}catch(e){b.dataset.running='false';setRefreshButton(false);s.textContent='状态读取失败：'+e.message;}}
+pollRefresh(false);
 </script></main></body></html>'''
 
 
@@ -1476,15 +1680,33 @@ def serve(data, port=8765, open_browser=True):
     DATA.mkdir(exist_ok=True)
     lock = threading.Lock()
     refresh_lock = threading.Lock()
-    refresh_state = {"running": False, "message": "可以刷新", "finished": False,
-                     "error": False, "started_at": 0}
+    refresh_state = {"running": False, "message": "可以刷新", "logs": [], "finished": False,
+                     "error": False, "cancel_requested": False, "started_at": 0,
+                     "cancel_event": None}
 
-    def refresh_worker():
+    def push_progress(stage, message):
+        with refresh_lock:
+            if not refresh_state["cancel_requested"] or stage in {"已停止", "失败", "完成"}:
+                refresh_state["message"] = message
+            refresh_state["logs"].append({
+                "time": time.strftime("%H:%M:%S"), "stage": stage, "message": message,
+            })
+            refresh_state["logs"] = refresh_state["logs"][-200:]
+
+    def refresh_worker(cancel_event):
         try:
-            _, message, changed = run_incremental_refresh(1200)
+            _, message, changed = run_incremental_refresh(
+                1200, replace_pending=True, cancel_event=cancel_event,
+                progress=push_progress)
+            push_progress("完成", message)
             with refresh_lock:
                 refresh_state.update(running=False, message=message, finished=changed, error=False)
+        except RefreshCancelled as exc:
+            push_progress("已停止", str(exc))
+            with refresh_lock:
+                refresh_state.update(running=False, message=str(exc), finished=False, error=False)
         except Exception as exc:
+            push_progress("失败", f"刷新失败：{exc}")
             with refresh_lock:
                 refresh_state.update(running=False, message=f"刷新失败：{exc}", finished=False, error=True)
 
@@ -1498,10 +1720,9 @@ def serve(data, port=8765, open_browser=True):
                 self.send_response(200);self.send_header("Content-Type", "text/plain; charset=utf-8")
             elif path == "/refresh-status":
                 with refresh_lock:
-                    state = dict(refresh_state)
+                    state = {key: value for key, value in refresh_state.items() if key != "cancel_event"}
                     if state["running"] and state.get("started_at"):
-                        elapsed = int(time.time() - state["started_at"])
-                        state["message"] = f'正在进行大范围增量扫描… 已运行 {elapsed} 秒'
+                        state["elapsed_seconds"] = int(time.time() - state["started_at"])
                     payload = json.dumps(state, ensure_ascii=False).encode("utf-8")
                 self.send_response(200);self.send_header("Content-Type", "application/json; charset=utf-8")
             elif path == "/export.csv":
@@ -1576,14 +1797,36 @@ def serve(data, port=8765, open_browser=True):
             if path == "/refresh":
                 with refresh_lock:
                     if refresh_state["running"]:
-                        payload = json.dumps(refresh_state, ensure_ascii=False).encode("utf-8")
+                        payload = json.dumps({key: value for key, value in refresh_state.items() if key != "cancel_event"}, ensure_ascii=False).encode("utf-8")
                         self.send_response(202)
                     else:
-                        refresh_state.update(running=True, message="正在进行大范围增量扫描…",
-                                             finished=False, error=False, started_at=time.time())
-                        threading.Thread(target=refresh_worker, daemon=True).start()
-                        payload = json.dumps(refresh_state, ensure_ascii=False).encode("utf-8")
+                        cancel_event = threading.Event()
+                        refresh_state.update(running=True, message="正在启动扫描…",
+                                             finished=False, error=False, cancel_requested=False,
+                                             cancel_event=cancel_event, started_at=time.time(),
+                                             logs=[{"time": time.strftime("%H:%M:%S"),
+                                                    "stage": "启动", "message": "正在启动扫描…"}])
+                        threading.Thread(target=refresh_worker, args=(cancel_event,), daemon=True).start()
+                        payload = json.dumps({key: value for key, value in refresh_state.items() if key != "cancel_event"}, ensure_ascii=False).encode("utf-8")
                         self.send_response(202)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers();self.wfile.write(payload)
+                return
+            if path == "/refresh/cancel":
+                with refresh_lock:
+                    if refresh_state["running"]:
+                        refresh_state["cancel_requested"] = True
+                        refresh_state["message"] = "已请求停止，正在结束当前扫描批次…"
+                        refresh_state["logs"].append({
+                            "time": time.strftime("%H:%M:%S"), "stage": "停止请求",
+                            "message": "已请求停止，正在结束当前扫描批次…",
+                        })
+                        refresh_state["cancel_event"].set()
+                        self.send_response(202)
+                    else:
+                        self.send_response(409)
+                    payload = json.dumps({key: value for key, value in refresh_state.items() if key != "cancel_event"}, ensure_ascii=False).encode("utf-8")
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.send_header("Content-Length", str(len(payload)))
                 self.end_headers();self.wfile.write(payload)

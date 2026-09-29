@@ -1498,5 +1498,35 @@
     "specialty": "",
     "aesthetic_notes": "",
     "rejection_reason": "写真"
+  },
+  "hPN_uM9uIfMmNr6Bkabq7aD2M2kiAl863_DD_UCyIfIaG-g=": {
+    "key": "hPN_uM9uIfMmNr6Bkabq7aD2M2kiAl863_DD_UCyIfIaG-g=",
+    "status": "pending",
+    "cc_id": "",
+    "cc_link": "",
+    "tt_link": "",
+    "total_posts": "",
+    "high_use_posts": "2",
+    "non_ai_confirmed": false,
+    "dance_confirmed": false,
+    "priority": "P1",
+    "specialty": "",
+    "aesthetic_notes": "",
+    "rejection_reason": ""
+  },
+  "FyM0MvgW0uXmcjnCL-HP_3po0nE1TYdQFSnbgz1lk3dT9w8=": {
+    "key": "FyM0MvgW0uXmcjnCL-HP_3po0nE1TYdQFSnbgz1lk3dT9w8=",
+    "status": "rejected",
+    "cc_id": "",
+    "cc_link": "",
+    "tt_link": "",
+    "total_posts": "",
+    "high_use_posts": "1",
+    "non_ai_confirmed": false,
+    "dance_confirmed": false,
+    "priority": "P1",
+    "specialty": "",
+    "aesthetic_notes": "",
+    "rejection_reason": "有AI内容"
   }
 }
