@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>审美学习机制</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/config.js"></script>
+  <script type="module" src="js/aesthetic.js"></script>
+</head>
+<body>
+<main class="narrow">
+  <section class="hero">
+    <div class="eyebrow">CAPCUT · AESTHETIC LEARNING</div>
+    <h1>审美学习机制</h1>
+    <p>只展示学习进度、具体内容和计分影响，不展示作者名单。</p>
+  </section>
+  <nav class="toolbar">
+    <a class="btn" href="index.html">← 返回作者审核</a>
+    <span class="muted">最近更新：<span id="updatedAt">…</span></span>
+  </nav>
+  <div id="notice" class="notice" hidden></div>
+
+  <section class="grid">
+    <div class="card"><span class="muted">正面案例</span><b id="referenceCount">–</b><span>已载入</span></div>
+    <div class="card"><span class="muted">已吸收审核反馈</span><b id="absorbed">–</b><span id="absorbedDetail"></span></div>
+    <div class="card"><span class="muted">当前有效规则</span><b id="ruleCount">–</b><span id="ruleDetail"></span></div>
+    <div class="card"><span class="muted">审美档案版本</span><b id="revision">–</b><span>持续学习中</span></div>
+  </section>
+
+  <section class="panel">
+    <h2>当前计分逻辑</h2>
+    <div class="formula"><span></span><span></span></div>
+    <div class="legend"><span>正面案例审美 70%</span><span>数据质量 30%</span></div>
+    <p class="muted">审核学习额外修正：每 1 点正向权重 +2 分，每 1 点反向权重 -4 分，最终修正限制在 -30 至 +30 分。</p>
+  </section>
+
+  <section class="panel">
+    <h2>反向视频内容学习</h2>
+    <p id="visualSummary"></p>
+    <p class="muted">本地 Apple Vision（仅 macOS）会对模板视频抽帧，学习人物出现、面部比例、镜头变化和画面标签。新候选只有高于舞蹈视频的共性基线时才扣分。</p>
+    <div id="visualLabels"></div>
+  </section>
+
+  <form id="termsForm" class="panel">
+    <h2>修改当前审美规则</h2>
+    <p class="muted">每行一条，格式为“关键词 = 权重”。权重范围 0–10；删掉整行即删除该规则。</p>
+    <div class="two-col">
+      <label><b>正向加分内容</b><textarea id="positiveText" class="code" spellcheck="false"></textarea>
+        <small>用于“喜欢什么”，命中后加分。</small></label>
+      <label><b>反向扣分内容</b><textarea id="negativeText" class="code" spellcheck="false"></textarea>
+        <small>每条不通过原因完整保留，同时拆出语义片段和可匹配关键词。</small></label>
+    </div>
+    <p><button class="btn primary" type="submit">保存并重新计算匹配度</button></p>
+  </form>
+
+  <section class="panel">
+    <h2>已学到的具体内容</h2>
+    <div class="two-col">
+      <div><b>正向审美描述</b><ul id="positiveFeedback" class="plain"></ul></div>
+      <div><b>反向原因</b><ul id="negativeFeedback" class="plain"></ul></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>手动修改记录</h2>
+    <ul id="history" class="plain"></ul>
+  </section>
+</main>
+</body>
+</html>

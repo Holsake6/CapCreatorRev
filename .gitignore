@@ -9,15 +9,15 @@ __pycache__/
 *.xlsx
 ~$*.xlsx
 
-# Network-derived template cache and locally compiled helper.
-capcut_local_data/cache/
-capcut_local_data/tools/
-capcut_local_data/video_analysis/
-capcut_local_data/*.log
+# Runtime state: the SQLite database, compiled helpers, logs and pid files.
+backend/data/*.db
+backend/data/*.db-*
+backend/data/*.log
+backend/data/tools/
+.run/
 
-# Historical safety snapshots are retained locally but are not the current state.
-capcut_local_data/*.backup-*.json
-capcut_local_data/*.before-*.json
+# Leftover caches of the old single-file version (imported once on first start).
+capcut_local_data/
 
 # Generated distribution packages duplicate the canonical source tree.
 outputs/

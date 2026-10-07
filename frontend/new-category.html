@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>新类别正面学习</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/config.js"></script>
+  <script type="module" src="js/new-category.js"></script>
+</head>
+<body>
+<main class="narrow">
+  <section class="hero alt">
+    <div class="eyebrow">CAPCUT · NEW CATEGORY · POSITIVE LEARNING</div>
+    <h1 id="categoryTitle">新类别</h1>
+    <p>这是独立的新类别工作区。当前只学习正面案例，不继承舞蹈审美，也不建立反向提示词。</p>
+  </section>
+  <nav class="toolbar">
+    <a class="btn" href="index.html">返回舞蹈创作者界面</a>
+    <a class="btn primary" href="#feed">导入正面案例</a>
+  </nav>
+  <div id="notice" class="notice" hidden></div>
+
+  <section class="grid three">
+    <div class="card"><span class="muted">已吸收正面案例</span><b id="caseCount">–</b><span>条</span></div>
+    <div class="card"><span class="muted">正面审美档案</span><b id="revision">–</b><span id="updatedAt"></span></div>
+    <div class="card"><span class="muted">反向提示词</span><b>0</b><span>此类别不启用</span></div>
+  </section>
+
+  <section class="panel">
+    <h2>当前学到的正面特征</h2>
+    <p class="muted">系统从你提供的结构化案例中自动汇总重复出现的风格、包装、节奏、内容和制作特征。</p>
+    <div id="terms"></div>
+  </section>
+
+  <section class="panel">
+    <h2>已识别的数据维度</h2>
+    <div id="fields"></div>
+  </section>
+
+  <form id="feed" class="panel">
+    <h2>喂入正面案例</h2>
+    <p class="muted">支持 JSON 数组，或包含 videos、cases、examples、items、data、positive_cases 数组的 JSON 对象。重复案例不会再次加入。</p>
+    <label class="block" for="categoryName">类别名称</label>
+    <input id="categoryName" type="text" placeholder="例如：旅行模板创作者">
+    <label class="block" for="jsonFile">选择 JSON 文件</label>
+    <input id="jsonFile" type="file" accept=".json,application/json">
+    <label class="block" for="jsonPayload">或粘贴 JSON</label>
+    <textarea id="jsonPayload" class="code" spellcheck="false" placeholder='[{"style":"……","rhythm":"……"}]'></textarea>
+    <p><button class="btn primary" type="submit">导入并自动学习</button></p>
+  </form>
+
+  <section class="panel">
+    <h2>最近吸收的案例内容</h2>
+    <ul id="cases" class="cases"></ul>
+  </section>
+</main>
+</body>
+</html>

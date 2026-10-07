@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="application-name" content="capcut-creator-review-frontend">
+  <title>舞蹈创作者审核</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/config.js"></script>
+  <script type="module" src="js/review.js"></script>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="eyebrow">CAPCUT · JAPAN · DANCE</div>
+    <h1>舞蹈模板创作者审核</h1>
+    <p id="summary">正在载入…</p>
+  </section>
+
+  <nav class="toolbar">
+    <button id="refreshBtn" class="btn primary" type="button">↻ 手动刷新候选</button>
+    <span id="viewButtons">
+      <button class="btn" type="button" data-view="pending">待审<span class="count" data-count="pending"></span></button>
+      <button class="btn approve" type="button" data-view="approved">通过<span class="count" data-count="approved"></span></button>
+      <button class="btn potential" type="button" data-view="aesthetic_only">审美达标<span class="count" data-count="aesthetic_only"></span></button>
+      <button class="btn reject" type="button" data-view="rejected">排除<span class="count" data-count="rejected"></span></button>
+      <button class="btn" type="button" data-view="all">全部</button>
+    </span>
+    <a class="btn potential" href="aesthetic.html">舞蹈审美机制</a>
+    <a class="btn" href="new-category.html">新类别工作区</a>
+    <a id="exportLink" class="btn" href="#">下载已通过表格</a>
+    <span id="msg"></span>
+    <span id="refreshStatus" class="status-text">准备就绪</span>
+  </nav>
+
+  <div id="error" class="notice bad" hidden></div>
+
+  <section id="logPanel" class="log-panel" hidden>
+    <h2>刷新日志</h2>
+    <div id="logEntries" class="log-entries" role="log" aria-live="polite"></div>
+  </section>
+
+  <details class="panel" id="exclusionPanel">
+    <summary>已归类作者排除名单（扫描时跳过）</summary>
+    <p class="muted">把飞书里已归类作者的 CC 用户名称或 CC ID 粘贴在这里，每行一个。下次扫描会跳过名称或 ID 包含这些内容的作者。</p>
+    <textarea id="exclusionText" class="code" spellcheck="false"></textarea>
+    <button id="saveExclusions" class="btn primary" type="button">保存排除名单</button>
+    <span id="exclusionMsg" class="muted"></span>
+  </details>
+
+  <div class="table-wrap" style="margin-top:16px">
+    <table>
+      <thead><tr><th>#</th><th>作者</th><th>日文和数量证据</th><th>作品预览</th><th>审核</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="emptyState" class="empty" hidden>这个视图暂时没有作者。</div>
+  </div>
+</main>
+</body>
+</html>
