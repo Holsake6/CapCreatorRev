@@ -12,6 +12,7 @@
 """
 
 import argparse
+import os
 import sys
 
 from . import category as categories, discovery, dna, doctor, ingest, learn, store
@@ -37,7 +38,7 @@ def cmd_serve(args):
                 learn.rescore(category, data)
                 data["scoring_version"] = 3
                 category.save_candidates(data)
-    server.serve(args.port, not args.no_browser)
+    server.serve(args.port, not args.no_browser, host=getattr(args, "host", None) or "127.0.0.1")
 
 
 def cmd_scan(args):
@@ -80,7 +81,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog="capcut_local.py")
     sub = parser.add_subparsers(dest="command", required=True)
     serve = sub.add_parser("serve")
-    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--port", type=int, default=int(os.environ.get("CAPCREATOR_PORT", 8765)))
+    serve.add_argument("--host", default=os.environ.get("CAPCREATOR_HOST", "127.0.0.1"),
+                       help="0.0.0.0 = 允许局域网/服务器访问（目前没有登录保护，只在可信网络使用）")
     serve.add_argument("--no-browser", action="store_true")
     sub.add_parser("doctor")
     sub.add_parser("categories")

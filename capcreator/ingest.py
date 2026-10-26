@@ -13,7 +13,7 @@ Folder conventions (optional, recommended for the client):
     客户素材/
       舞蹈/        ← one folder per category (name becomes the category)
         xxx.mp4
-        反例/      ← "反例" / "negative" / "不要": counter-examples
+        反例/      ← "反例" / "NG" / "不採用" / "negative": counter-examples
       旅行vlog/
         links.txt  ← CapCut template links, one per line
 """
@@ -29,7 +29,7 @@ from . import capcut, category as categories, dna, net, paths
 
 VIDEO_EXT = {".mp4", ".mov", ".m4v", ".webm", ".mkv", ".avi"}
 TEXT_EXT = {".txt", ".csv", ".md", ".json", ".html", ".htm", ".tsv"}
-NEGATIVE_DIR = re.compile(r"(?i)^(反例|负例|不要|不喜欢|negative|negatives|bad|no)$")
+NEGATIVE_DIR = re.compile(r"(?i)^(反例|负例|不要|不喜欢|NG|不採用|ダメ|negative|negatives|bad|no)$")
 SKIP_DIR = re.compile(r"^(__MACOSX|\..*)$")
 
 

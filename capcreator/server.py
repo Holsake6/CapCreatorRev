@@ -643,7 +643,7 @@ def make_server(port=8765, host="127.0.0.1"):
 def serve(port=8765, open_browser=True, host="127.0.0.1"):
     server = make_server(port, host)
     url = f"http://127.0.0.1:{port}/"
-    print(f"审核页：{url}", flush=True)
+    print(f"审核页：{url}" + (f"（监听 {host}，局域网可访问）" if host not in ("127.0.0.1", "localhost") else ""), flush=True)
     if open_browser:
         webbrowser.open(url)
     try:

@@ -123,3 +123,9 @@ def test_server_errors_and_ranges(data_dir):
         time.sleep(0.5)
     finally:
         httpd.shutdown()
+
+
+def test_japanese_counter_example_folder_names():
+    for name in ("反例", "NG", "ng", "不採用", "ダメ"):
+        assert ingest.label_for(("ダンス", name)) == "negative"
+    assert ingest.label_for(("ダンス",), "positive") == "positive"

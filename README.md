@@ -8,13 +8,17 @@
 - **可解释**：每个类别都能看到学到了什么（“偏好：画面变化更贴合音乐重拍；避开：分屏拼贴…”），每条作品显示风格匹配分和原因。
 - **不调用任何外部 AI 服务**，所有视频分析在本机完成。
 
-方法说明见 [docs/模板学习方法.md](docs/模板学习方法.md)，调研见 [docs/research/视频模板自学习_调研.md](docs/research/视频模板自学习_调研.md)，给客户的上传说明见 [docs/客户素材上传指南.md](docs/客户素材上传指南.md)。
+方法说明见 [docs/模板学习方法.md](docs/模板学习方法.md)，调研见 [docs/research/视频模板自学习_调研.md](docs/research/视频模板自学习_调研.md)，给客户的上传说明：[日文版（直接发给日本客户）](docs/素材アップロードのお願い_クライアント向け.md) · [中文版](docs/客户素材上传指南.md)。
 
-## 快速开始（Mac）
+## 快速开始（本机试运行）
 
-1. 双击 **安装依赖.command**（只需一次）：创建 `.venv`，安装 numpy / OpenCV / ffmpeg 等，并自动做一次网络检查。
-2. 双击 **打开审核.command**，浏览器打开 <http://127.0.0.1:8765/>。
-3. 可选：双击 **安装每日扫描.command**，每天 9:00 自动扫描所有类别。
+1. 双击 **run.command**：在后台启动并打开 <http://127.0.0.1:8765/>。第一次运行会自动创建 `.venv` 并安装依赖（约 1–3 分钟）。
+2. 用完双击 **stop.command** 停止（正在进行的扫描会中断，已保存的数据不受影响）。
+3. 可选：双击 **安装每日扫描.command**，每天 9:00 自动扫描所有类别；运行 `.venv/bin/python capcut_local.py doctor` 检查网络。
+
+- 日志：`capcut_local_data/server.log`。端口被占用时可以用 `CAPCREATOR_PORT=8777 ./run.command`。
+- `打开审核.command` / `script.sh` 是旧入口，现在等同于 run.command；`安装依赖.command` 用于手动重装依赖（加 `--clip` 安装可选 CLIP）。
+- 之后部署到服务器：`capcut_local.py serve --host 0.0.0.0 --port 8765`。**目前没有登录保护**，上服务器前需要先加访问控制（见文末“上服务器前”）。
 
 ### 从 v2 升级（已在用旧版的 Mac）
 
@@ -26,7 +30,7 @@ cp -R capcut_local_data ~/Desktop/capcut_v2_backup     # 先备份
 git stash -u                                            # 暂存本地数据改动，避免拉取冲突
 git pull                                                # 或 git checkout 本分支
 cp ~/Desktop/capcut_v2_backup/*.json capcut_local_data/ # 把旧版 json 放回数据根目录
-./打开审核.command                                       # 启动时自动迁移
+./run.command                                            # 启动时自动迁移
 ```
 
 ## 使用流程
@@ -94,3 +98,7 @@ capcut_local_data/
 docs/                  方法、调研、客户上传指南、舞蹈审美标准
 已归类作者.txt / .csv   飞书已归类作者，扫描时排除（所有类别通用）
 ```
+
+## 上服务器前
+
+当前定位是本机试运行。部署到服务器前需要补：登录/访问控制（或放在 VPN / 反向代理认证之后）、HTTPS、把每日扫描从 launchd 改为 cron/systemd，以及把数据目录（`CAPCREATOR_DATA`）放到持久磁盘。
