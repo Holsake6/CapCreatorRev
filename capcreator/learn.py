@@ -96,7 +96,7 @@ def retrain(category, data=None):
 
 def template_scores(category, data=None, model=None):
     model = model or category.model()
-    if not model:
+    if not model or not dna.available():  # scoring a saved model needs numpy
         return {}
     index = template_index(category, data)
     return taste.score_records(model, records_for(index))
@@ -175,8 +175,34 @@ def analyze_works(works, progress=None, workers=3):
     return results
 
 
+def complete_examples(category, log=None):
+    """Retry examples whose CapCut fetch or video analysis failed earlier (e.g. offline at import)."""
+    if not dna.available():
+        return 0
+    from . import ingest, paths
+    fixed = 0
+    pending = [e for e in category.examples() if not dna.cached(e["key"])]
+    capcut_ids = {}
+    for example in pending:
+        if example.get("kind") == "capcut" and example.get("template_id"):
+            capcut_ids.setdefault(example.get("label", "positive"), []).append(example["template_id"])
+        elif example.get("file"):
+            try:
+                dna.analyze_video(paths.media_dir() / example["file"], key=example["key"],
+                                  meta={"title": example.get("title", "")})
+                fixed += 1
+            except Exception as exc:
+                if log:
+                    log(f"  ⚠ 示例 {example.get('title')} 仍无法分析：{exc}")
+    for label, ids in capcut_ids.items():
+        ingest.add_capcut_templates(category, ids, label=label, log=log)
+        fixed += sum(1 for tid in ids if dna.cached(f"t{tid}"))
+    return fixed
+
+
 def prepare_pool(category, limit=60, per_author=2, progress=None):
     """Analyse not-yet-analysed candidate works so the trainer and model have material."""
+    complete_examples(category)
     data = normalize_candidates(category.candidates())
     todo = []
     for author in data.get("candidates", []):

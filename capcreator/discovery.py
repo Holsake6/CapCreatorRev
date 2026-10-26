@@ -303,7 +303,8 @@ def discover(category, max_pages=None, workers=10, log=print):
         learn.add_background(category, [r for r in records.values()
                                         if f't{r["template_id"]}' in analysed and r["template_id"] not in candidate_ids])
     from . import taste
-    scores = taste.score_records(model, learn.records_for({f't{w["template_id"]}' for a in candidates for w in a["works"]})) if model else {}
+    scores = (taste.score_records(model, learn.records_for({f't{w["template_id"]}' for a in candidates for w in a["works"]}))
+              if model and dna.available() else {})
     for author in candidates:
         scoring.score_author(author, config, profile, reference, scores, terms)
     records_by_key = learn.records_for({f't{w["template_id"]}' for a in candidates for w in a["works"]})
@@ -375,6 +376,7 @@ def refresh(category, max_pages=None, append_batch_size=None, log=print):
     """Incremental scan + merge. Returns ``(data, message, changed)``."""
     config = category.config
     max_pages = max_pages or config["scan_pages"]
+    learn.complete_examples(category, log=log)
     previous = learn.normalize_candidates(category.candidates())
     pending = pending_count(category, previous)
     if append_batch_size is None and previous.get("candidates") and pending >= config["max_pending"]:
@@ -383,6 +385,8 @@ def refresh(category, max_pages=None, append_batch_size=None, log=print):
     if not new["indexed_templates"]:
         raise RuntimeError("没有获取到模板，保留上次扫描结果。请运行 doctor 检查 CapCut 连接。")
     with store.LOCK:
+        # A scan takes minutes; reviews / deep-checks saved meanwhile must survive the merge.
+        previous = learn.normalize_candidates(category.candidates())
         data = merge_results(category, previous, new, append_batch_size)
         apply_stale_rule(category, data)
         if dna.available():
@@ -473,7 +477,8 @@ def deep_check(category, key, public_id, limit_analyse=3):
         known = {w["template_id"] for w in author.get("works", [])}
         for item in items:
             record = item_record(item, rules, terms, config)
-            if record and record["template_id"] not in known:
+            # Same hard rule as the crawl: past day N with too few uses never counts.
+            if record and record["template_id"] not in known and not record["stale_low_use"]:
                 record["sec_uid"] = author.get("sec_uid", "")
                 record["from_homepage"] = True
                 author["works"].append(record)
@@ -481,13 +486,14 @@ def deep_check(category, key, public_id, limit_analyse=3):
         relevant = [w for w in author["works"] if scoring.is_category_work(w) and not w.get("likely_ai")]
         author["homepage_checked_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
         author["homepage_template_count"] = len(items)
+        homepage = [w for w in author["works"] if w.get("from_homepage")]
         author["homepage_category_share"] = round(
-            sum(1 for w in author["works"] if w.get("from_homepage") and scoring.is_category_work(w))
-            / max(1, sum(1 for w in author["works"] if w.get("from_homepage"))), 3)
+            sum(1 for w in homepage if scoring.is_category_work(w) and not w.get("likely_ai")) / max(1, len(homepage)), 3)
         category.save_candidates(data)
     learn.analyze_works(learn.best_works(author, limit_analyse))
     with store.LOCK:
         data = learn.normalize_candidates(category.candidates())
+        apply_stale_rule(category, data)  # also refreshes the per-creator counts with the new works
         learn.rescore(category, data)
         category.save_candidates(data)
     return {"templates": len(items), "category_share": author["homepage_category_share"],

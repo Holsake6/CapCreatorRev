@@ -82,7 +82,7 @@ def test_newer_v2_files_win_over_repo_copy(data_dir):
     shutil.copy(repo_data / "candidates.json", data_dir / "candidates.json")
     categories.ensure_default()
     assert "new-creator" in categories.get("dance").decisions()
-    assert list((data_dir / "categories" / "dance").glob("before-v3-migration-*/decisions.json"))
+    assert list((data_dir / "categories" / "dance").glob("before-v3-migration-*/v3/decisions.json"))
     # an older leftover never overwrites newer v3 state
     (data_dir / "decisions.json").write_text("{}", encoding="utf-8")
     (data_dir / "candidates.json").write_text('{"generated_at": "2000-01-01"}', encoding="utf-8")

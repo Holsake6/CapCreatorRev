@@ -105,7 +105,7 @@ def api_candidates(category, query):
     view = query.get("view", ["pending"])[0]
     data = learn.normalize_candidates(category.candidates())
     decisions = category.decisions()
-    model = category.model()
+    model = category.model() if dna.available() else None
     index_records = learn.records_for({f't{w["template_id"]}' for a in data.get("candidates", [])
                                        for w in a.get("works", [])[:12]})
     rows = []
@@ -192,7 +192,7 @@ def api_resolve_profile(category, body):
             result = discovery.deep_check(category, key, profile["public_id"])
             job.write(f"主页模板 {result['templates']} 条，其中本类别占比 {round(result['category_share'] * 100)}%")
             return result
-        job, _ = jobs.start("deep", category.slug, f"主页深度核查：{profile['name']}", deep)
+        job, _ = jobs.start(f"deep-{key}", category.slug, f"主页深度核查：{profile['name']}", deep)
         profile["job"] = job.id
     return profile
 
@@ -275,17 +275,14 @@ def api_import(category, body):
     label = "negative" if body.get("label") == "negative" else "positive"
 
     def run(job):
-        if label == "negative" and not re.match(r"https?://", source.strip()) and not Path(source.strip()).exists():
-            added, total = ingest.ingest_text(category, source, label="negative", log=job.write)
-            counts = {category.slug: added}
-        else:
-            counts = ingest.ingest(source, category.slug, by_folder=by_folder, log=job.write)
+        counts = ingest.ingest(source, category.slug, by_folder=by_folder, log=job.write, label=label)
         for slug in counts:
             if dna.available():
                 learn.retrain(categories.get(slug))
         job.write("完成：" + "，".join(f"{categories.get(s).config['name']} +{n}" for s, n in counts.items()))
         return {"counts": counts}
-    job, _ = jobs.start("import", category.slug, "导入示例", run)
+    # Each import is its own job: a second paste must not be swallowed by a running one.
+    job, _ = jobs.start(f"import-{time.time()}", category.slug, "导入示例", run)
     return {"job": job.id}
 
 
@@ -310,6 +307,22 @@ def trainer_pool(category):
 
 def api_train_next(category, query):
     size = max(2, min(8, int(query.get("size", ["6"])[0])))
+    if not dna.available():
+        # Without numpy the model cannot score; still show unseen templates so clicks are recorded.
+        pool = trainer_pool(category)
+        labelled = {p["key"] for p in category.labels()["points"]}
+        seen_authors, keys = set(), []
+        for key, info in pool.items():
+            author = info.get("author_key") or key
+            if key not in labelled and author not in seen_authors and len(keys) < size:
+                keys.append(key)
+                seen_authors.add(author)
+        items = [{"key": k, "title": pool[k].get("title", ""), "media": media_url(pool[k]),
+                  "cover_url": pool[k].get("cover_url", ""), "url": pool[k].get("url", ""),
+                  "author_name": pool[k].get("author_name", ""), "uses": pool[k].get("uses", 0),
+                  "analysed": False, "score": None} for k in keys]
+        return {"items": items, "pool": len(pool), "analysed_pool": 0, "unlabelled": len(pool) - len(labelled & set(pool)),
+                "rounds": category.labels()["rounds"], "model": model_summary(category.model()), "dna_available": False}
     pool = trainer_pool(category)
     model = category.model()
     records = learn.records_for(pool)
@@ -377,6 +390,8 @@ def api_prepare(category, body):
 
 
 def api_retrain(category):
+    if not dna.available():
+        raise HttpError(400, "未安装视频分析依赖（numpy / opencv-python-headless），请先双击 安装依赖.command")
     model = learn.retrain(category)
     with store.LOCK:
         data = learn.rescore(category, category.candidates())
@@ -462,9 +477,12 @@ class Handler(BaseHTTPRequestHandler):
             return {}
         raw = self.rfile.read(length)
         try:
-            return json.loads(raw)
+            body = json.loads(raw)
         except json.JSONDecodeError as exc:
             raise HttpError(400, "请求不是有效 JSON") from exc
+        if not isinstance(body, dict):
+            raise HttpError(400, "请求内容必须是 JSON 对象")
+        return body
 
     def serve_file(self, path, content_type=None):
         if not path.is_file():
@@ -473,10 +491,20 @@ class Handler(BaseHTTPRequestHandler):
         size = path.stat().st_size
         range_header = self.headers.get("Range")
         if range_header and content_type.startswith("video/"):
-            match = re.match(r"bytes=(\d*)-(\d*)", range_header)
-            start = int(match.group(1) or 0) if match else 0
-            end = int(match.group(2)) if match and match.group(2) else size - 1
-            end = min(end, size - 1)
+            match = re.match(r"bytes=(\d*)-(\d*)$", range_header.strip())
+            if not match or not (match.group(1) or match.group(2)):
+                return self.send(200, path.read_bytes(), content_type, {"Accept-Ranges": "bytes"})
+            if match.group(1):
+                start = int(match.group(1))
+                end = min(int(match.group(2)) if match.group(2) else size - 1, size - 1)
+            else:  # suffix range: the last N bytes
+                start, end = max(0, size - int(match.group(2))), size - 1
+            if start >= size or start > end:
+                self.send_response(416)
+                self.send_header("Content-Range", f"bytes */{size}")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return
             with open(path, "rb") as handle:
                 handle.seek(start)
                 chunk = handle.read(end - start + 1)
@@ -517,9 +545,13 @@ class Handler(BaseHTTPRequestHandler):
                 self.send(200, result)
         except HttpError as exc:
             self.send(exc.status, {"error": str(exc)})
-        except (ValueError, KeyError, OSError, RuntimeError) as exc:
+        except (ValueError, KeyError, OSError, RuntimeError, TypeError, re.error) as exc:
             advice = exc.advice() if hasattr(exc, "advice") else ""
             self.send(400, {"error": f"{exc}{(' ' + advice) if advice else ''}"})
+        except Exception as exc:  # never drop the connection without an answer
+            import traceback
+            traceback.print_exc()
+            self.send(500, {"error": f"内部错误：{type(exc).__name__}: {exc}"})
 
     def route_page(self, path, query):
         if path == "/health":

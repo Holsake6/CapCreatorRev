@@ -274,27 +274,70 @@ def get(slug):
 
 
 def create(name, slug=None, **overrides):
-    slug = slug or slugify(name)
-    category = Category(slug)
-    if category.exists():
-        raise ValueError(f"类别 {slug} 已存在")
+    if slug:
+        category = Category(slug)
+        if category.exists():
+            raise ValueError(f"类别 {slug} 已存在")
+    else:
+        # Different names can share a slug (旅行vlog / 美食vlog -> vlog): number them.
+        base = slugify(name)
+        slug, n = base, 2
+        while Category(slug).exists():
+            slug, n = f"{base[:36]}-{n}", n + 1
+        category = Category(slug)
     config = merged_config({**overrides, "name": name.strip() or slug, "slug": slug, "created_at": now()})
     category.save_config(config)
     return category
 
 
-def _legacy_is_newer(data_root, dance):
-    """v2 files left at the data root win when they hold newer review state than categories/dance.
+def _merge_legacy_into(data_root, dance, legacy):
+    """Merge v2 files left at the data root into an existing categories/dance.
 
-    This happens when a Mac that kept running v2 daily scans copies its old
-    files back after pulling v3 (whose repo copy of dance is older).
+    Happens when a Mac that kept running v2 copies its old files back after
+    pulling v3. Nothing is chosen wholesale: decisions merge per creator (a v3
+    decision carries ``updated_at`` and beats an undated v2 one; between two
+    undated ones the copied-back v2 file wins), candidates are the union with
+    the newer scan as the base, and seen creators are the union. Both
+    originals are kept in a backup folder.
     """
-    old = store.read_json(data_root / "candidates.json", {})
-    new = store.read_json(dance.path("candidates.json"), {})
-    old_decisions = store.read_json(data_root / "decisions.json", {})
-    new_decisions = store.read_json(dance.path("decisions.json"), {})
-    return (str(old.get("generated_at") or "") > str(new.get("generated_at") or "")
-            or len(old_decisions) > len(new_decisions))
+    backup = dance.dir / f"before-v3-migration-{time.strftime('%Y%m%d-%H%M%S')}"
+    (backup / "v2").mkdir(parents=True, exist_ok=True)
+    (backup / "v3").mkdir(parents=True, exist_ok=True)
+    for name in legacy:
+        if dance.path(name).exists():
+            shutil.copy2(dance.path(name), backup / "v3" / name)
+        shutil.copy2(data_root / name, backup / "v2" / name)
+
+    old = lambda name, default: store.read_json(data_root / name, default)  # noqa: E731
+    new = lambda name, default: store.read_json(dance.path(name), default)  # noqa: E731
+
+    decisions = dict(new("decisions.json", {}))
+    for key, legacy_decision in old("decisions.json", {}).items():
+        current = decisions.get(key)
+        if current is None:
+            decisions[key] = legacy_decision
+            continue
+        a, b = str(legacy_decision.get("updated_at") or ""), str(current.get("updated_at") or "")
+        if (a and b and a > b) or (not a and not b):
+            decisions[key] = legacy_decision
+    store.write_json(dance.path("decisions.json"), decisions)
+
+    old_c, new_c = old("candidates.json", {"candidates": []}), new("candidates.json", {"candidates": []})
+    legacy_newer = str(old_c.get("generated_at") or "") > str(new_c.get("generated_at") or "")
+    base, other = (old_c, new_c) if legacy_newer else (new_c, old_c)
+    keys = {author_key(a) for a in base.get("candidates", [])}
+    base["candidates"] = list(base.get("candidates", [])) + [
+        a for a in other.get("candidates", []) if author_key(a) not in keys]
+    store.write_json(dance.path("candidates.json"), base)
+
+    seen = {**old("seen_creators.json", {}), **new("seen_creators.json", {})}
+    store.write_json(dance.path("seen_creators.json"), seen)
+    for name in ("scan_state.json", "scan_history.json", "trend_terms.json", "preference_profile.json"):
+        if name in legacy and (legacy_newer or not dance.path(name).exists()):
+            shutil.copy2(data_root / name, dance.path(name))
+    for name in legacy:
+        (data_root / name).unlink(missing_ok=True)
+    return [f"{name}（已合并）" for name in legacy]
 
 
 def migrate_legacy():
@@ -304,18 +347,8 @@ def migrate_legacy():
     legacy = [name for name in LEGACY_FILES if (data / name).exists()]
     moved = []
     if legacy and dance.path("candidates.json").exists():
-        if _legacy_is_newer(data, dance):
-            backup = dance.dir / f"before-v3-migration-{time.strftime('%Y%m%d-%H%M%S')}"
-            backup.mkdir(parents=True, exist_ok=True)
-            for name in legacy:
-                if dance.path(name).exists():
-                    shutil.move(str(dance.path(name)), str(backup / name))
-        else:
-            backup = data / f"v2-superseded-{time.strftime('%Y%m%d-%H%M%S')}"
-            backup.mkdir(parents=True, exist_ok=True)
-            for name in legacy:
-                shutil.move(str(data / name), str(backup / name))
-            legacy = []
+        moved += _merge_legacy_into(data, dance, legacy)
+        legacy = []
     if legacy:
         dance.dir.mkdir(parents=True, exist_ok=True)
         for name in legacy:

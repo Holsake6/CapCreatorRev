@@ -116,19 +116,53 @@ def fetch_remote(url, workdir, log=None):
 
 # ---------------------------------------------------------------- local scanning
 
+def decode_member_name(raw):
+    """Guess the codec of a legacy zip entry name.
+
+    cp932 bytes very often also decode as valid GBK (ダンス -> 僟儞僗), so a
+    cp932 reading that contains kana wins; otherwise GBK, then cp932.
+    """
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        pass
+    readings = {}
+    for codec in ("cp932", "gbk"):
+        try:
+            readings[codec] = raw.decode(codec)
+        except UnicodeDecodeError:
+            pass
+    kana = re.compile(r"[\u3040-\u30ff]")
+    if "cp932" in readings and kana.search(readings["cp932"]):
+        return readings["cp932"]
+    if "gbk" in readings:
+        return readings["gbk"]
+    return readings.get("cp932") or raw.decode("utf-8", "replace")
+
+
+def single_top_folder(root):
+    """Finder's "Compress" wraps everything in one folder; descend into it.
+
+    Only a wrapper of category folders is skipped: ``旅行vlog/a.mp4`` keeps
+    ``旅行vlog`` because that folder *is* the category.
+    """
+    root = Path(root)
+    entries = [p for p in root.iterdir() if not SKIP_DIR.match(p.name)]
+    if len(entries) == 1 and entries[0].is_dir():
+        inner = [p for p in entries[0].iterdir() if p.is_dir() and not SKIP_DIR.match(p.name)
+                 and not NEGATIVE_DIR.match(p.name)]
+        if inner:
+            return entries[0]
+    return root
+
+
 def safe_extract(archive, target):
     target = Path(target).resolve()
     with zipfile.ZipFile(archive) as zf:
         for member in zf.infolist():
             name = member.filename
-            if member.flag_bits & 0x800 == 0:  # legacy encoding: macOS/Windows Chinese zips are often GBK/cp932
-                raw = name.encode("cp437", "replace")
-                for codec in ("utf-8", "gbk", "cp932"):
-                    try:
-                        name = raw.decode(codec)
-                        break
-                    except UnicodeDecodeError:
-                        continue
+            if member.flag_bits & 0x800 == 0:  # legacy (non-UTF-8) name: Windows Chinese/Japanese zips
+                name = decode_member_name(name.encode("cp437", "replace"))
             dest = (target / name).resolve()
             if not dest.is_relative_to(target):
                 continue  # zip-slip
@@ -157,8 +191,9 @@ def scan(root):
             yield rel.parts[:-1], path, "zip"
 
 
-def label_for(parts):
-    return "negative" if any(NEGATIVE_DIR.match(p) for p in parts) else "positive"
+def label_for(parts, default="positive"):
+    """A 反例 folder always means negative; otherwise the label chosen for the whole import."""
+    return "negative" if any(NEGATIVE_DIR.match(p) for p in parts) else default
 
 
 def category_for(parts, default, by_folder):
@@ -232,14 +267,14 @@ def ingest_text(category, text, label="positive", log=None):
     return added, len(ids)
 
 
-def ingest_path(path, default_slug, by_folder=False, log=None, analyze=True):
+def ingest_path(path, default_slug, by_folder=False, log=None, analyze=True, label="positive"):
     """Import a folder / zip / single file. Returns {slug: added_count}."""
     path = Path(path)
     counts = {}
     with tempfile.TemporaryDirectory(prefix="capcreator-ingest-") as temp:
         if path.is_file() and path.suffix.lower() == ".zip":
             _log(log, f"解压 {path.name} …")
-            root = safe_extract(path, Path(temp) / "unzipped")
+            root = single_top_folder(safe_extract(path, Path(temp) / "unzipped"))
         elif path.is_file():
             root = Path(temp) / "single"
             root.mkdir()
@@ -254,53 +289,72 @@ def ingest_path(path, default_slug, by_folder=False, log=None, analyze=True):
                 items.append((parts, file_path, kind))
                 continue
             # Nested archives are unpacked into the temp dir, never next to the user's files.
-            unpacked = safe_extract(file_path, Path(temp) / "nested" / f"{len(items)}-{file_path.stem}")
+            unpacked = single_top_folder(
+                safe_extract(file_path, Path(temp) / "nested" / f"{len(items)}-{file_path.stem}"))
             prefix = parts + (file_path.stem,) if by_folder and not parts else parts
             items.extend((prefix + sub_parts, sub_path, sub_kind)
                          for sub_parts, sub_path, sub_kind in scan(unpacked) if sub_kind != "zip")
         videos = sum(kind == "video" for _, _, kind in items)
         _log(log, f"发现 {videos} 个视频、{sum(kind == 'text' for _, _, kind in items)} 个文本文件")
         done = 0
+        resolved = {}
         for parts, file_path, kind in items:
-            slug_name = category_for(parts, default_slug, by_folder)
-            cat = resolve_category(slug_name)
-            label = label_for(parts)
+            name = category_for(parts, default_slug, by_folder)
+            if name not in resolved:
+                resolved[name] = resolve_category(name)
+            cat = resolved[name]
+            item_label = label_for(parts, label)
             if kind == "video":
                 done += 1
-                _log(log, f"  [{done}/{videos}] {cat.config['name']} · {'反例' if label == 'negative' else '正例'} · {file_path.name}")
-                counts[cat.slug] = counts.get(cat.slug, 0) + add_video(cat, file_path, label, analyze=analyze, log=log)
+                _log(log, f"  [{done}/{videos}] {cat.config['name']} · {'反例' if item_label == 'negative' else '正例'} · {file_path.name}")
+                counts[cat.slug] = counts.get(cat.slug, 0) + add_video(cat, file_path, item_label, analyze=analyze, log=log)
             elif kind == "text":
                 text = file_path.read_text(encoding="utf-8", errors="replace")
                 if capcut.CAPCUT_LINK.search(text) or capcut.TEMPLATE_ID.search(text):
-                    added, _ = ingest_text(cat, text, label=label, log=log)
+                    added, _ = ingest_text(cat, text, label=item_label, log=log)
                     counts[cat.slug] = counts.get(cat.slug, 0) + added
     return counts
 
 
 def resolve_category(name_or_slug):
+    """Existing category by slug or (case-insensitive) name, else a new one with a unique slug."""
     try:
         return categories.get(name_or_slug)
     except (KeyError, ValueError):
         pass
+    wanted = name_or_slug.strip().casefold()
     for existing in categories.list_categories():
-        if existing.config["name"] == name_or_slug:
+        if existing.config["name"].strip().casefold() == wanted or existing.slug == wanted:
             return existing
     return categories.create(name_or_slug)
 
 
-def ingest(source, default_slug, by_folder=False, log=None, analyze=True):
-    """Entry point for CLI and web: ``source`` is a path, URL or pasted text."""
+def looks_like_path(source):
+    if "\n" in source or len(source) > 1000 or re.match(r"https?://", source):
+        return False
+    try:
+        return Path(source).expanduser().exists()
+    except OSError:  # e.g. ENAMETOOLONG for a long pasted line
+        return False
+
+
+def ingest(source, default_slug, by_folder=False, log=None, analyze=True, label="positive"):
+    """Entry point for CLI and web: ``source`` is a path, URL or pasted text.
+
+    ``label`` applies to everything imported, except files inside a 反例 folder (always negative).
+    """
     source = (source or "").strip()
     if not source:
         raise IngestError("请提供文件夹路径、网盘链接或模板链接")
     if re.match(r"https?://", source) and "\n" not in source and not capcut.CAPCUT_LINK.fullmatch(source):
         with tempfile.TemporaryDirectory(prefix="capcreator-dl-") as temp:
             local = fetch_remote(source, temp, log=log)
-            return ingest_path(local, default_slug, by_folder=by_folder, log=log, analyze=analyze)
-    if Path(source).expanduser().exists():
-        return ingest_path(Path(source).expanduser(), default_slug, by_folder=by_folder, log=log, analyze=analyze)
+            return ingest_path(local, default_slug, by_folder=by_folder, log=log, analyze=analyze, label=label)
+    if looks_like_path(source):
+        return ingest_path(Path(source).expanduser(), default_slug, by_folder=by_folder, log=log,
+                           analyze=analyze, label=label)
     cat = resolve_category(default_slug)
-    added, total = ingest_text(cat, source, log=log)
+    added, total = ingest_text(cat, source, label=label, log=log)
     if not total:
         raise IngestError("没有识别到 CapCut 模板链接、文件夹或网盘链接")
     return {cat.slug: added}
