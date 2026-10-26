@@ -1,0 +1,105 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>示例与设置</title><link rel="stylesheet" href="/static/app.css"></head><body><main>
+<div class="topbar" id="topbar"></div>
+<div id="notice"></div>
+<div class="grid g2">
+<section class="section"><h2>① 上传示例视频</h2><p class="muted">拖入这个类别“想要的样子”的视频（mp4/mov 等）。每个视频会自动提取模板基因并更新风格档案。</p>
+  <div class="drop" id="drop">把视频拖到这里，或 <u>点击选择</u><input type="file" id="files" accept="video/*" multiple hidden></div>
+  <div style="margin-top:8px"><label class="inline"><input type="radio" name="ulabel" value="positive" checked>正例（想要的）</label><label class="inline"><input type="radio" name="ulabel" value="negative">反例（不要的）</label></div>
+  <div id="uploadStatus" class="muted"></div></section>
+<section class="section"><h2>② 从链接 / 网盘 / 文件夹导入</h2>
+  <p class="muted">可以粘贴：CapCut 模板链接（每行一个）、Google Drive / Dropbox 分享链接、zip 直链，或本机文件夹路径。</p>
+  <textarea id="source" style="min-height:96px" placeholder="https://www.capcut.com/template-detail/7402910946471071032&#10;https://drive.google.com/drive/folders/...&#10;/Users/me/Downloads/客户素材"></textarea>
+  <label class="inline"><input type="checkbox" id="byFolder">按子文件夹名自动分到不同类别</label>
+  <label class="inline"><input type="radio" name="ilabel" value="positive" checked>正例</label><label class="inline"><input type="radio" name="ilabel" value="negative">反例</label>
+  <div class="actions"><button class="btn primary" id="importBtn">导入</button></div><pre class="log" id="log" hidden></pre></section>
+</div>
+<section class="section"><h2>示例 <span class="muted" id="exCount"></span></h2><p class="muted">★ = 风格档案选出的代表案例。点“改为反例/正例”可以纠正标注；删除不影响已下载的分析缓存。</p>
+  <div class="examples" id="examples"><div class="empty">加载中…</div></div></section>
+<section class="section"><h2>类别设置</h2><form id="config" class="grid g3">
+  <div><label>名称</label><input name="name"></div>
+  <div><label>说明</label><input name="description"></div>
+  <div><label>地区（CapCut 页面语言）</label><select name="region"><option value="ja-jp">ja-jp 日本</option><option value="en-us">en-us 美国/英文</option><option value="ko-kr">ko-kr 韩国</option><option value="zh-tw">zh-tw 繁中</option><option value="id-id">id-id 印尼</option><option value="pt-br">pt-br 巴西</option><option value="th-th">th-th 泰国</option></select></div>
+  <div><label>创作者语言</label><select name="language"><option value="ja">只要日本区创作者</option><option value="any">不限语言</option></select></div>
+  <div style="grid-column:span 2"><label>CapCut 搜索关键词（每行或逗号分隔）</label><textarea name="keywords"></textarea></div>
+  <div><label>视频风格强度：<b id="strengthVal"></b></label><input type="range" min="0" max="100" step="5" name="style_strength">
+    <small>类似 Midjourney 的 --s：越高越依赖学到的视频风格，越低越依赖标题文字和数据。</small></div>
+  <div><label>标题必须匹配（正则，可空）</label><input name="include_regex" placeholder="留空 = 用关键词和示例标题判断"></div>
+  <div><label>标题排除（正则，可空）</label><input name="exclude_regex"></div>
+  <div><label class="inline" style="margin-top:28px"><input type="checkbox" name="exclude_ai">排除 AI 模板</label></div>
+  <div><label>待审队列上限</label><input type="number" name="max_pending" min="5"></div>
+  <div><label>高 uses 门槛</label><input type="number" name="high_use_threshold" min="0"></div>
+  <div><label>低量淘汰：发布满 N 天</label><input type="number" name="stale_days" min="1"></div>
+  <div><label>低量淘汰：uses 少于</label><input type="number" name="stale_min_uses" min="0"></div>
+  <div><label>每次扫描页数</label><input type="number" name="scan_pages" min="10"></div>
+  <div><label>每次视频分析作者数</label><input type="number" name="analyze_top" min="0"></div>
+  <div style="grid-column:1/-1"><label>额外入口页面（每行一个 CapCut 列表页 URL）</label><textarea name="landing_urls"></textarea></div>
+  <div style="grid-column:1/-1"><button class="btn primary" type="submit">保存设置</button></div>
+</form></section>
+</main><script src="/static/app.js"></script><script>
+const LISTS = ['keywords', 'landing_urls'];
+async function loadExamples() {
+  const data = await api(`/api/c/${SLUG}/examples`);
+  if (!data.dna_available) $('#notice').innerHTML = '<div class="notice bad">视频分析依赖未安装：示例会被保存，但要安装依赖（双击 安装依赖.command）后才会提取模板基因。</div>';
+  $('#exCount').textContent = `${data.examples.filter((e) => e.label === 'positive').length} 正例 · ${data.examples.filter((e) => e.label === 'negative').length} 反例`;
+  $('#examples').innerHTML = data.examples.map((e) => `<div class="ex ${e.label === 'negative' ? 'neg' : ''}">${e.prototype ? '<span class="star">★</span>' : ''}
+    ${mediaTag(e)}<div class="t" title="${esc(e.title)}">${esc(e.title || e.template_id || e.key)}</div>
+    <div>${e.label === 'negative' ? '<span class="chip red">反例</span>' : '<span class="chip green">正例</span>'}${e.analysed ? '' : '<span class="chip amber">未分析</span>'}${e.kind === 'capcut' ? '<span class="chip gray">CapCut</span>' : ''}</div>
+    <div>${(e.tags || []).map((t) => `<span class="chip gray">${esc(t)}</span>`).join('')}</div>
+    <div class="actions"><button class="btn small" data-flip="${esc(e.key)}" data-to="${e.label === 'negative' ? 'positive' : 'negative'}">改为${e.label === 'negative' ? '正例' : '反例'}</button>
+    <button class="btn small reject" data-del="${esc(e.key)}">删除</button></div></div>`).join('') || '<div class="empty">还没有示例。上传视频或粘贴模板链接开始。</div>';
+  const form = $('#config');
+  for (const [key, value] of Object.entries(data.config)) {
+    const el = form.elements[key]; if (!el) continue;
+    if (el.type === 'checkbox') el.checked = !!value; else el.value = LISTS.includes(key) ? (value || []).join('\n') : value;
+  }
+  $('#strengthVal').textContent = form.elements.style_strength.value;
+}
+$('#config').elements.style_strength.oninput = (e) => { $('#strengthVal').textContent = e.target.value; };
+$('#config').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target, body = {};
+  for (const el of form.elements) if (el.name) body[el.name] = el.type === 'checkbox' ? el.checked : el.value;
+  try { await api(`/api/c/${SLUG}/config`, {method: 'POST', body}); toast('已保存，候选排序已更新'); renderTopbar('examples'); }
+  catch (err) { toast(err.message, true); }
+});
+$('#examples').addEventListener('click', async (e) => {
+  const flip = e.target.dataset.flip, del = e.target.dataset.del;
+  try {
+    if (flip) await api(`/api/c/${SLUG}/examples/${flip}`, {method: 'POST', body: {label: e.target.dataset.to}});
+    if (del && confirm('删除这个示例？')) await api(`/api/c/${SLUG}/examples/${del}`, {method: 'DELETE'});
+    if (flip || del) { await loadExamples(); renderTopbar('examples'); }
+  } catch (err) { toast(err.message, true); }
+});
+async function upload(files) {
+  const label = $('input[name=ulabel]:checked').value;
+  const list = [...files]; let done = 0;
+  for (const file of list) {
+    $('#uploadStatus').textContent = `上传 ${done + 1}/${list.length}：${file.name}`;
+    const form = new FormData(); form.append('label', label); form.append('file', file, file.name);
+    try { const r = await api(`/api/c/${SLUG}/examples/upload`, {method: 'POST', body: form}); await pollJob(r.job); }
+    catch (err) { toast(`${file.name}：${err.message}`, true); }
+    done += 1;
+  }
+  $('#uploadStatus').textContent = `已完成 ${done} 个视频`;
+  await loadExamples(); renderTopbar('examples');
+}
+const drop = $('#drop');
+drop.onclick = () => $('#files').click();
+$('#files').onchange = (e) => upload(e.target.files);
+drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
+drop.ondragleave = () => drop.classList.remove('over');
+drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); upload(e.dataTransfer.files); };
+$('#importBtn').onclick = async () => {
+  const source = $('#source').value.trim(); if (!source) return toast('请先粘贴链接或路径', true);
+  $('#importBtn').disabled = true;
+  try {
+    const r = await api(`/api/c/${SLUG}/examples/import`, {method: 'POST', body: {source, by_folder: $('#byFolder').checked, label: $('input[name=ilabel]:checked').value}});
+    const job = await pollJob(r.job, {logBox: $('#log')});
+    toast(job.status === 'done' ? '导入完成' : '导入失败：' + job.error, job.status !== 'done');
+    await loadExamples(); renderTopbar('examples');
+  } catch (err) { toast(err.message, true); }
+  $('#importBtn').disabled = false;
+};
+renderTopbar('examples'); loadExamples().catch((e) => toast(e.message, true));
+</script></body></html>

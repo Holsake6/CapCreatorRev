@@ -1,0 +1,126 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>创作者审核</title><link rel="stylesheet" href="/static/app.css"></head><body><main>
+<div class="topbar" id="topbar"></div>
+<section class="hero"><div class="eyebrow" id="eyebrow">CAPCUT · CREATORS</div><h1 id="title">创作者审核</h1><p id="summary"></p></section>
+<nav class="toolbar">
+  <button id="refreshBtn" class="btn primary">↻ 扫描新作者</button>
+  <a class="btn" data-view="pending">待审</a><a class="btn approve" data-view="approved">已通过</a>
+  <a class="btn potential" data-view="aesthetic_only">审美达标·数据不足</a><a class="btn reject" data-view="rejected">已排除</a><a class="btn" data-view="all">全部</a>
+  <a class="btn ghost" id="export">下载已通过表格</a>
+  <span id="status" class="status">准备就绪</span>
+</nav>
+<pre class="log" id="log" hidden></pre>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>作者与匹配度</th><th>筛选证据</th><th>作品预览（色块=风格匹配度）</th><th>审核</th></tr></thead><tbody id="rows"><tr><td colspan="5">加载中…</td></tr></tbody></table></div>
+</main><script src="/static/app.js"></script><script>
+const params = new URLSearchParams(location.search);
+let view = params.get('view') || 'pending';
+let config = null;
+
+function workHtml(w) {
+  const p = w.style_prob == null ? null : Math.round(w.style_prob * 100);
+  const reasons = (w.reasons || []).map((r) => r.text).join('、');
+  return `<div class="work">${mediaTag(w)}
+    <a target="_blank" href="${esc(w.url)}" title="${esc(w.title)}">${esc(w.title || w.template_id)}</a>
+    <div class="meta">${fmt(w.uses)} uses${w.category_signal || w.category_seed ? ' · ✓类别' : ''}${w.likely_ai ? ' · ⚠AI?' : ''}${w.from_homepage ? ' · 主页' : ''}</div>
+    <span class="style-dot" style="${styleColor(p)}" title="${esc(reasons)}">${p == null ? '未分析' : '风格 ' + p}</span>
+    ${(w.dna_tags || []).slice(0, 3).map((t) => `<span class="chip gray">${esc(t)}</span>`).join('')}</div>`;
+}
+
+function rowHtml(c, i) {
+  const d = c.decision || {};
+  const L = config.labels;
+  const explore = c.recommendation_type === '随机探索';
+  return `<tr data-status="${esc(c.status)}" data-key="${esc(c.key)}">
+  <td><span class="rank">${i + 1}</span></td>
+  <td><strong class="creator-name">${esc(c.name)}</strong><br><span class="badge ${explore ? 'explore' : 'match'}">${esc(c.recommendation_type || '高匹配')}</span>
+    <div class="scores"><span>综合 <b>${c.score ?? 0}</b></span><span>审美 <b>${c.aesthetic_score ?? c.reference_match_score ?? 0}</b></span>
+    <span>视频风格 <b>${c.style_score == null ? '—' : c.style_score}</b>${c.style_analysed ? ` <small>(${c.style_analysed}条)</small>` : ''}</span><span>数据 <b>${c.quality_data_score ?? 0}</b></span>
+    ${c.preference_adjustment ? `<span>反馈 <b>${c.preference_adjustment > 0 ? '+' : ''}${c.preference_adjustment}</b></span>` : ''}</div>
+    <small>文字依据：${esc((c.reference_match_evidence || []).join('、') || '仅结构代理，待人工审核')}</small><br>
+    ${c.homepage_checked_at ? `<small>主页核查：${c.homepage_template_count} 条模板，本类别占 ${Math.round((c.homepage_category_share || 0) * 100)}%</small><br>` : ''}
+    <small>${esc((c.bio || '').slice(0, 180))}</small></td>
+  <td>${esc(c.japanese_signal || '')}<br>已索引${esc(L.category)}：${c.category_non_ai_indexed || 0} 条；非AI且≥${fmt(config.high_use_threshold)}：${c.high_use_non_ai_indexed || 0} 条<br>
+    满${config.stale_days}天且 uses&lt;${fmt(config.stale_min_uses)} 已排除：${c.stale_low_use_excluded_count || 0} 条<br>主页总投稿：${c.total_posts || '待核'}</td>
+  <td><div class="works">${c.works.map(workHtml).join('')}</div></td>
+  <td style="min-width:280px">
+    <input data-f="cc_id" placeholder="主页显示的 CapCut ID（不是昵称）" value="${esc(d.cc_id ?? c.cc_id ?? '')}">
+    <input data-f="cc_link" placeholder="粘贴主页分享链接，自动提取ID" value="${esc(d.cc_link ?? c.cc_link ?? '')}">
+    <button class="btn small" data-act="lookup">从主页链接读取 ID、投稿数并核查全部模板</button>
+    <input data-f="tt_link" placeholder="TT主页链接（可空）" value="${esc(d.tt_link || '')}">
+    <label>主页投稿总数（仅供参考）<input data-f="total_posts" type="number" min="0" value="${esc(d.total_posts ?? '')}"></label>
+    <label>≥${fmt(config.high_use_threshold)} uses 的非AI模板数（仅供排序参考）<input data-f="high_use_posts" type="number" min="0" value="${esc(d.high_use_posts ?? c.high_use_non_ai_indexed ?? '')}"></label>
+    <label class="inline"><input data-f="non_ai_confirmed" type="checkbox" ${d.non_ai_confirmed ? 'checked' : ''}>已确认以非AI模板为主</label><br>
+    <label class="inline"><input data-f="category_confirmed" type="checkbox" ${d.category_confirmed ? 'checked' : ''}>${esc(L.confirm)}</label>
+    <label>内部优先级 <select data-f="priority"><option value="P0" ${d.priority === 'P0' ? 'selected' : ''}>P0 高审美/稳定型</option><option value="P1" ${d.priority !== 'P0' ? 'selected' : ''}>P1 热点/专长型</option></select></label>
+    <textarea data-f="specialty" placeholder="${esc(L.specialty)}">${esc(d.specialty || '')}</textarea>
+    <textarea data-f="aesthetic_notes" placeholder="${esc(L.notes)}">${esc(d.aesthetic_notes || '')}</textarea>
+    <textarea data-f="rejection_reason" placeholder="不通过原因（会加入反向提示词，并让视频模型学习避开这种风格）">${esc(d.rejection_reason || '')}</textarea>
+    <div class="actions"><button class="btn approve" data-act="approved">通过</button><button class="btn potential" data-act="aesthetic_only">审美达标·数据不足</button>
+    <button class="btn reject" data-act="rejected">排除</button><button class="btn" data-act="pending">待审</button></div></td></tr>`;
+}
+
+function collect(row) {
+  const body = {key: row.dataset.key};
+  $$('[data-f]', row).forEach((el) => { body[el.dataset.f] = el.type === 'checkbox' ? el.checked : el.value; });
+  return body;
+}
+
+async function save(row, status) {
+  const body = {...collect(row), status};
+  await api(`/api/c/${SLUG}/decision`, {method: 'POST', body});
+  row.dataset.status = status;
+  toast(status === 'rejected' ? '已保存：原因已加入反向提示词，视频风格模型将在后台更新' : status === 'pending' ? '已改回待审' : '已保存并更新风格档案');
+}
+
+async function lookup(row, button) {
+  const link = $('[data-f=cc_link]', row).value.trim();
+  if (!link) return toast('先粘贴主页分享链接', true);
+  button.disabled = true; button.textContent = '正在读取…';
+  try {
+    const p = await api(`/api/c/${SLUG}/resolve-profile`, {method: 'POST', body: {link, key: row.dataset.key}});
+    const id = $('[data-f=cc_id]', row); if (!id.value.trim()) id.value = p.cc_id || '';
+    const tt = $('[data-f=tt_link]', row); tt.value = tt.value || p.tt_link || '';
+    $('[data-f=total_posts]', row).value = p.total_posts || '';
+    await save(row, row.dataset.status);
+    toast(`主页：${p.name}；投稿 ${p.total_posts}。正在后台核查主页全部模板…`);
+    if (p.job) pollJob(p.job, {onDone: (j) => j.status === 'done' && toast(j.log.slice(-1)[0] || '主页核查完成')});
+  } catch (e) { toast('读取失败：' + e.message, true); }
+  finally { button.disabled = false; button.textContent = '从主页链接读取 ID、投稿数并核查全部模板'; }
+}
+
+async function load() {
+  const cat = await renderTopbar('review');
+  const data = await api(`/api/c/${SLUG}/candidates?view=${view}`);
+  config = data.config;
+  const m = data.meta;
+  $('#title').textContent = config.name + ' · 创作者审核';
+  $('#eyebrow').textContent = 'CAPCUT · ' + config.region.toUpperCase() + ' · ' + (config.labels.category || '');
+  const trend = (m.trend_terms || []).slice(0, 5).join('、');
+  $('#summary').innerHTML = `每次扫描只追加未展示过的新作者；发布满${config.stale_days}天且 uses 低于${fmt(config.stale_min_uses)}的模板自动排除。
+    排序 = 审美 70%（文字代理${data.model ? ` + 视频风格模型 <b>${esc(data.model.code)}</b>，强度 ${config.style_strength}` : '，尚未训练视频风格模型'}）+ 数据质量 30% + 审核反馈。
+    ${trend ? `本轮热歌入口：${esc(trend)}。` : ''}上次扫描 ${esc(m.generated_at || '—')}，新增 ${m.latest_batch_candidates ?? 0} 位（高匹配 ${m.latest_ranked_candidates ?? 0} · 随机探索 ${m.latest_random_candidates ?? 0}），累计 ${m.total_candidates ?? data.rows.length} 位。`;
+  $$('[data-view]').forEach((a) => { a.href = `?view=${a.dataset.view}`; a.style.outline = a.dataset.view === view ? '2px solid #827af7' : ''; });
+  $('#export').href = `/api/c/${SLUG}/export.csv`;
+  $('#rows').innerHTML = data.rows.map(rowHtml).join('') || `<tr><td colspan="5"><div class="empty">这个视图里没有作者。${view === 'pending' ? '点击“扫描新作者”开始。' : ''}</div></td></tr>`;
+}
+
+$('#rows').addEventListener('click', async (e) => {
+  const button = e.target.closest('[data-act]');
+  if (!button) return;
+  const row = button.closest('tr');
+  try { button.dataset.act === 'lookup' ? await lookup(row, button) : await save(row, button.dataset.act); }
+  catch (err) { toast(err.message, true); }
+});
+$('#rows').addEventListener('mouseover', (e) => { if (e.target.tagName === 'VIDEO' && e.target.paused) e.target.play().catch(() => {}); });
+
+$('#refreshBtn').onclick = async () => {
+  const b = $('#refreshBtn'); b.disabled = true; $('#status').textContent = '正在启动扫描…';
+  try {
+    const r = await api(`/api/c/${SLUG}/refresh`, {method: 'POST', body: {}});
+    await pollJob(r.job, {logBox: $('#log'), onLog: (j) => { $('#status').textContent = `扫描中… ${j.elapsed} 秒`; },
+      onDone: (j) => { $('#status').textContent = j.status === 'done' ? j.result.message : '扫描失败：' + j.error; if (j.status === 'done' && j.result.changed) setTimeout(load, 800); }});
+  } catch (err) { $('#status').textContent = '启动失败：' + err.message; }
+  b.disabled = false;
+};
+load().catch((e) => toast(e.message, true));
+</script></body></html>

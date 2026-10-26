@@ -1,0 +1,50 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>风格档案</title><link rel="stylesheet" href="/static/app.css"></head><body><main>
+<div class="topbar" id="topbar"></div>
+<section class="hero"><div class="eyebrow">STYLE PROFILE</div><h1 id="title">风格档案</h1>
+<p>档案编号像 Midjourney 的 --p 代码：每次学习都会生成新编号，方便对照“哪一版模型找出了哪些作者”。下面列出模型从示例、点选和审核结论中学到的具体偏好。</p></section>
+<div class="grid g4" id="stats"></div>
+<div class="grid g2" style="margin-top:16px">
+<section class="section"><h2>视频风格：偏好</h2><div id="likes"></div><h3>视频风格：避开</h3><div id="avoids"></div>
+  <div class="actions"><button class="btn primary" id="retrain">立即重新学习</button></div></section>
+<section class="section"><h2>代表案例</h2><p class="muted">从示例中自动选出的几种典型风格（同一类别可以有多种风格方向）。</p><div class="examples" id="protos"></div></section>
+</div>
+<section class="section"><h2>档案版本记录</h2><div class="table-wrap"><table><thead><tr><th>编号</th><th>时间</th><th>正例</th><th>反例</th><th>对比</th><th>置信度</th></tr></thead><tbody id="history"></tbody></table></div></section>
+<section class="section"><h2>文字规则（来自审核备注）</h2><p class="muted">每行“关键词 = 权重”（0–10）。命中正向 +2/点，反向 −4/点，总修正限制在 ±30 分。删除整行即删除规则。</p>
+  <div class="grid g2"><label>正向加分<textarea id="pos" style="min-height:220px;font-family:ui-monospace,Menlo,monospace"></textarea></label>
+  <label>反向扣分<textarea id="neg" style="min-height:220px;font-family:ui-monospace,Menlo,monospace"></textarea></label></div>
+  <div class="actions"><button class="btn primary" id="saveTerms">保存并重新计算匹配度</button></div>
+  <div class="grid g2"><div><h3>正向审美描述</h3><ul id="posText"></ul></div><div><h3>反向原因（原文）</h3><ul id="negText"></ul></div></div>
+  <h3>修改记录</h3><ul id="edits"></ul></section>
+<section class="section"><h2>模板基因说明</h2><p class="muted">每个视频会被测量以下特征（本地计算，不上传任何视频）。</p><div class="grid g3" id="glossary"></div></section>
+</main><script src="/static/app.js"></script><script>
+function bars(list, color) {
+  if (!list || !list.length) return '<p class="muted">数据还不够：继续添加示例或在“风格训练”里点选。</p>';
+  const max = Math.max(...list.map((x) => Math.abs(x.weight)), 0.01);
+  return list.map((x) => `<div class="wbar"><span>${esc(x.text)}</span><div class="track"><span style="left:0;width:${Math.round(Math.abs(x.weight) / max * 100)}%;background:${color}"></span></div><small>${x.weight.toFixed(2)}</small></div>`).join('');
+}
+const terms = (obj) => Object.entries(obj || {}).map(([k, v]) => `${k} = ${v}`).join('\n');
+async function load() {
+  await renderTopbar('profile');
+  const p = await api(`/api/c/${SLUG}/profile`);
+  const m = p.model;
+  $('#title').textContent = p.config.name + ' · 风格档案';
+  $('#stats').innerHTML = [
+    ['当前档案', m ? `<span class="code">${esc(m.code)}</span>` : '未生成'], ['置信度', m ? Math.round(m.confidence * 100) + '%' : '0%'],
+    ['训练数据', m ? `${m.counts.positives} 正 · ${m.counts.negatives} 反 · ${m.counts.pairs} 对比` : `${p.examples} 个示例`],
+    ['参考', `${p.labels.rounds} 轮点选${p.reference_cases ? ` · ${p.reference_cases} 条人工正面案例` : ''}`]]
+    .map(([k, v]) => `<div class="card stat"><span class="muted">${k}</span><b>${v}</b></div>`).join('');
+  $('#likes').innerHTML = bars(m && m.explanation.likes, '#22c55e');
+  $('#avoids').innerHTML = bars(m && m.explanation.avoids, '#ef4444');
+  $('#protos').innerHTML = p.prototypes.map((x) => `<div class="ex">${mediaTag(x)}<div class="t">${esc(x.title || x.key)}</div></div>`).join('') || '<div class="empty">尚无</div>';
+  $('#history').innerHTML = p.history.slice().reverse().map((h) => `<tr><td><span class="code" style="font-size:12px">${esc(h.code)}</span></td><td>${esc(h.trained_at)}</td><td>${h.counts.positives}</td><td>${h.counts.negatives}</td><td>${h.counts.pairs}</td><td>${Math.round(h.confidence * 100)}%</td></tr>`).join('') || '<tr><td colspan="6" class="muted">尚无</td></tr>';
+  $('#pos').value = terms(p.text.positive_terms); $('#neg').value = terms(p.text.negative_terms);
+  $('#posText').innerHTML = p.text.positive_phrases.map((t) => `<li>${esc(t)}</li>`).join('') || '<li class="muted">暂无</li>';
+  $('#negText').innerHTML = p.text.negative_prompts.map((t) => `<li>${esc(t)}</li>`).join('') || '<li class="muted">暂无</li>';
+  $('#edits').innerHTML = p.text.edit_history.slice().reverse().map((h) => `<li><small>${esc(h.at)}</small> ${esc(h.summary)}</li>`).join('') || '<li class="muted">尚无手动修改</li>';
+  $('#glossary').innerHTML = p.features.map((f) => `<div><span class="chip gray">${esc(f.group)}</span> <b>${esc(f.label)}</b><br><small>数值越高 = ${esc(f.higher)}</small></div>`).join('');
+}
+$('#retrain').onclick = async () => { try { const m = await api(`/api/c/${SLUG}/retrain`, {method: 'POST', body: {}}); toast('已生成 ' + m.code); load(); } catch (e) { toast(e.message, true); } };
+$('#saveTerms').onclick = async () => { try { await api(`/api/c/${SLUG}/terms`, {method: 'POST', body: {positive_terms: $('#pos').value, negative_terms: $('#neg').value}}); toast('已保存，匹配度已重算'); load(); } catch (e) { toast(e.message, true); } };
+load().catch((e) => toast(e.message, true));
+</script></body></html>

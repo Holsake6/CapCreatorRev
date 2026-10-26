@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CapCut 创作者雷达</title><link rel="stylesheet" href="/static/app.css"></head><body><main>
+<div class="topbar" id="topbar"></div>
+<section class="hero"><div class="eyebrow">CAPCUT · TEMPLATE CREATOR RADAR</div><h1>上传一类视频，让它学会这种风格，再去 CapCut 找会做这种模板的创作者</h1>
+<p>每个类别独立学习：示例视频 → 自动提取“模板基因”（卡点、切镜节奏、色调、包装、人物构图）→ 像 Midjourney 一样不断点选喜欢的模板来校准 → 沿 CapCut 相关推荐检索并排序创作者。</p></section>
+<div id="notice"></div>
+<section class="section"><h2>类别</h2><p class="muted">点进一个类别开始审核、训练或添加示例。</p><div class="grid g3" id="cats"><div class="empty">加载中…</div></div></section>
+<section class="section"><h2>新建类别</h2><p class="muted">名称会作为类别标签；关键词用于在 CapCut 专题页（explore）里检索入口模板，之后可随时修改。</p>
+<form id="create" class="grid g3">
+<div><label>类别名称</label><input name="name" required placeholder="例如：旅行 vlog、卡点变装、宠物"></div>
+<div><label>CapCut 搜索关键词（逗号或换行分隔）</label><input name="keywords" placeholder="例如：旅行,vlog,trip,旅行動画"></div>
+<div><label>创作者语言</label><select name="language"><option value="ja">只要日本区（投稿或介绍含日文）</option><option value="any">不限语言</option></select></div>
+<div><label>说明（可空）</label><input name="description" placeholder="例如：客户 A 的旅行类模板需求"></div>
+<div style="align-self:end"><button class="btn primary" type="submit">创建并添加示例 →</button></div>
+</form></section>
+</main><script src="/static/app.js"></script><script>
+async function load() {
+  renderTopbar('');
+  const data = await api('/api/categories');
+  if (!data.dna_available) $('#notice').innerHTML = '<div class="notice bad">视频分析依赖未安装：风格学习和视频打分暂不可用（文字规则仍可用）。请双击 <b>安装依赖.command</b> 后重启。</div>';
+  $('#cats').innerHTML = data.categories.map((c) => `<a class="card cat-card" href="/c/${c.slug}">
+    <h3>${esc(c.name)}</h3><div class="muted">${esc(c.description || '')}</div>
+    <div class="kv"><span>示例 <b>${c.examples}</b></span><span>作者 <b>${c.creators}</b></span><span>待审 <b>${c.pending}</b></span><span>通过 <b>${c.approved}</b></span><span>训练 <b>${c.rounds}</b> 轮</span></div>
+    <div>${c.model_code ? `<span class="code">${esc(c.model_code)}</span>` : '<span class="chip gray">尚未生成风格档案</span>'}</div>
+    <div class="bar"><span style="width:${Math.round((c.confidence || 0) * 100)}%"></span></div>
+    <small>风格置信度 ${Math.round((c.confidence || 0) * 100)}% · 最近扫描 ${esc(c.last_scan || '—')}</small></a>`).join('') || '<div class="empty">还没有类别</div>';
+}
+$('#create').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = Object.fromEntries(new FormData(e.target));
+  try { const c = await api('/api/categories', {method: 'POST', body: form}); location.href = `/c/${c.slug}/examples`; }
+  catch (err) { toast(err.message, true); }
+});
+load().catch((e) => toast(e.message, true));
+</script></body></html>

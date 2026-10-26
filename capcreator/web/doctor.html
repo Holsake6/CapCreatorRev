@@ -1,0 +1,23 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>网络与依赖检查</title><link rel="stylesheet" href="/static/app.css"></head><body><main>
+<div class="topbar" id="topbar"></div>
+<section class="hero"><div class="eyebrow">SELF CHECK</div><h1>网络与依赖检查</h1><p>逐个测试 CapCut 网页、应用接口、视频 CDN 和网盘域名，并说明失败原因与修复方法。</p></section>
+<section class="section"><button class="btn primary" id="run">重新检查</button> <span class="muted" id="when"></span>
+<div id="verdict"></div><h3>网络</h3><div class="table-wrap"><table><thead><tr><th>用途</th><th>域名</th><th>结果</th><th>说明</th></tr></thead><tbody id="net"></tbody></table></div>
+<h3>依赖</h3><div class="table-wrap"><table><thead><tr><th>模块</th><th>用途</th><th>状态</th></tr></thead><tbody id="deps"></tbody></table></div></section>
+</main><script src="/static/app.js"></script><script>
+async function run() {
+  $('#run').disabled = true; $('#net').innerHTML = '<tr><td colspan="4">检查中（约 10–30 秒）…</td></tr>';
+  try {
+    const r = await api('/api/doctor');
+    $('#when').textContent = r.checked_at + ' · Python ' + r.python;
+    $('#verdict').innerHTML = r.capcut_ok ? '<div class="notice ok">CapCut 关键域名都可以访问。</div>'
+      : `<div class="notice bad">CapCut 关键域名无法访问：${r.blocked_hosts.map(esc).join('、')}。扫描会只用本地缓存。</div>`;
+    $('#net').innerHTML = r.network.map((n) => `<tr><td>${esc(n.label)}${n.required ? '' : ' <small>(可选)</small>'}</td><td><code>${esc(n.host)}</code></td>
+      <td>${n.ok ? `<span class="chip green">可访问 ${n.ms}ms</span>` : `<span class="chip ${n.required ? 'red' : 'amber'}">${esc(n.kind)}</span>`}</td><td>${esc(n.ok ? '' : (n.advice || n.detail))}</td></tr>`).join('');
+    $('#deps').innerHTML = r.dependencies.map((d) => `<tr><td><code>${esc(d.module)}</code></td><td>${esc(d.purpose)}</td><td>${d.ok ? '<span class="chip green">已安装</span>' : `<span class="chip ${d.required ? 'red' : 'gray'}">${d.required ? '缺少' : '未安装（可选）'}</span>`}</td></tr>`).join('');
+  } catch (e) { toast(e.message, true); }
+  $('#run').disabled = false;
+}
+renderTopbar(''); $('#run').onclick = run; run();
+</script></body></html>

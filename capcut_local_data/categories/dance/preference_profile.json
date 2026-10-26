@@ -5,7 +5,7 @@
   "approved_count": 5,
   "aesthetic_only_count": 1,
   "rejected_count": 94,
-  "learning_policy": "通过与审美达标特征累积为正向审美偏好；只有正式通过作者用于数据质量特征；不通过原因原文累积为反向提示词。",
+  "learning_policy": "通过与审美达标特征累积为正向偏好；不通过原因原文累积为反向提示词。",
   "positive_phrases": [
     {
       "creator_key": "TzRfVrY5Q4Ibd6ZDY8YuLMsDZyuN9CYqN9aBCY_S9rSl04Y=",

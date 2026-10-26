@@ -1,11 +1,10 @@
 #!/bin/zsh
 cd "${0:A:h}" || exit 1
-python="/Users/a1-6/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3"
-if [[ ! -x "$python" ]]; then
-  for candidate in /opt/homebrew/bin/python3 /usr/local/bin/python3; do
-    if [[ -x "$candidate" ]]; then python="$candidate"; break; fi
-  done
-fi
+python=""
+# launchd needs an absolute interpreter path, so the project .venv is referenced absolutely.
+for candidate in "${0:A:h}/.venv/bin/python" /Users/a1-6/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 /opt/homebrew/bin/python3 /usr/local/bin/python3; do
+  if [[ -x "$candidate" ]]; then python="$candidate"; break; fi
+done
 if [[ ! -x "$python" ]]; then echo "未找到 Python 运行环境。"; read -k 1; exit 1; fi
 echo "正在执行一次测试扫描，成功后才会安装每日任务……"
 "$python" capcut_local.py --refresh --scan-only --pages 30
@@ -37,7 +36,7 @@ EOF
 /bin/launchctl bootout "gui/$(id -u)" "$agent" 2>/dev/null
 /bin/launchctl bootstrap "gui/$(id -u)" "$agent"
 if [[ $? == 0 ]]; then
-  echo "测试扫描成功，已设置每天上午 9:00 自动扫描。审核时双击“打开审核.command”。"
+  echo "测试扫描成功，已设置每天上午 9:00 自动扫描所有类别。审核时双击“打开审核.command”。"
 else
   echo "定时任务未能启动，请在 Codex 中报告此错误。"
 fi

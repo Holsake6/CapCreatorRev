@@ -1,0 +1,6 @@
+# Core: video Template DNA + taste learning. The review UI itself needs only the standard library.
+numpy>=1.24
+opencv-python-headless>=4.8,<5   # OpenCV 5 dropped the bundled face/person detectors
+imageio-ffmpeg>=0.4.9            # bundled ffmpeg for music beat analysis
+certifi>=2023.7                  # HTTPS certificates (python.org builds on macOS ship without them)
+gdown>=5.1                       # Google Drive folder import

@@ -1,0 +1,94 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>风格训练</title><link rel="stylesheet" href="/static/app.css"></head><body><main>
+<div class="topbar" id="topbar"></div>
+<div class="grid" style="grid-template-columns:minmax(0,1fr) 330px;align-items:start">
+<div>
+  <nav class="toolbar">
+    <b>点选所有“像这个类别、做得好”的模板</b><span class="muted">（数字键 1–8 选中 · Shift+数字 标记“完全不像” · 回车提交）</span>
+    <span class="spacer"></span>
+    <label class="inline">每组 <select id="size" style="width:auto"><option>2</option><option>4</option><option selected>6</option><option>8</option></select> 个</label>
+    <button class="btn" id="undo">撤销上一组</button><button class="btn" id="skip">换一组</button><button class="btn primary" id="submit">提交并下一组 ⏎</button>
+  </nav>
+  <div id="notice"></div>
+  <div class="train-grid" id="grid"><div class="empty">加载中…</div></div>
+</div>
+<aside>
+  <section class="section"><div style="display:flex;gap:14px;align-items:center"><div class="ring" id="ring"><b id="pct">0%</b></div>
+    <div><div class="muted">风格档案</div><div class="code" id="code">未生成</div><small id="counts"></small></div></div>
+    <p class="muted" style="margin:12px 0 0">像 Midjourney 的个性化：每点一组，模型就更新一次，并生成新的档案编号。约 30 轮后基本稳定，越点越准。</p></section>
+  <section class="section"><h2>已学到：偏好</h2><div id="likes" class="muted">—</div><h3>避开</h3><div id="avoids" class="muted">—</div></section>
+  <section class="section"><h2>候选池</h2><p id="pool" class="muted">—</p><button class="btn" id="prepare">分析更多候选视频</button><pre class="log" id="log" hidden></pre></section>
+</aside></div>
+</main><script src="/static/app.js"></script><script>
+let items = [], picked = new Set(), disliked = new Set(), busy = false;
+
+function renderModel(model, rounds) {
+  const conf = model ? Math.round(model.confidence * 100) : 0;
+  $('#ring').style.setProperty('--p', conf); $('#pct').textContent = conf + '%';
+  $('#code').textContent = model ? model.code : '未生成';
+  $('#counts').textContent = model ? `正例 ${model.counts.positives} · 反例 ${model.counts.negatives} · 对比 ${model.counts.pairs} · 已训练 ${rounds} 组` : `已训练 ${rounds || 0} 组`;
+  const chips = (list, cls) => (list || []).map((x) => `<span class="chip ${cls}">${esc(x.text)}</span>`).join('') || '<span class="muted">还需要更多点选</span>';
+  $('#likes').innerHTML = model ? chips(model.explanation.likes, 'green') : '—';
+  $('#avoids').innerHTML = model ? chips(model.explanation.avoids, 'red') : '—';
+}
+
+function renderGrid() {
+  const size = items.length;
+  $('#grid').style.setProperty('--cols', size <= 6 ? Math.max(2, size) : 4);
+  $('#grid').innerHTML = items.map((it, i) => `<div class="tcard ${picked.has(it.key) ? 'picked' : ''} ${disliked.has(it.key) ? 'disliked' : ''}" data-key="${esc(it.key)}">
+    ${mediaTag(it, {autoplay: true, controls: false})}<span class="mark">${picked.has(it.key) ? '✓' : disliked.has(it.key) ? '✕' : i + 1}</span>
+    <button class="no" data-no="1">完全不像</button>
+    <div class="cap"><b>${esc(it.title || '（无标题）')}</b><br>${esc(it.author_name || '')} · ${fmt(it.uses)} uses${it.score != null ? ` · 当前预测 ${it.score}` : ''}${it.analysed ? '' : ' · 未分析'}</div></div>`).join('')
+    || '<div class="empty">候选池已全部看过，或者还没有候选模板。先在“审核作者”页扫描，或点击右侧“分析更多候选视频”。</div>';
+}
+
+async function next() {
+  picked = new Set(); disliked = new Set();
+  const data = await api(`/api/c/${SLUG}/train/next?size=${$('#size').value}`);
+  items = data.items;
+  renderGrid(); renderModel(data.model, data.rounds);
+  $('#pool').textContent = `候选模板 ${data.pool} 条，其中已做视频分析 ${data.analysed_pool} 条，尚未点评 ${data.unlabelled} 条。`;
+  $('#notice').innerHTML = !data.dna_available ? '<div class="notice bad">未安装视频分析依赖：点选会被记录，但要安装依赖后才能训练模型（双击 安装依赖.command）。</div>'
+    : data.analysed_pool < 12 ? '<div class="notice info">已分析的候选视频还很少：点击右侧“分析更多候选视频”，模型才能从你的点选里学习画面风格。</div>' : '';
+}
+
+async function submit() {
+  if (busy || !items.length) return;
+  busy = true; $('#submit').disabled = true;
+  try {
+    const r = await api(`/api/c/${SLUG}/train/feedback`, {method: 'POST', body: {shown: items.map((i) => i.key), picked: [...picked], disliked: [...disliked]}});
+    renderModel(r.model, r.rounds);
+    toast(r.model ? `已更新 → ${r.model.code}` : '已记录');
+    await next();
+  } catch (e) { toast(e.message, true); }
+  busy = false; $('#submit').disabled = false;
+}
+
+$('#grid').addEventListener('click', (e) => {
+  const card = e.target.closest('.tcard'); if (!card) return;
+  const key = card.dataset.key;
+  if (e.target.dataset.no) { picked.delete(key); disliked.has(key) ? disliked.delete(key) : disliked.add(key); }
+  else { disliked.delete(key); picked.has(key) ? picked.delete(key) : picked.add(key); }
+  renderGrid();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('input,textarea,select')) return;
+  if (e.key === 'Enter') return submit();
+  const digit = e.code.startsWith('Digit') ? Number(e.code.slice(5)) : NaN;
+  const it = items[digit - 1]; if (!it) return;
+  if (e.shiftKey) { picked.delete(it.key); disliked.has(it.key) ? disliked.delete(it.key) : disliked.add(it.key); }
+  else { disliked.delete(it.key); picked.has(it.key) ? picked.delete(it.key) : picked.add(it.key); }
+  renderGrid();
+});
+$('#submit').onclick = submit;
+$('#skip').onclick = () => next().catch((e) => toast(e.message, true));
+$('#size').onchange = () => next().catch((e) => toast(e.message, true));
+$('#undo').onclick = async () => { const r = await api(`/api/c/${SLUG}/train/undo`, {method: 'POST', body: {}}); renderModel(r.model, r.rounds); toast('已撤销上一组'); next(); };
+$('#prepare').onclick = async () => {
+  $('#prepare').disabled = true;
+  try { const r = await api(`/api/c/${SLUG}/train/prepare`, {method: 'POST', body: {limit: 60}}); await pollJob(r.job, {logBox: $('#log')}); await next(); }
+  catch (e) { toast(e.message, true); }
+  $('#prepare').disabled = false;
+};
+renderTopbar('train'); next().catch((e) => toast(e.message, true));
+</script></body></html>

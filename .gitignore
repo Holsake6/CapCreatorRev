@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.venv/
 *.swp
 *.tmp
 
@@ -9,16 +10,19 @@ __pycache__/
 *.xlsx
 ~$*.xlsx
 
-# Network-derived template cache and locally compiled helper.
+# Network-derived and machine-derived data: rebuilt automatically.
 capcut_local_data/cache/
-capcut_local_data/tools/
-capcut_local_data/video_analysis/
+capcut_local_data/features/
+capcut_local_data/media/
+capcut_local_data/categories/*/background.json
 capcut_local_data/*.log
 
 # Historical safety snapshots are retained locally but are not the current state.
-capcut_local_data/*.backup-*.json
-capcut_local_data/*.before-*.json
+capcut_local_data/**/*.backup-*.json
+capcut_local_data/**/*.before-*.json
 
 # Generated distribution packages duplicate the canonical source tree.
 outputs/
 CapCut作者审核_分享版/
+capcut_local_data/categories/*/before-v3-migration-*/
+capcut_local_data/v2-superseded-*/
