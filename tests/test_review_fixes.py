@@ -129,3 +129,16 @@ def test_japanese_counter_example_folder_names():
     for name in ("反例", "NG", "ng", "不採用", "ダメ"):
         assert ingest.label_for(("ダンス", name)) == "negative"
     assert ingest.label_for(("ダンス",), "positive") == "positive"
+
+
+def test_creator_with_changed_secuid_is_still_known():
+    """CapCut returned a different secUid for the same creator on another machine."""
+    cat = categories.create("ids2", slug="ids2")
+    cat.write("seen_creators.json", {"OLD_SEC": {"name": "メロディ/melody", "first_seen": "x", "last_seen": "x"}})
+    known = discovery.known_identities(cat)
+    assert discovery.is_known({"name": "メロディ/melody ", "sec_uid": "NEW_SEC"}, known)
+    assert not discovery.is_known({"name": "someone else", "sec_uid": "NEW2"}, known)
+    merged = discovery.merge_results(cat, {"candidates": [{"name": "Yui", "sec_uid": "A"}]},
+                                     {"generated_at": "t", "candidates": [{"name": "yui", "sec_uid": "B"},
+                                                                         {"name": "new", "sec_uid": "C"}]})
+    assert [a["sec_uid"] for a in merged["candidates"]] == ["A", "C"]

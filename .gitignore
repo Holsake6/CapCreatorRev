@@ -27,3 +27,5 @@ CapCut作者审核_分享版/
 capcut_local_data/categories/*/before-v3-migration-*/
 capcut_local_data/v2-superseded-*/
 capcut_local_data/server.pid
+capcut_local_data/explore_index_*.json
+capcut_local_data/explore_counts_*.json

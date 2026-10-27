@@ -20,7 +20,7 @@ from pathlib import Path
 
 from . import paths, store
 
-FEATURE_VERSION = 3
+FEATURE_VERSION = 4
 ANALYZE_SECONDS = 60
 SAMPLE_FPS = 6
 EVENT_TOLERANCE = 0.09  # seconds; a visual hit within 90 ms of an onset counts as "on beat"
@@ -32,7 +32,8 @@ FEATURES = (
     ("cut_rate", "节奏", "切镜频率", "切镜更频繁"),
     ("shot_len_cv", "节奏", "镜头时长变化", "镜头长短变化更大"),
     ("hit_rate", "节奏", "画面冲击点密度", "冲击点（切镜/闪光/大动作）更密"),
-    ("beat_sync", "节奏", "卡点同步度", "画面变化更贴合音乐重拍"),
+    ("beat_sync", "节奏", "切点卡拍", "切镜/闪光更准地落在音乐重拍上"),
+    ("beat_motion", "节奏", "画面律动跟拍", "动作和画面变化整体更跟着音乐节奏走"),
     ("motion_mean", "运动", "画面运动强度", "画面动得更多"),
     ("motion_std", "运动", "运动起伏", "运动强弱对比更大"),
     ("flash_rate", "包装", "闪白/闪光", "闪光特效更多"),
@@ -122,6 +123,10 @@ def onset_envelope(samples, rate, hop=256, size=1024):
     log_spec = np.log1p(spectrum * 10)
     flux = np.maximum(0, np.diff(log_spec, axis=0)).sum(axis=1)
     flux = np.concatenate([[0.0], flux])
+    # A frame's flux is stamped at its window start; shift by half a window so
+    # onset times line up with the picture (otherwise ~45 ms early).
+    shift = int(round(size / 2 / hop))
+    flux = np.concatenate([np.zeros(shift, dtype=flux.dtype), flux[:-shift]]) if shift else flux
     if flux.max() > 0:
         flux = flux / flux.max()
     return flux.astype(np.float32), rate / hop
@@ -149,6 +154,35 @@ def peak_times(series, fps, min_gap=0.12, rel=0.35, floor=None):
                 peaks[-1] = i / fps
                 last = i
     return peaks
+
+
+def rhythm_correlation(change, fps, envelope, env_fps, max_lag=0.12, trials=40):
+    """Does the picture move with the music? Dance templates rarely cut, so cut-on-beat misses them.
+
+    Correlates rising visual change with the onset envelope (best lag within
+    ±120 ms) and compares it with the same signal circularly shifted to random
+    offsets. Returns the z-score mapped to 0–1 (z = 8 -> 1).
+    """
+    _, np = _cv()
+    if envelope is None or len(change) < fps * 3:
+        return 0.0
+    n = int(min(len(change) / fps, len(envelope) / env_fps) * fps)
+    if n < fps * 3:
+        return 0.0
+    env = np.interp(np.arange(n) / fps, np.arange(len(envelope)) / env_fps, envelope)
+    rise = np.maximum(0, np.diff(np.concatenate([[change[0]], change[:n]])))
+    rise = (rise - rise.mean()) / (rise.std() + 1e-9)
+    env = (env - env.mean()) / (env.std() + 1e-9)
+    span = max(1, int(max_lag * fps))
+
+    def corr(a, b):
+        return max(float(np.mean(a[max(0, lag):n + min(0, lag)] * b[max(0, -lag):n - max(0, lag)]))
+                   for lag in range(-span, span + 1))
+    best = corr(rise, env)
+    rng = np.random.default_rng(0)
+    null = [corr(np.roll(rise, int(shift)), env) for shift in rng.integers(int(fps), n - int(fps), trials)]
+    z = (best - float(np.mean(null))) / (float(np.std(null)) + 1e-9)
+    return float(max(0.0, min(1.0, z / 8)))
 
 
 def tempo_bpm(envelope, fps):
@@ -205,8 +239,71 @@ def _people_detector(cv2):
     return hog
 
 
+FLOW_FPS = 15  # rate of the visual-change series; 67 ms resolution is enough for beat timing
+
+
+def _frame_series(frames_iter, step, tiny):
+    """Shared per-frame bookkeeping for both decoders."""
+    cv2, np = _cv()
+    sampled, change, brightness_series = [], [], []
+    prev_tiny, index = None, 0
+    for frame in frames_iter:
+        h, w = frame.shape[:2]
+        small = cv2.resize(frame, (tiny, max(1, int(tiny * h / w))), interpolation=cv2.INTER_AREA)
+        brightness_series.append(float(cv2.cvtColor(small, cv2.COLOR_BGR2GRAY).mean()))
+        colour = small.astype(np.float32)  # colour, so hue-only cuts register too
+        change.append(0.0 if prev_tiny is None else float(np.abs(colour - prev_tiny).mean()) / 255.0)
+        prev_tiny = colour
+        if index % step == 0:
+            sampled.append(frame)
+        index += 1
+    return sampled, change, brightness_series, index
+
+
+def _read_with_ffmpeg(path, seconds, sample_fps, width, tiny):
+    """ffmpeg decodes multithreaded and only emits small frames at FLOW_FPS (~5x faster than OpenCV)."""
+    cv2, np = _cv()
+    exe = ffmpeg_exe()
+    if not exe:
+        return None
+    cap = cv2.VideoCapture(str(path))
+    src_w, src_h = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap.release()
+    if src_w <= 0 or src_h <= 0:
+        return None
+    out_h = max(2, int(round(width * src_h / src_w / 2)) * 2)
+    cmd = [exe, "-v", "error", "-t", str(seconds), "-i", str(path), "-an", "-sn",
+           "-vf", f"fps={FLOW_FPS},scale={width}:{out_h}", "-f", "rawvideo", "-pix_fmt", "bgr24", "-"]
+    try:
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    except OSError:
+        return None
+    size = width * out_h * 3
+
+    def frames():
+        while True:
+            buf = proc.stdout.read(size)
+            if len(buf) < size:
+                break
+            yield np.frombuffer(buf, dtype=np.uint8).reshape(out_h, width, 3)
+    step = max(1, int(round(FLOW_FPS / sample_fps)))
+    try:
+        sampled, change, bright, count = _frame_series(frames(), step, tiny)
+    finally:
+        proc.stdout.close()
+        proc.wait(timeout=30)
+    if not sampled:
+        return None
+    return {"fps": float(FLOW_FPS), "frames": count, "duration": count / FLOW_FPS, "sample_step": step,
+            "sampled": sampled, "change": np.array(change, dtype=np.float32),
+            "brightness": np.array(bright, dtype=np.float32), "shape": (src_h, src_w)}
+
+
 def read_frames(path, seconds=ANALYZE_SECONDS, sample_fps=SAMPLE_FPS, width=192, tiny=48):
-    """Decode once: a full-rate tiny-gray change series plus sampled colour frames."""
+    """Decode once: a tiny-gray change series plus sampled small colour frames."""
+    decoded = _read_with_ffmpeg(path, seconds, sample_fps, width, tiny)
+    if decoded:
+        return decoded
     cv2, np = _cv()
     cap = cv2.VideoCapture(str(path))
     if not cap.isOpened():
@@ -215,30 +312,25 @@ def read_frames(path, seconds=ANALYZE_SECONDS, sample_fps=SAMPLE_FPS, width=192,
     if not 1 <= fps <= 240:
         fps = 30.0
     step = max(1, int(round(fps / sample_fps)))
-    sampled, change, brightness_series = [], [], []
-    prev_tiny = None
-    index = 0
-    limit = int(seconds * fps)
-    while index < limit:
-        ok, frame = cap.read()
-        if not ok:
-            break
-        h, w = frame.shape[:2]
-        small = cv2.resize(frame, (tiny, max(1, int(tiny * h / w))), interpolation=cv2.INTER_AREA)
-        gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY).astype(np.float32)
-        brightness_series.append(float(gray.mean()))
-        change.append(0.0 if prev_tiny is None else float(np.abs(gray - prev_tiny).mean()) / 255.0)
-        prev_tiny = gray
-        if index % step == 0:
-            scale = width / w
-            sampled.append(cv2.resize(frame, (width, max(1, int(h * scale))), interpolation=cv2.INTER_AREA))
-        index += 1
+    shape = [None]
+
+    def frames():
+        limit, index = int(seconds * fps), 0
+        while index < limit:
+            ok, frame = cap.read()
+            if not ok:
+                break
+            h, w = frame.shape[:2]
+            shape[0] = (h, w)
+            index += 1
+            yield cv2.resize(frame, (width, max(1, int(h * width / w))), interpolation=cv2.INTER_AREA)
+    sampled, change, bright, count = _frame_series(frames(), step, tiny)
     cap.release()
     if not sampled:
         raise ValueError("视频没有可读取的画面")
-    return {"fps": fps, "frames": index, "duration": index / fps, "sample_step": step,
+    return {"fps": fps, "frames": count, "duration": count / fps, "sample_step": step,
             "sampled": sampled, "change": np.array(change, dtype=np.float32),
-            "brightness": np.array(brightness_series, dtype=np.float32), "shape": (h, w)}
+            "brightness": np.array(bright, dtype=np.float32), "shape": shape[0]}
 
 
 def _hist(cv2, hsv):
@@ -288,13 +380,15 @@ def analyze_frames(decoded, audio=None):
         flashes = len(peak_times(np.maximum(0, jump), fps, min_gap=0.2, rel=0.5, floor=35.0))
     flash_rate = flashes / duration
 
-    # --- colour / look
-    sat = np.array([hsv[..., 1].mean() / 255 for hsv in hsv_frames])
+    # --- colour / look (a uniform subset is plenty and keeps long videos fast)
+    look_idx = np.linspace(0, len(frames) - 1, num=min(90, len(frames))).astype(int)
+    look = [(frames[i], hsv_frames[i], grays[i]) for i in sorted(set(look_idx.tolist()))]
+    sat = np.array([hsv[..., 1].mean() / 255 for _, hsv, _ in look])
     val = np.array([hsv[..., 2].mean() / 255 for hsv in hsv_frames])
     contrast = np.array([g.std() / 128 for g in grays])
     colorful, warm = [], []
     palette = np.zeros(PALETTE_BINS + 2, dtype=np.float64)
-    for frame, hsv in zip(frames, hsv_frames):
+    for frame, hsv, _ in look:
         b, g, r = [c.astype(np.float32) for c in cv2.split(frame)]
         rg, yb = r - g, 0.5 * (r + g) - b
         colorful.append((math.hypot(rg.std(), yb.std()) + 0.3 * math.hypot(rg.mean(), yb.mean())) / 255)
@@ -307,17 +401,18 @@ def analyze_frames(decoded, audio=None):
         palette[PALETTE_BINS + 1] += float(((s <= 0.25) & (v >= 0.75)).sum()) * 0.5
     palette = palette / palette.sum() if palette.sum() > 0 else palette
 
-    sharp = [math.log1p(cv2.Laplacian(g, cv2.CV_32F).var()) / 10 for g in grays]
+    sharp = [math.log1p(cv2.Laplacian(g, cv2.CV_32F).var()) / 10 for _, _, g in look]
 
-    # --- packaging & layout
-    edges = [cv2.Canny(g, 80, 180) > 0 for g in grays]
+    # --- packaging & layout (same uniform subset as the colour statistics)
+    look_grays = [g for _, _, g in look]
+    edges = [cv2.Canny(g, 80, 180) > 0 for g in look_grays]
     edge_density = float(np.mean([e.mean() for e in edges]))
     stack = np.stack(edges).astype(np.float32)
     persistence = stack.mean(axis=0)
     static_overlay = float((persistence >= 0.7).mean() / (edge_density + 1e-3)) if edge_density > 0 else 0.0
     static_overlay = min(1.0, static_overlay)
 
-    gray_stack = np.stack(grays).astype(np.float32)
+    gray_stack = np.stack(look_grays).astype(np.float32)
     temporal_std = gray_stack.std(axis=0)
     spatial_std_rows = gray_stack.mean(axis=0).std(axis=1)
     spatial_std_cols = gray_stack.mean(axis=0).std(axis=0)
@@ -339,7 +434,7 @@ def analyze_frames(decoded, audio=None):
     # frame that stays put while the content around it changes.
     def seam_strength(axis):
         coverage = []
-        for g in grays:
+        for g in look_grays:
             grad = np.abs(cv2.Sobel(g, cv2.CV_32F, 1 if axis == 0 else 0, 0 if axis == 0 else 1, ksize=3))
             strong = grad > 60
             coverage.append(strong.mean(axis=axis))  # per column (axis=0) or per row (axis=1)
@@ -384,7 +479,7 @@ def analyze_frames(decoded, audio=None):
 
     # --- audio
     tempo = onset_rate = energy = 0.0
-    beat = 0.0
+    beat = motion_beat = 0.0
     has_audio = False
     if audio is not None and audio[0] is not None:
         samples, rate = audio
@@ -395,13 +490,15 @@ def analyze_frames(decoded, audio=None):
             onset_rate = len(audio_events) / max(0.1, len(samples) / rate)
             tempo = tempo_bpm(envelope, env_fps)
             energy = float(min(1.0, max(0.0, (20 * math.log10(float(np.sqrt((samples ** 2).mean())) + 1e-6) + 50) / 50)))
-            cut_times = [i / sample_fps for i in cut_idx]
-            events = sorted(set(round(t, 2) for t in visual_events + cut_times))
-            beat = sync_score(events, audio_events, min(duration, len(samples) / rate))
+            # Only the full-rate change series is precise enough for beat timing
+            # (sampled-frame cut times are quantised to ~130 ms).
+            beat = sync_score(visual_events, audio_events, min(duration, len(samples) / rate))
+            motion_beat = rhythm_correlation(change, fps, envelope, env_fps)
 
     scalars = {
         "duration": round(duration, 2), "vertical": float(h > w),
         "cut_rate": cut_rate, "shot_len_cv": shot_len_cv, "hit_rate": hit_rate, "beat_sync": beat,
+        "beat_motion": motion_beat,
         "motion_mean": motion_mean, "motion_std": motion_std, "flash_rate": flash_rate,
         "edge_density": edge_density, "static_overlay": static_overlay,
         "border_ratio": border_ratio, "split_layout": split_layout,
@@ -434,11 +531,24 @@ def cached(key):
     return data if data and data.get("version") == FEATURE_VERSION else None
 
 
+def _clip_ready():
+    try:
+        from . import embed
+        return embed.enabled()
+    except Exception:
+        return False
+
+
+def is_complete(previous, embed=True):
+    """A cached result is reusable unless CLIP became available and it has no embedding yet."""
+    return previous and (not embed or previous.get("embedding") or not _clip_ready())
+
+
 def analyze_video(path, key=None, meta=None, embed=True):
     """Full Template DNA for a local video file, cached by ``key`` (default: content hash)."""
     key = key or file_key(path)
     previous = cached(key)
-    if previous:
+    if is_complete(previous, embed):
         return previous
     decoded = read_frames(path)
     result = analyze_frames(decoded, audio_track(path))
@@ -460,7 +570,7 @@ def analyze_template(template_id, video_url, meta=None, keep_video=False):
     """Download a CapCut preview, extract DNA, then delete the video unless asked to keep it."""
     key = f"t{template_id}"
     previous = cached(key)
-    if previous:
+    if is_complete(previous):
         return previous
     from . import capcut
     video = capcut.download_preview(template_id, video_url)
@@ -476,10 +586,10 @@ def describe(scalars):
     parts = []
     if scalars.get("beat_sync", 0) >= 0.35:
         parts.append("强卡点")
+    elif scalars.get("beat_motion", 0) >= 0.45:
+        parts.append("律动跟拍")
     if scalars.get("cut_rate", 0) >= 1.2:
         parts.append("快切")
-    elif scalars.get("cut_rate", 0) <= 0.15:
-        parts.append("长镜头")
     if scalars.get("person_ratio", 0) >= 0.6:
         parts.append("人物为主")
     if scalars.get("face_size", 0) >= 0.25:

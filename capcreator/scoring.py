@@ -114,6 +114,9 @@ def score_author(author, config, text_profile, reference=None, template_scores=N
         proxy, evidence = keyword_relevance(author, terms or [])
     style, analysed = creator_style(author, template_scores or {})
     strength = max(0.0, min(1.0, float(config.get("style_strength", 60)) / 100))
+    if not config.get("reference_cases") and not config.get("keywords"):
+        # No keywords: the "text" proxy is only example file names (noisy), so the examples' look decides.
+        strength = max(strength, 0.85)
     aesthetic = proxy if style is None else round((1 - strength) * proxy + strength * style, 1)
     quality = quality_data_score(author)
     learned = textlearn.preference_adjustment(author, text_profile or {})

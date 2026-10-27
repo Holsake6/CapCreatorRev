@@ -126,12 +126,23 @@ def advance_scan_state(category, generated_at):
     category.write("scan_state.json", state)
 
 
-def landing_urls(category):
+def landing_urls(category, log=None):
     config = category.config
     keywords = list(config.get("keywords", []))
     if config.get("trend_source") == "oricon_tiktok_jp":
         keywords += current_jp_tiktok_songs(category)
     urls = [*config.get("landing_urls", []), *(capcut.explore_url(k, config["region"]) for k in keywords)]
+    if config.get("auto_explore"):
+        # Most typed keywords have no explore page of their own; CapCut's sitemap says which do.
+        from . import explore
+        try:
+            points = explore.entry_points(config, category.examples(), log=log)
+            if log and points:
+                log("自动匹配的 CapCut 专题页：" + "、".join(p["keyword"] for p in points))
+            urls += [p["url"] for p in points]
+        except OSError as exc:
+            if log:
+                log(f"⚠ 读取 CapCut 专题页索引失败：{exc}")
     return list(dict.fromkeys(urls))
 
 
@@ -140,7 +151,7 @@ def seed_ids(category, rules, terms, quick=False, log=print):
     examples = [e["template_id"] for e in category.examples()
                 if e.get("template_id") and e.get("label", "positive") == "positive"]
     pages = scan_pages(category, quick)
-    urls = [u if p == 1 else f"{u}{'&' if '?' in u else '?'}page={p}" for u in landing_urls(category) for p in pages]
+    urls = [u if p == 1 else f"{u}{'&' if '?' in u else '?'}page={p}" for u in landing_urls(category, log) for p in pages]
     discovered, failures = [], []
     with ThreadPoolExecutor(max_workers=10) as pool:
         jobs = {pool.submit(capcut.landing_template_ids, url): url for url in urls}
@@ -195,10 +206,35 @@ def item_record(item, rules, terms, config):
     }
 
 
+def name_key(author):
+    return (author.get("name") or "").strip().casefold()
+
+
+def known_identities(category, data=None):
+    """Keys and names of every creator this category has already shown.
+
+    CapCut's ``secUid`` is not stable: the same creator gets a different one
+    depending on region/server (seen live: melody's changed between the Mac
+    and a cloud machine). Matching on the display name as well keeps the
+    "never show a creator twice" rule.
+    """
+    seen = category.read("seen_creators.json", {})
+    data = data if data is not None else category.candidates()
+    keys = set(seen) | {author_key(a) for a in data.get("candidates", [])}
+    names = {(v.get("name") or "").strip().casefold() for v in seen.values()}
+    names |= {name_key(a) for a in data.get("candidates", [])}
+    names.discard("")
+    return keys, names
+
+
+def is_known(author, identities):
+    keys, names = identities
+    return author_key(author) in keys or name_key(author) in names
+
+
 def qualify(author, config, terms_excl, seen, rules):
     """Apply hard rules; returns the author dict (mutated) or None."""
-    key = author_key(author)
-    if key in seen or is_excluded(author, terms_excl):
+    if is_known(author, seen) or is_excluded(author, terms_excl):
         return None
     works = sorted(author["works"], key=lambda w: (scoring.is_category_work(w), w["uses"]), reverse=True)
     eligible = [w for w in works if not w.get("stale_low_use")]
@@ -281,10 +317,10 @@ def discover(category, max_pages=None, workers=10, log=print):
             author["bio"] = record["author_bio"]
         author["works"].append(record)
 
-    seen = category.read("seen_creators.json", {})
+    seen = known_identities(category)
     excl = exclusion_terms()
+    skipped_seen = sum(is_known(a, seen) for a in authors.values())
     candidates = [a for a in (qualify(a, config, excl, seen, rules) for a in authors.values()) if a]
-    skipped_seen = sum(author_key(a) in seen for a in authors.values())
 
     # Cheap ranking first, then video analysis for the strongest pool only.
     profile = category.text_profile()
@@ -322,12 +358,12 @@ def merge_results(category, previous, new, append_batch_size=None):
     """Append unseen creators: 60% best matches + 40% random exploration, up to the queue limit."""
     config = category.config
     existing = list((previous or {}).get("candidates", []))
-    keys = {author_key(a) for a in existing}
+    known = known_identities(category, {"candidates": existing})
     decisions = category.decisions()
     pending = sum(decisions.get(author_key(a), {}).get("status", "pending") == "pending" for a in existing)
     slots = (max(0, int(append_batch_size)) if append_batch_size is not None
              else max(0, config["max_pending"] - pending))
-    available = [a for a in new.get("candidates", []) if author_key(a) not in keys]
+    available = [a for a in new.get("candidates", []) if not is_known(a, known)]
     ranked = available[:min(len(available), round(slots * 0.6))]
     remainder = available[len(ranked):]
     rng = random.Random(new.get("generated_at", ""))

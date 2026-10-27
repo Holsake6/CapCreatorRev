@@ -26,7 +26,7 @@ import time
 
 from .dna import FEATURE_INFO, FEATURE_NAMES, PALETTE_BINS, PALETTE_LABELS
 
-AUDIO_FEATURES = {"tempo_bpm", "onset_rate", "audio_energy", "beat_sync"}
+AUDIO_FEATURES = {"tempo_bpm", "onset_rate", "audio_energy", "beat_sync", "beat_motion"}
 PALETTE_DIMS = PALETTE_BINS + 2
 EXTRA = ("proto_sim", "embed_sim")
 SOURCE_WEIGHTS = {
@@ -138,12 +138,14 @@ def _unit(v):
 class Features:
     """Feature matrix builder shared by training and scoring (keeps them consistent)."""
 
-    def __init__(self, norm, prototypes=None, proto_scale=1.0, pos_embed=None, neg_embed=None):
+    def __init__(self, norm, prototypes=None, proto_scale=1.0, pos_embed=None, neg_embed=None,
+                 embed_center=(0.5, 0.1)):
         self.norm = norm
         self.prototypes = prototypes if prototypes is not None else []
         self.proto_scale = proto_scale
         self.pos_embed = pos_embed
         self.neg_embed = neg_embed
+        self.embed_center = embed_center
 
     def vector(self, record):
         np = _np()
@@ -158,7 +160,9 @@ class Features:
             emb = float(e @ self.pos_embed)
             if self.neg_embed is not None:
                 emb -= 0.5 * float(e @ self.neg_embed)
-            emb = (emb - 0.2) * 5  # CLIP cosine sims sit in a narrow band
+            # CLIP cosines sit in a narrow band: standardise against the pool (median, spread).
+            center, spread = self.embed_center
+            emb = max(-3.0, min(3.0, (emb - center) / max(spread, 0.02)))
         return np.concatenate([base, [proto * 2.0, emb]])
 
 
@@ -232,7 +236,17 @@ def train(records, points, pairs, slug="cat", previous=None):
         vecs = [_unit(records[p["key"]]["embedding"]) for p in items if records[p["key"]].get("embedding")]
         return _unit(np.mean(vecs, axis=0)) if vecs else None
     negatives_lab = [p for p in points if p["label"] == 0 and p["key"] in records]
-    features = Features(norm, prototypes, proto_scale, embed_centroid(positives), embed_centroid(negatives_lab))
+    pos_embed, neg_embed = embed_centroid(positives), embed_centroid(negatives_lab)
+    embed_center = (0.5, 0.1)
+    if pos_embed is not None:
+        sims = []
+        for record in pool:
+            if record.get("embedding"):
+                e = _unit(record["embedding"])
+                sims.append(float(e @ pos_embed) - (0.5 * float(e @ neg_embed) if neg_embed is not None else 0.0))
+        if len(sims) >= 3:
+            embed_center = (float(np.median(sims)), float(np.percentile(sims, 75) - np.percentile(sims, 25)) / 1.349)
+    features = Features(norm, prototypes, proto_scale, pos_embed, neg_embed, embed_center)
 
     labelled = {p["key"] for p in points}
     rows, ys, ws, bias = [], [], [], []
@@ -268,7 +282,9 @@ def train(records, points, pairs, slug="cat", previous=None):
     consistency = 1 / (1 + pos_vectors.std(axis=0)) if len(pos_vectors) > 1 else np.full(pos_vectors.shape[1], 0.5)
     prior[:pos_vectors.shape[1]] = 0.25 * pos_mean[:pos_vectors.shape[1]] * consistency
     prior[-3] = 0.8  # proto_sim
-    prior[-2] = 0.6 if features.pos_embed is not None else 0.0
+    # "Looks like the examples" (CLIP) is the most direct content signal there is;
+    # verified live: it ranked dog templates above dance ones from 6 dog examples.
+    prior[-2] = 1.5 if features.pos_embed is not None else 0.0
     prior[-1] = -0.5
     effective = sum(1 for p in points if p["key"] in records and p.get("source") != "background") + n_pairs
     lam = 2.0 + 30.0 / (1 + effective / 10)
@@ -281,7 +297,8 @@ def train(records, points, pairs, slug="cat", previous=None):
     fingerprint = hashlib.sha1(",".join(f"{v:.2f}" for v in beta).encode()).hexdigest()[:6]
     model = {
         "version": 1, "revision": revision,
-        "code": f"{slug[:4]}-v{revision}-{fingerprint}",
+        # Non-ASCII category names get hash slugs ("c-36454dc9"); "cat" reads better than "c-36".
+        "code": f"{'cat' if slug.startswith('c-') else slug[:4]}-v{revision}-{fingerprint}",
         "trained_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "norm": norm, "weights": weights, "bias": round(float(beta[-1]), 4),
         "prototypes": [[round(float(x), 4) for x in p] for p in prototypes],
@@ -289,6 +306,7 @@ def train(records, points, pairs, slug="cat", previous=None):
         "proto_scale": proto_scale,
         "pos_embed": None if features.pos_embed is None else [round(float(x), 5) for x in features.pos_embed],
         "neg_embed": None if features.neg_embed is None else [round(float(x), 5) for x in features.neg_embed],
+        "embed_center": [round(x, 5) for x in features.embed_center],
         "counts": {"records": len(records), "positives": len(positives), "negatives": len(negatives_lab),
                    "background": len(background), "pairs": n_pairs,
                    "examples": sum(p.get("source") == "example" for p in positives)},
@@ -303,7 +321,8 @@ def _features_for(model):
     return Features(model["norm"], [np.array(p) for p in model.get("prototypes", [])],
                     model.get("proto_scale", 3.0),
                     None if not model.get("pos_embed") else np.array(model["pos_embed"]),
-                    None if not model.get("neg_embed") else np.array(model["neg_embed"]))
+                    None if not model.get("neg_embed") else np.array(model["neg_embed"]),
+                    tuple(model.get("embed_center") or (0.5, 0.1)))
 
 
 def score_records(model, records):
@@ -324,11 +343,12 @@ def explain(model, top=6):
     """Readable "what this category likes / avoids" from weight × prototype direction."""
     weights = model["weights"]
     items = []
+    extra_text = {"proto_sim": "更接近示例里的代表案例", "embed_sim": "画面内容更像示例（CLIP）"}
     for name, value in weights.items():
-        if name in EXTRA or abs(value) < 0.05:
+        if abs(value) < 0.05 or (name in EXTRA and (value < 0.3 or (name == "embed_sim" and not model.get("pos_embed")))):
             continue
         info = FEATURE_INFO.get(name)
-        text = info["higher"] if info else label_of(name) + "更多"
+        text = extra_text.get(name) or (info["higher"] if info else label_of(name) + "更多")
         items.append({"feature": name, "label": label_of(name), "weight": value, "text": text})
     items.sort(key=lambda item: -abs(item["weight"]))
     likes = [item for item in items if item["weight"] > 0][:top]

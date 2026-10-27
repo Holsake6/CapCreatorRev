@@ -47,7 +47,27 @@ def decision_of(decisions, author):
 def media_url(item):
     if item.get("file"):
         return "/media/" + item["file"]
+    if item.get("template_id"):
+        # Stored CapCut URLs are signed and expire within days; this redirects to a current one.
+        return f"/api/video/{item['template_id']}"
     return item.get("video_url", "")
+
+
+_fresh_urls = {}
+_fresh_lock = threading.Lock()
+
+
+def fresh_video_redirect(template_id):
+    with _fresh_lock:
+        cached = _fresh_urls.get(template_id)
+    if cached and time.time() - cached[1] < 6 * 3600:
+        return cached[0]
+    video, _ = capcut.fresh_media_urls(template_id)
+    if not video:
+        raise HttpError(404, "CapCut 没有返回这个模板的预览视频")
+    with _fresh_lock:
+        _fresh_urls[template_id] = (video, time.time())
+    return video
 
 
 # ---------------------------------------------------------------- API handlers
@@ -73,6 +93,7 @@ EDITABLE_CONFIG = {"name": str, "description": str, "region": str, "language": s
                    "landing_urls": list, "seed_template_ids": list, "include_regex": str, "exclude_regex": str,
                    "exclude_ai": bool, "max_pending": int, "stale_days": int, "stale_min_uses": int,
                    "high_use_threshold": int, "scan_pages": int, "analyze_top": int, "style_strength": int,
+                   "auto_explore": bool,
                    "visual_gate": str, "trend_source": str, "labels": dict}
 
 
@@ -121,6 +142,7 @@ def api_candidates(category, query):
             works.append({**{k: work.get(k) for k in ("template_id", "title", "uses", "url", "cover_url", "video_url",
                                                        "likely_ai", "category_signal", "category_seed",
                                                        "published_at", "style_prob", "from_homepage")},
+                          "media": media_url(work),
                           "dna_tags": dna.describe(record["scalars"]) if record else [],
                           "reasons": taste.explain_record(model, record) if (model and record) else []})
         rows.append({"key": author_key(author), "status": status, "decision": decision,
@@ -190,7 +212,7 @@ def api_resolve_profile(category, body):
         def deep(job):
             job.write(f"读取 {profile['name']} 的主页全部模板…")
             result = discovery.deep_check(category, key, profile["public_id"])
-            job.write(f"主页模板 {result['templates']} 条，其中本类别占比 {round(result['category_share'] * 100)}%")
+            job.write(f"主页最近 {result['templates']} 条模板，标题含类别关键词的占 {round(result['category_share'] * 100)}%")
             return result
         job, _ = jobs.start(f"deep-{key}", category.slug, f"主页深度核查：{profile['name']}", deep)
         profile["job"] = job.id
@@ -302,7 +324,11 @@ def api_example_update(category, key, body, method):
 def trainer_pool(category):
     index = learn.template_index(category)
     examples = {e["key"] for e in category.examples()}
-    return {k: v for k, v in index.items() if k not in examples and (v.get("video_url") or v.get("file"))}
+    # Reviewed creators already label their works (approve/reject); clicks there teach nothing new.
+    reviewed = {k for k, d in category.decisions().items() if d.get("status", "pending") != "pending"}
+    return {k: v for k, v in index.items()
+            if k not in examples and v.get("author_key") not in reviewed
+            and (v.get("video_url") or v.get("file") or v.get("template_id"))}
 
 
 def api_train_next(category, query):
@@ -399,6 +425,15 @@ def api_retrain(category):
     if not model:
         raise HttpError(400, "还没有可用的已分析正例：请先添加示例视频或模板链接，并等待分析完成")
     return model_summary(model)
+
+
+def api_explore(category):
+    """Which configured keywords exist as CapCut explore pages, and what the sitemap suggests."""
+    from . import explore
+    config = category.config
+    return {"keywords": explore.check_keywords(config.get("keywords", [])[:15], config["region"]),
+            "auto_explore": config.get("auto_explore"),
+            "entry_points": explore.entry_points(config, category.examples())}
 
 
 def api_profile(category):
@@ -535,7 +570,7 @@ class Handler(BaseHTTPRequestHandler):
         path = unquote(parsed.path)
         query = parse_qs(parsed.query)
         try:
-            if method == "GET" and not path.startswith("/api/"):
+            if method == "GET" and (not path.startswith("/api/") or path.startswith("/api/video/")):
                 return self.route_page(path, query)
             body = {} if method == "GET" or path.endswith("/examples/upload") else self.json_body()
             result = self.route_api(method, path, query, body)
@@ -569,6 +604,9 @@ class Handler(BaseHTTPRequestHandler):
             return self.serve_file(target)
         if path in ("/", "/index.html"):
             return self.serve_file(STATIC / "index.html", "text/html; charset=utf-8")
+        match = re.fullmatch(r"/api/video/(\d{15,20})", path)
+        if match:
+            return self.redirect(fresh_video_redirect(match.group(1)))
         if path == "/doctor":
             return self.serve_file(STATIC / "doctor.html", "text/html; charset=utf-8")
         # v2 bookmarks: "/", "/aesthetic", "/new-category" and "/?view=..."
@@ -624,6 +662,7 @@ class Handler(BaseHTTPRequestHandler):
             ("POST", "/train/prepare"): lambda: api_prepare(category, body),
             ("POST", "/retrain"): lambda: api_retrain(category),
             ("GET", "/profile"): lambda: api_profile(category),
+            ("GET", "/explore"): lambda: api_explore(category),
             ("POST", "/terms"): lambda: api_terms(category, body),
             ("GET", "/export.csv"): lambda: (export_csv(category), "text/csv; charset=utf-8",
                                              {"Content-Disposition": f'attachment; filename="capcut-{category.slug}-approved.csv"'}),

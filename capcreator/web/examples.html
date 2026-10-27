@@ -16,6 +16,8 @@
 </div>
 <section class="section"><h2>示例 <span class="muted" id="exCount"></span></h2><p class="muted">★ = 风格档案选出的代表案例。点“改为反例/正例”可以纠正标注；删除不影响已下载的分析缓存。</p>
   <div class="examples" id="examples"><div class="empty">加载中…</div></div></section>
+<section class="section"><h2>CapCut 入口专题页</h2><p class="muted">扫描从这些 CapCut 专题页出发，再沿“相关推荐”扩展。大多数随手输入的关键词在 CapCut 上没有专题页，所以程序会从 CapCut 的站点地图（约 5 万个日文专题页）里自动匹配关键词和示例标题，只保留模板足够多的页面。</p>
+  <div class="actions"><button class="btn" id="exploreBtn">检查关键词并查看自动匹配的专题页</button></div><div id="explore"></div></section>
 <section class="section"><h2>类别设置</h2><form id="config" class="grid g3">
   <div><label>名称</label><input name="name"></div>
   <div><label>说明</label><input name="description"></div>
@@ -27,6 +29,7 @@
   <div><label>标题必须匹配（正则，可空）</label><input name="include_regex" placeholder="留空 = 用关键词和示例标题判断"></div>
   <div><label>标题排除（正则，可空）</label><input name="exclude_regex"></div>
   <div><label class="inline" style="margin-top:28px"><input type="checkbox" name="exclude_ai">排除 AI 模板</label></div>
+  <div><label class="inline" style="margin-top:28px"><input type="checkbox" name="auto_explore">自动匹配 CapCut 专题页作为入口</label></div>
   <div><label>待审队列上限</label><input type="number" name="max_pending" min="5"></div>
   <div><label>高 uses 门槛</label><input type="number" name="high_use_threshold" min="0"></div>
   <div><label>低量淘汰：发布满 N 天</label><input type="number" name="stale_days" min="1"></div>
@@ -100,6 +103,16 @@ $('#importBtn').onclick = async () => {
     await loadExamples(); renderTopbar('examples');
   } catch (err) { toast(err.message, true); }
   $('#importBtn').disabled = false;
+};
+$('#exploreBtn').onclick = async () => {
+  const b = $('#exploreBtn'); b.disabled = true; $('#explore').innerHTML = '<p class="muted">检查中（首次需要下载站点地图，约 10–40 秒）…</p>';
+  try {
+    const r = await api(`/api/c/${SLUG}/explore`);
+    const kw = Object.entries(r.keywords).map(([k, n]) => `<span class="chip ${n ? 'green' : 'red'}">${esc(k)} ${n ? '✓ ' + n + ' 个模板' : '✗ 没有专题页'}</span>`).join('') || '<span class="muted">还没有设置关键词</span>';
+    const eps = r.entry_points.map((e) => `<a class="chip" target="_blank" href="${esc(e.url)}">${esc(e.keyword)} · ${e.templates}</a>`).join('') || '<span class="muted">没有匹配的专题页：试试更通用的日文关键词，或添加 CapCut 模板链接作为示例</span>';
+    $('#explore').innerHTML = `<h3>关键词</h3><div>${kw}</div><h3>自动匹配的专题页${r.auto_explore ? '' : '（当前已关闭自动匹配）'}</h3><div>${eps}</div>`;
+  } catch (e) { $('#explore').innerHTML = `<div class="notice bad">${esc(e.message)}</div>`; }
+  b.disabled = false;
 };
 renderTopbar('examples'); loadExamples().catch((e) => toast(e.message, true));
 </script></body></html>

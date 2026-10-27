@@ -38,6 +38,16 @@ def _load():
         return _state["model"]
 
 
+def enabled():
+    """True when CLIP can be used. Only loads the model if the packages are installed."""
+    if os.environ.get("CAPCREATOR_CLIP", "").lower() in ("off", "0", "false"):
+        return False
+    import importlib.util
+    if not importlib.util.find_spec("open_clip") or not importlib.util.find_spec("torch"):
+        return False
+    return _load() is not None
+
+
 def status():
     return {"model": model_name(), "enabled": _load() is not None, "error": _state["error"]}
 

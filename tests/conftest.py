@@ -18,6 +18,17 @@ def data_dir(tmp_path, monkeypatch):
     return root
 
 
+@pytest.fixture(autouse=True)
+def no_network(monkeypatch):
+    """Tests never reach CapCut: anything not mocked fails like an offline machine."""
+    from capcreator import net
+
+    def offline(url, *args, **kwargs):
+        raise net.NetError("dns", url, "network disabled in tests")
+    monkeypatch.setattr(net, "request", offline)
+    monkeypatch.setattr(net, "download", offline)
+
+
 @pytest.fixture(scope="session")
 def videos(tmp_path_factory):
     """A small library of synthetic templates: on-beat fast cuts, off-beat fast cuts, slow dark takes."""

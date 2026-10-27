@@ -37,7 +37,7 @@ function rowHtml(c, i) {
     <span>视频风格 <b>${c.style_score == null ? '—' : c.style_score}</b>${c.style_analysed ? ` <small>(${c.style_analysed}条)</small>` : ''}</span><span>数据 <b>${c.quality_data_score ?? 0}</b></span>
     ${c.preference_adjustment ? `<span>反馈 <b>${c.preference_adjustment > 0 ? '+' : ''}${c.preference_adjustment}</b></span>` : ''}</div>
     <small>文字依据：${esc((c.reference_match_evidence || []).join('、') || '仅结构代理，待人工审核')}</small><br>
-    ${c.homepage_checked_at ? `<small>主页核查：${c.homepage_template_count} 条模板，本类别占 ${Math.round((c.homepage_category_share || 0) * 100)}%</small><br>` : ''}
+    ${c.homepage_checked_at ? `<small>主页核查：最近 ${c.homepage_template_count} 条模板，标题/描述明确含类别关键词的占 ${Math.round((c.homepage_category_share || 0) * 100)}%（很多作品标题只写歌名，仅供参考）</small><br>` : ''}
     <small>${esc((c.bio || '').slice(0, 180))}</small></td>
   <td>${esc(c.japanese_signal || '')}<br>已索引${esc(L.category)}：${c.category_non_ai_indexed || 0} 条；非AI且≥${fmt(config.high_use_threshold)}：${c.high_use_non_ai_indexed || 0} 条<br>
     满${config.stale_days}天且 uses&lt;${fmt(config.stale_min_uses)} 已排除：${c.stale_low_use_excluded_count || 0} 条<br>主页总投稿：${c.total_posts || '待核'}</td>

@@ -92,7 +92,7 @@
   "high_use_threshold": 3000,
   "scan_pages": 1200,
   "analyze_top": 80,
-  "style_strength": 40,
+  "style_strength": 20,
   "labels": {
     "category": "舞蹈",
     "confirm": "已确认主要产出优质舞蹈模板",

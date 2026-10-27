@@ -125,15 +125,20 @@ def template_page(template_id, force=False, region="ja-jp", fetch=None):
         return {"error": str(exc), "detail": None, "recommendations": []}
 
 
-def landing_template_ids(url, fetch=None):
-    fetch = fetch or net.fetch_text
-    _, page = fetch(url, timeout=25)
+def template_ids_in_page(page):
+    """Template ids on a list page: embedded JSON when present, else detail links."""
     payload = embedded_json_object(page, "videoTemplateListResolved")
     templates = (payload.get("data") or {}).get("videoTemplates") or []
     ids = [str(item.get("templateId")) for item in templates if item.get("templateId")]
     if not ids:
         ids = DETAIL_URL_ID.findall(page.replace("\\u002F", "/"))
     return list(dict.fromkeys(ids))
+
+
+def landing_template_ids(url, fetch=None):
+    fetch = fetch or net.fetch_text
+    _, page = fetch(url, timeout=25)
+    return template_ids_in_page(page)
 
 
 def cached_pages():
@@ -219,8 +224,9 @@ def creator_templates(public_id, max_pages=5, page_size=100):
                 continue
             seen.add(template_id)
             author = raw.get("author") or {}
-            video = raw.get("video_info") or {}
-            cover = raw.get("cover") or {}
+            # The API returns plain URL strings; older payloads nested them in objects.
+            video = raw.get("video_url") or (raw.get("video_info") or {}).get("url") or ""
+            cover = raw.get("cover_url") or raw.get("optimized_cover_url") or (raw.get("cover") or {}).get("url") or ""
             items.append({
                 "templateId": template_id,
                 "title": raw.get("short_title") or raw.get("title") or "",
@@ -228,8 +234,7 @@ def creator_templates(public_id, max_pages=5, page_size=100):
                 "usageAmount": raw.get("usage_amount") or 0,
                 "createTime": raw.get("create_time") or 0,
                 "segmentAmount": raw.get("fragment_count"),
-                "coverUrl": cover.get("url") if isinstance(cover, dict) else (raw.get("cover_url") or ""),
-                "videoUrl": video.get("url") if isinstance(video, dict) else (raw.get("video_url") or ""),
+                "coverUrl": cover, "videoUrl": video,
                 "author": {"name": author.get("name", ""), "description": author.get("description", "")},
             })
         if not data.get("has_more") or not data.get("new_cursor"):
@@ -260,6 +265,25 @@ def template_ids_from_text(text, resolve=True):
     return list(dict.fromkeys(ids)), unresolved
 
 
+SIGNED_URL_TTL = 24 * 3600
+
+
+def fresh_media_urls(template_id, region="ja-jp", force=False):
+    """Current ``(video_url, cover_url)`` for a template.
+
+    CapCut signs preview URLs with an expiry of a few days, so URLs stored in
+    candidates.json go stale (HTTP 403). The detail page is re-read when the
+    cached copy is older than a day, or always with ``force``.
+    """
+    path = paths.template_cache_dir() / f"{template_id}.json"
+    stale = not path.exists() or time.time() - path.stat().st_mtime > SIGNED_URL_TTL
+    page = template_page(template_id, force=force or stale, region=region)
+    detail = page.get("detail") or {}
+    if not detail.get("videoUrl"):
+        detail = next((item for item in page_items(page) if item_id(item) == str(template_id)), {})
+    return detail.get("videoUrl") or "", detail.get("coverUrl") or ""
+
+
 def cached_video_path(template_id):
     return paths.media_dir() / "capcut" / f"{template_id}.mp4"
 
@@ -274,7 +298,16 @@ def download_preview(template_id, video_url, max_bytes=80 * 1024 * 1024):
     target.parent.mkdir(parents=True, exist_ok=True)
     temp = Path(str(target) + ".part")
     try:
-        net.download(video_url, temp, max_bytes=max_bytes)
+        try:
+            net.download(video_url, temp, max_bytes=max_bytes)
+        except net.NetError as exc:
+            if exc.kind != "http":
+                raise
+            # The stored signed URL expired: ask CapCut for the current one and retry once.
+            fresh, _ = fresh_media_urls(template_id, force=True)
+            if not fresh or fresh == video_url:
+                raise
+            net.download(fresh, temp, max_bytes=max_bytes)
         temp.replace(target)
     finally:
         temp.unlink(missing_ok=True)

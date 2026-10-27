@@ -1,5 +1,6 @@
 # Optional semantic channel (what is on screen). ~2 GB with PyTorch; weights download from huggingface.co on first use.
 -r requirements.txt
 torch>=2.2
+torchvision>=0.17   # must match the torch build (mismatch -> 'torchvision::nms does not exist')
 open_clip_torch>=2.24
 pillow>=10

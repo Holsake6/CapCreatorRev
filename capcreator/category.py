@@ -71,6 +71,7 @@ BASE_CONFIG = {
     "exclude_ai": True,
     "ai_regex": AI_PATTERN,
     "trend_source": "",          # "oricon_tiktok_jp" adds this week's JP TikTok songs as keywords
+    "auto_explore": True,        # add matching explore pages from CapCut's sitemap as entry points
     "visual_gate": "",           # "people_motion": analysed video must show people and movement
     "reference_cases": False,    # dance only: 26 hand-analysed positive cases
     "max_pending": 50,
@@ -89,7 +90,10 @@ DANCE_CONFIG = {
     "include_regex": DANCE_PATTERN, "exclude_regex": DANCE_EXCLUDE,
     "keywords": DANCE_KEYWORDS, "landing_urls": DANCE_LANDINGS,
     "trend_source": "oricon_tiktok_jp", "visual_gate": "people_motion", "reference_cases": True,
-    "style_strength": 40,
+    "auto_explore": False,  # v2's 40+ hand-picked dance pages stay the entry points
+    # Validated on the 100 real v2 decisions: the hand-written dance rubric is
+    # strong, the video model adds little yet (6 positives), so keep it light.
+    "style_strength": 20,
     "labels": {"category": "舞蹈", "confirm": "已确认主要产出优质舞蹈模板",
                "specialty": "舞蹈类型与素材：单人/双人/群舞、手势舞、偶像舞等",
                "notes": "包装、节奏、构图、替换性和做得好的 case"},

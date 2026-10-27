@@ -158,7 +158,7 @@ def analyze_works(works, progress=None, workers=3):
     def one(work):
         key = f't{work["template_id"]}'
         cached = dna.cached(key)
-        if cached:
+        if dna.is_complete(cached):
             return key, cached
         try:
             return key, dna.analyze_template(work["template_id"], work.get("video_url", ""),
@@ -181,7 +181,7 @@ def complete_examples(category, log=None):
         return 0
     from . import ingest, paths
     fixed = 0
-    pending = [e for e in category.examples() if not dna.cached(e["key"])]
+    pending = [e for e in category.examples() if not dna.is_complete(dna.cached(e["key"]))]
     capcut_ids = {}
     for example in pending:
         if example.get("kind") == "capcut" and example.get("template_id"):
@@ -207,7 +207,7 @@ def prepare_pool(category, limit=60, per_author=2, progress=None):
     todo = []
     for author in data.get("candidates", []):
         for work in best_works(author, per_author):
-            if not dna.cached(f't{work["template_id"]}'):
+            if not dna.is_complete(dna.cached(f't{work["template_id"]}')):
                 todo.append(work)
     with _analysis_lock:
         done = analyze_works(todo[:limit], progress=progress)
