@@ -29,7 +29,8 @@ fi
 # ---- Python：优先使用项目自己的 .venv，没有就创建
 if [ ! -x .venv/bin/python ]; then
   base=""
-  for candidate in /opt/homebrew/bin/python3 /usr/local/bin/python3 \
+  # CAPCREATOR_PYTHON lets an assistant point at a Python it just installed (e.g. via uv).
+  for candidate in "${CAPCREATOR_PYTHON:-}" /opt/homebrew/bin/python3 /usr/local/bin/python3 \
       /Library/Frameworks/Python.framework/Versions/Current/bin/python3 \
       /Users/a1-6/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 \
       "$(command -v python3 2>/dev/null)"; do
